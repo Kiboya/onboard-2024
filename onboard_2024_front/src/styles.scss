@@ -1,1 +1,39 @@
-/* You can add global styles to this file, and also import other style files */
+/* styles.scss */
+@use './m3-theme.scss' as *;
+@use '@angular/material' as mat;
+
+:root {
+  @include mat.all-component-themes($light-theme);
+  @include mat.system-level-typography($light-theme);
+  @include mat.system-level-colors($light-theme);
+
+  --mdc-filled-text-field-container-color: #1a1c1c;
+
+  margin: 0;
+  padding: 0;
+  font-family: Roboto, sans-serif;
+  background-color: mat.get-theme-color($light-theme, primary, 95);
+}
+
+.dark-theme {
+  @include mat.all-component-colors($dark-theme);
+  @include mat.system-level-colors($dark-theme);
+
+  --mdc-filled-text-field-container-color: #e2e2e2;
+
+  background-color: mat.get-theme-color($dark-theme, neutral, 20);
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background-color: inherit;
+}
+
+mat-form-field:has(input:-webkit-autofill) {
+  input:-webkit-autofill {
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: var(--mdc-filled-text-field-container-color);
+  }
+}

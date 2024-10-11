@@ -1,0 +1,18 @@
+<!-- login.component.html -->
+<div class="login-container">
+    <app-logo [isDarkTheme]="isDarkTheme" class="login-logo"></app-logo>
+    <mat-card class="login-card">
+      <mat-form-field appearance="outline" class="login-form-field">
+        <mat-label>Nom d'utilisateur</mat-label>
+        <input matInput type="text" id="username" name="username">
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="login-form-field">
+        <mat-label>Mot de passe</mat-label>
+        <input matInput type="password" id="password" name="password">
+      </mat-form-field>
+      <div class="buttons">
+        <button mat-flat-button type="submit" class="login-button">Connexion</button>
+        <button mat-stroked-button type="button" class="forgot-password-button">Mot de passe oublié</button>
+      </div>
+    </mat-card>
+  </div>

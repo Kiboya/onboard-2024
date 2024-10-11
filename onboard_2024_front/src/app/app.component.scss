@@ -1,0 +1,23 @@
+/* app.component.scss */
+.theme-toggle-button {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 1000;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: inherit;
+  }
+  
+  .theme-toggle-button mat-icon {
+    font-size: 24px;
+  }
+  
+  .theme-toggle-button.dark-mode {
+    color: white;
+  }
+  
+  .theme-toggle-button.light-mode {
+    color: #1c3053;
+  }
