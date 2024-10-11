@@ -1,0 +1,54 @@
+/* login.component.scss */
+.login-container {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100%;
+    background-color: inherit;
+  
+    @media (max-width: 500px) {
+      width: 75%;
+      margin: 0 auto; 
+    }
+  
+    .login-logo {
+      width: 300px;
+      height: auto;
+      margin-bottom: 20px;
+    
+      @media (max-width: 500px) {
+        width: 75%;
+      }
+    }
+    
+    .login-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center; 
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
+      margin: 0 20px; 
+    
+      .login-form-field {
+        width: 100%;
+        margin-bottom: 10px;
+      }
+      
+      .buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        margin-bottom: 10px;
+        width: 75%;
+      }
+    }
+  }
+  
+  
+  
+  

@@ -1,5 +1,7 @@
-<main class="main">
-  <!-- Contenu supprimé pour que rien ne s'affiche sur la page d'accueil -->
-</main>
-
-<router-outlet />
+<!-- app.component.html -->
+<div class="content">
+  <button mat-icon-button (click)="toggleTheme()" class="theme-toggle-button" [ngClass]="{ 'dark-mode': isDarkTheme, 'light-mode': !isDarkTheme }">
+    <mat-icon>{{ isDarkTheme ? 'light_mode' : 'dark_mode' }}</mat-icon>
+  </button>
+  <router-outlet></router-outlet>
+</div>

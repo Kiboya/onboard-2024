@@ -1,34 +1,18 @@
 <!-- login.component.html -->
-<div style="text-align: center; margin-top: 20px;">
-    <img src="path/to/logo.png" alt="Logo" style="width: 100px; height: auto;">
-  </div>
-  <div style="text-align: center; margin-top: 20px;">
-    <h1>Bienvenue</h1>
-  </div>
-  <div style="display: flex; justify-content: center; align-items: flex-end; height: 60vh;">
-    <div style="background-color: rgb(255, 255, 255); padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); width: 300px;">
-      <form>
-        <div style="margin-bottom: 10px;">
-          <label for="username">Nom d'utilisateur</label>
-          <input type="text" id="username" name="username" style="width: 100%;">
-        </div>
-        <div style="margin-bottom: 10px;">
-          <label for="password">Mot de passe</label>
-          <input type="password" id="password" name="password" style="width: 100%;">
-        </div>
-        <div style="margin-bottom: 10px;">
-          <button type="submit" style="width: 100%;">Connexion</button>
-        </div>
-        <div style="margin-bottom: 10px;">
-          <button type="button" style="width: 100%;">Mot de passe oublié</button>
-        </div>
-        <div style="margin-bottom: 10px;">
-          <label for="language">Langue</label>
-          <select id="language" name="language" style="width: 100%;">
-            <option value="fr">Français</option>
-            <option value="en">Anglais</option>
-          </select>
-        </div>
-      </form>
-    </div>
+<div class="login-container">
+    <app-logo [isDarkTheme]="isDarkTheme" class="login-logo"></app-logo>
+    <mat-card class="login-card">
+      <mat-form-field appearance="outline" class="login-form-field">
+        <mat-label>Nom d'utilisateur</mat-label>
+        <input matInput type="text" id="username" name="username">
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="login-form-field">
+        <mat-label>Mot de passe</mat-label>
+        <input matInput type="password" id="password" name="password">
+      </mat-form-field>
+      <div class="buttons">
+        <button mat-flat-button type="submit" class="login-button">Connexion</button>
+        <button mat-stroked-button type="button" class="forgot-password-button">Mot de passe oublié</button>
+      </div>
+    </mat-card>
   </div>
