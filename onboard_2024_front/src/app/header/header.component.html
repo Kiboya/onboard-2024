@@ -1,0 +1,11 @@
+<div class="header-controls">
+    <mat-button-toggle-group class="language-switcher" (change)="switchLanguage($event.value)" [value]="currentLanguage"
+        [hideSingleSelectionIndicator]="true">
+        <mat-button-toggle value="fr">FRA</mat-button-toggle>
+        <mat-button-toggle value="en">ENG</mat-button-toggle>
+    </mat-button-toggle-group>
+    <button mat-icon-button (click)="toggleTheme()" class="theme-toggle-button"
+        [ngClass]="{ 'dark-mode': isDarkTheme, 'light-mode': !isDarkTheme }">
+        <mat-icon>{{ isDarkTheme ? 'light_mode' : 'dark_mode' }}</mat-icon>
+    </button>
+</div>
