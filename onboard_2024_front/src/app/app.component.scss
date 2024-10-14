@@ -1,23 +1,37 @@
 /* app.component.scss */
+.header-controls {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+}
+
 .theme-toggle-button {
-    position: fixed;
-    top: 10px;
-    right: 10px;
-    z-index: 1000;
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    color: inherit;
-  }
-  
-  .theme-toggle-button mat-icon {
-    font-size: 24px;
-  }
-  
-  .theme-toggle-button.dark-mode {
-    color: white;
-  }
-  
-  .theme-toggle-button.light-mode {
-    color: #1c3053;
-  }
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  color: inherit;
+  width: 48px;
+  height: 48px;
+}
+
+.theme-toggle-button mat-icon {
+  font-size: 30px;
+  width: 30px;
+  height: 30px;
+  padding-top: 2px;
+}
+
+.theme-toggle-button.dark-mode {
+  color: white;
+}
+
+.theme-toggle-button.light-mode {
+  color: #1c3053;
+}
+
+.language-switcher {
+  margin-right: 10px;
+}

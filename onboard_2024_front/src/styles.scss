@@ -31,6 +31,7 @@ html, body {
   background-color: inherit;
 }
 
+// Override autofill color for text fields
 mat-form-field:has(input:-webkit-autofill) {
   input:-webkit-autofill {
     -webkit-background-clip: text;
