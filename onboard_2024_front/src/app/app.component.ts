@@ -18,6 +18,8 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { ThemeService } from './services/theme.service';
 import { LoginComponent } from './login/login.component';
 import { LogoComponent } from './logo/logo.component';
+import { TranslocoModule, getBrowserLang } from '@ngneat/transloco';
+import { LanguageService } from './services/language.service';
 
 @Component({
   selector: 'app-root',
@@ -25,6 +27,7 @@ import { LogoComponent } from './logo/logo.component';
   imports: [
     RouterOutlet,
     CommonModule,
+    TranslocoModule,
 
     // Custom components
     LoginComponent,
@@ -52,16 +55,26 @@ import { LogoComponent } from './logo/logo.component';
 export class AppComponent implements OnInit {
   title = 'onboard_2024_front';
   isDarkTheme = false;
+  currentLanguage = 'fr';
 
-  constructor(private themeService: ThemeService) {}
+  constructor(private themeService: ThemeService, private languageService: LanguageService) { }
 
   ngOnInit(): void {
     this.themeService.isDarkTheme$.subscribe(isDarkTheme => {
       this.isDarkTheme = isDarkTheme;
     });
+
+    const storedLang = localStorage.getItem('language');
+    const browserLang = getBrowserLang() || 'fr';
+    this.currentLanguage = storedLang || browserLang;
+    this.languageService.switchLanguage(this.currentLanguage);
   }
 
   toggleTheme(): void {
     this.themeService.toggleTheme();
+  }
+
+  switchLanguage(language: string): void {
+    this.languageService.switchLanguage(language);
   }
 }
