@@ -18,8 +18,8 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { ThemeService } from './services/theme.service';
 import { LoginComponent } from './login/login.component';
 import { LogoComponent } from './logo/logo.component';
-import { TranslocoModule, getBrowserLang } from '@ngneat/transloco';
-import { LanguageService } from './services/language.service';
+import { TranslocoModule } from '@ngneat/transloco';
+import { HeaderComponent } from './header/header.component';
 
 @Component({
   selector: 'app-root',
@@ -32,6 +32,7 @@ import { LanguageService } from './services/language.service';
     // Custom components
     LoginComponent,
     LogoComponent,
+    HeaderComponent,
 
     // Material modules
     MatToolbarModule,
@@ -54,27 +55,8 @@ import { LanguageService } from './services/language.service';
 })
 export class AppComponent implements OnInit {
   title = 'onboard_2024_front';
-  isDarkTheme = false;
-  currentLanguage = 'fr';
 
-  constructor(private themeService: ThemeService, private languageService: LanguageService) { }
+  constructor() { }
 
-  ngOnInit(): void {
-    this.themeService.isDarkTheme$.subscribe(isDarkTheme => {
-      this.isDarkTheme = isDarkTheme;
-    });
-
-    const storedLang = localStorage.getItem('language');
-    const browserLang = getBrowserLang() || 'fr';
-    this.currentLanguage = storedLang || browserLang;
-    this.languageService.switchLanguage(this.currentLanguage);
-  }
-
-  toggleTheme(): void {
-    this.themeService.toggleTheme();
-  }
-
-  switchLanguage(language: string): void {
-    this.languageService.switchLanguage(language);
-  }
+  ngOnInit(): void { }
 }
