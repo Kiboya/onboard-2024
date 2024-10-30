@@ -12,6 +12,7 @@ $background-color: var(--app-background-color);
 mat-toolbar {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   background-color: inherit;
   height: $header-height;
 }
@@ -46,6 +47,16 @@ mat-toolbar {
   padding: 0 $padding-medium;
 }
 
+.logo-container app-logo {
+  cursor: pointer;
+  display: flex;
+  height: auto;
+  width: 130px;
+  align-items: center;
+  padding: 0px 12px;
+}
+
+
 mat-sidenav-container {
   background-color: inherit;
 }
@@ -55,22 +66,27 @@ mat-sidenav {
   background-color: $background-color;
   transition: width $transition-duration ease;
   width: $sidenav-width;
+
   &.sidenav-expanded {
     width: $sidenav-expanded-width;
   }
+
   padding: 24px $padding-small 16px $padding-small;
 }
 
 mat-sidenav-content {
   transition: margin-left $transition-duration ease;
   margin-left: $sidenav-width;
+
   &.full-margin {
     margin-left: $sidenav-expanded-width;
   }
+
   &.no-margin {
     margin-left: 0;
     padding-right: 0;
   }
+
   padding-right: $padding-small;
 }
 
@@ -94,6 +110,7 @@ mat-sidenav-content {
   overflow-y: auto;
   height: calc(100vh - 76px);
   width: 100%;
+
   &.no-margin {
     height: calc(100vh - $header-height);
   }

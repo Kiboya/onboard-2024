@@ -10,7 +10,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { LogoComponent } from '../logo/logo.component';
@@ -61,7 +61,8 @@ export class HeaderComponent implements OnInit {
   isSidenavExpanded = true;
   backdrop = false;
   previousMouseEnter = false;
-  
+  isLoginPage = false; 
+
 
   // Defines the navigation items for the sidenav.
   navItems: NavItem[] = [
@@ -91,13 +92,17 @@ export class HeaderComponent implements OnInit {
    * @param {ThemeService} themeService - Service to switch the theme.
    * @param {LanguageService} languageService - Service to switch the language.
    * @param {BreakpointObserver} breakpointObserver - Service to observe the screen size.
-   * @param {ChangeDetectorRef} cdr - Service to manually trigger a change detection for the sidenav.
+   * @param {ChangeDetectorRef} cdr - Manually trigger a change detection for the sidenav.
+   * @param {Router} router - Service to navigate between routes.
+   * @param {ActivatedRoute} activatedRoute - Get the current route.
    */
   constructor(
     private themeService: ThemeService,
     private languageService: LanguageService,
     private breakpointObserver: BreakpointObserver,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private router: Router,
+    private activatedRoute: ActivatedRoute
   ) { }
 
   /**
@@ -157,6 +162,12 @@ export class HeaderComponent implements OnInit {
     const browserLang = getBrowserLang() || 'fr';
     this.currentLanguage = storedLang || browserLang;
     this.languageService.switchLanguage(this.currentLanguage);
+
+    // Check if the route is the login page
+    this.router.events.subscribe(() => {
+      const currentRoute = this.router.url;
+      this.isLoginPage = currentRoute.includes('/login');
+    });
   }
 
   /**

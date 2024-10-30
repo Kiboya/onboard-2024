@@ -1,20 +1,19 @@
 <!-- login.component.html -->
 <div class="login-container">
-  <mat-icon  class="login-logo">
-    <app-logo [isDarkTheme]="isDarkTheme"></app-logo>
-  </mat-icon>
-    <mat-card class="login-card">
-      <mat-form-field appearance="outline" class="login-form-field">
-        <mat-label>{{'login.username' | transloco}}</mat-label>
-        <input matInput type="text" id="username" name="username">
-      </mat-form-field>
-      <mat-form-field appearance="outline" class="login-form-field">
-        <mat-label>{{'login.password' | transloco}}</mat-label>
-        <input matInput type="password" id="password" name="password">
-      </mat-form-field>
-      <div class="buttons">
-        <button mat-flat-button type="submit" class="login-button">{{'login.login' | transloco}}</button>
-        <button mat-stroked-button type="button" class="forgot-password-button">{{'login.forgotPassword' | transloco}}</button>
-      </div>
-    </mat-card>
-  </div>
+  <app-logo class="login-logo" [isDarkTheme]="isDarkTheme" [size]="'large'"></app-logo>
+  <mat-card class="login-card">
+    <mat-form-field appearance="outline" class="login-form-field">
+      <mat-label>{{'login.username' | transloco}}</mat-label>
+      <input matInput type="text" id="username" name="username">
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="login-form-field">
+      <mat-label>{{'login.password' | transloco}}</mat-label>
+      <input matInput type="password" id="password" name="password">
+    </mat-form-field>
+    <div class="buttons">
+      <button mat-flat-button type="submit" class="login-button">{{'login.login' | transloco}}</button>
+      <button mat-stroked-button type="button" class="forgot-password-button">{{'login.forgotPassword' |
+        transloco}}</button>
+    </div>
+  </mat-card>
+</div>

@@ -1,15 +1,20 @@
 <!-- header.component.html -->
 <mat-toolbar>
   <!-- Toolbar content -->
-  <button *ngIf="currentNavMode < NavMode.NORMAL_RETRACTED" mat-icon-button class="menu-button"
+  <button *ngIf="currentNavMode < NavMode.NORMAL_RETRACTED && !isLoginPage" mat-icon-button class="menu-button"
     (click)="toggleSidenav()">
     <mat-icon class="material-symbols-rounded">menu</mat-icon>
   </button>
+  <div *ngIf="!isLoginPage" class="logo-container">
+    <a routerLink="/home">
+      <app-logo [isDarkTheme]="isDarkTheme" [size]="'medium'"></app-logo>
+    </a>
+  </div>
   <span class="spacer"></span>
   <div class="header-controls">
     <!-- Language Switcher -->
-    <mat-button-toggle-group class="language-switcher" (change)="switchLanguage($event.value)"
-      [value]="currentLanguage" [hideSingleSelectionIndicator]="true">
+    <mat-button-toggle-group class="language-switcher" (change)="switchLanguage($event.value)" [value]="currentLanguage"
+      [hideSingleSelectionIndicator]="true">
       <mat-button-toggle value="fr">FRA</mat-button-toggle>
       <mat-button-toggle value="en">ENG</mat-button-toggle>
     </mat-button-toggle-group>
@@ -22,23 +27,27 @@
   </div>
 </mat-toolbar>
 
-<mat-sidenav-container (backdropClick)="toggleSidenav()" [hasBackdrop]="backdrop">
-    <mat-sidenav mode="over" (mouseenter)="onSidenavMouseEnter()" (mouseleave)="onSidenavMouseLeave()" class="sidenav"
-        [class.sidenav-expanded]="isSidenavExpanded" [opened]="currentNavMode != NavMode.HIDDEN_RETRACTED">
-        <mat-nav-list>
-            <a *ngFor="let item of navItems" mat-list-item [routerLink]="item.routerLink" class="nav-link">
-                <div class="icon-text">
-                    <mat-icon class="material-symbols-rounded">{{ item.icon }}</mat-icon>
-                    <span>
-                        {{ item.labelKey | transloco }}
-                    </span>
-                </div>
-            </a>
-        </mat-nav-list>
-    </mat-sidenav>
-    <mat-sidenav-content [ngClass]="matSideNavContentMargin">
-        <mat-card class="full-width-card" [ngClass]="matSideNavContentMargin">
-            <router-outlet></router-outlet>
-        </mat-card>
-    </mat-sidenav-content>
+<mat-sidenav-container *ngIf="!isLoginPage" (backdropClick)="toggleSidenav()" [hasBackdrop]="backdrop">
+  <mat-sidenav mode="over" (mouseenter)="onSidenavMouseEnter()" (mouseleave)="onSidenavMouseLeave()" class="sidenav"
+    [class.sidenav-expanded]="isSidenavExpanded" [opened]="currentNavMode != NavMode.HIDDEN_RETRACTED">
+    <mat-nav-list>
+      <a *ngFor="let item of navItems" mat-list-item [routerLink]="item.routerLink" class="nav-link">
+        <div class="icon-text">
+          <mat-icon class="material-symbols-rounded">{{ item.icon }}</mat-icon>
+          <span>
+            {{ item.labelKey | transloco }}
+          </span>
+        </div>
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content [ngClass]="matSideNavContentMargin">
+    <mat-card class="full-width-card" [ngClass]="matSideNavContentMargin">
+      <router-outlet></router-outlet>
+    </mat-card>
+  </mat-sidenav-content>
 </mat-sidenav-container>
+
+<ng-container *ngIf="isLoginPage">
+  <router-outlet></router-outlet>
+</ng-container>
