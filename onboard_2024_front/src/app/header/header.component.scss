@@ -1,36 +1,100 @@
+// header.component.scss
+@use '@angular/material' as mat;
+
+$header-height: 64px;
+$sidenav-width: 80px;
+$sidenav-expanded-width: 300px;
+$padding-small: 12px;
+$padding-medium: 16px;
+$transition-duration: 0.3s;
+$background-color: var(--app-background-color);
+
+mat-toolbar {
+  display: flex;
+  justify-content: space-between;
+  background-color: inherit;
+  height: $header-height;
+}
+
 .header-controls {
-    position: fixed;
-    top: 10px;
-    right: 10px;
-    z-index: 1000;
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .theme-toggle-button {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    color: inherit;
-    width: 48px;
-    height: 48px;
-}
-
-.theme-toggle-button mat-icon {
-    font-size: 30px;
-    width: 30px;
-    height: 30px;
-    padding-top: 2px;
-}
-
-.theme-toggle-button.dark-mode {
-    color: white;
-}
-
-.theme-toggle-button.light-mode {
-    color: #1c3053;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
 }
 
 .language-switcher {
-    margin-right: 10px;
+  margin-right: $padding-small;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.menu-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  margin-left: 4px;
+}
+
+.menu-button mat-icon-button {
+  padding: 0 $padding-medium;
+}
+
+mat-sidenav-container {
+  background-color: inherit;
+}
+
+mat-sidenav {
+  border-radius: 0;
+  background-color: $background-color;
+  transition: width $transition-duration ease;
+  width: $sidenav-width;
+  &.sidenav-expanded {
+    width: $sidenav-expanded-width;
+  }
+  padding: 24px $padding-small 16px $padding-small;
+}
+
+mat-sidenav-content {
+  transition: margin-left $transition-duration ease;
+  margin-left: $sidenav-width;
+  &.full-margin {
+    margin-left: $sidenav-expanded-width;
+  }
+  &.no-margin {
+    margin-left: 0;
+    padding-right: 0;
+  }
+  padding-right: $padding-small;
+}
+
+.nav-link {
+  cursor: pointer;
+  width: 100%;
+}
+
+.icon-text {
+  display: flex;
+  align-items: center;
+}
+
+.icon-text mat-icon {
+  padding-right: $padding-small;
+  flex-shrink: 0;
+}
+
+.full-width-card {
+  box-shadow: none;
+  overflow-y: auto;
+  height: calc(100vh - 76px);
+  width: 100%;
+  &.no-margin {
+    height: calc(100vh - $header-height);
+  }
 }

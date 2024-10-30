@@ -3,6 +3,14 @@
         "username": "Username",
         "password": "Password",
         "login": "Login",
-        "forgotPassword": "Forgot password"
+        "forgotPassword": "Forgot Password"
+    },
+    "sidenav": {
+        "reference-documents": "Reference Documents",
+        "informations": "Informations",
+        "administrative-documents": "Administrative Documents",
+        "schooling": "Schooling",
+        "absences": "Absences",
+        "planning": "Planning"
     }
 }

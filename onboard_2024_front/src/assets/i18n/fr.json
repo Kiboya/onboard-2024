@@ -1,8 +1,16 @@
 {
     "login": {
-        "username": "Nom d'utilisateur",
-        "password": "Mot de passe",
+        "username": "Nom d'Utilisateur",
+        "password": "Mot de Passe",
         "login": "Connexion",
-        "forgotPassword": "Mot de passe oublié"
+        "forgotPassword": "Mot de Passe oublié"
+    },
+    "sidenav": {
+        "reference-documents": "Documents de Référence",
+        "informations": "Informations",
+        "administrative-documents": "Documents Administratifs",
+        "schooling": "Scolarité",
+        "absences": "Absences",
+        "planning": "Planning"
     }
 }
