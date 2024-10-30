@@ -1,6 +1,8 @@
 <!-- login.component.html -->
 <div class="login-container">
-    <app-logo [isDarkTheme]="isDarkTheme" class="login-logo"></app-logo>
+  <mat-icon  class="login-logo">
+    <app-logo [isDarkTheme]="isDarkTheme"></app-logo>
+  </mat-icon>
     <mat-card class="login-card">
       <mat-form-field appearance="outline" class="login-form-field">
         <mat-label>{{'login.username' | transloco}}</mat-label>

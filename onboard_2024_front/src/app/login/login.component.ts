@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { ThemeService } from '../services/theme.service';
 import { LogoComponent } from '../logo/logo.component';
 import { TranslocoModule, getBrowserLang } from '@ngneat/transloco';
+import { MatIconModule } from '@angular/material/icon';
 
 
 @Component({
@@ -17,9 +18,10 @@ import { TranslocoModule, getBrowserLang } from '@ngneat/transloco';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
+    MatIconModule,
     CommonModule,
     LogoComponent,
-    TranslocoModule
+    TranslocoModule,
   ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']

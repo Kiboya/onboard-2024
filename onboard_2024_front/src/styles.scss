@@ -7,28 +7,30 @@
   @include mat.system-level-typography($light-theme);
   @include mat.system-level-colors($light-theme);
 
-  --mdc-filled-text-field-container-color: #1a1c1c;
+  --mdc-filled-text-field-container-color: #1a1c1c; // Default text color for text fields
 
   margin: 0;
   padding: 0;
   font-family: Roboto, sans-serif;
   background-color: mat.get-theme-color($light-theme, primary, 95);
+  --app-background-color: #ecf0ff;
 }
 
 .dark-theme {
   @include mat.all-component-colors($dark-theme);
   @include mat.system-level-colors($dark-theme);
 
-  --mdc-filled-text-field-container-color: #e2e2e2;
+  --mdc-filled-text-field-container-color: #e2e2e2; 
 
   background-color: mat.get-theme-color($dark-theme, neutral, 20);
+  --app-background-color: #303033;
 }
 
 html, body {
   margin: 0;
   padding: 0;
   height: 100%;
-  background-color: inherit;
+  overflow: hidden;
 }
 
 // Override autofill color for text fields
