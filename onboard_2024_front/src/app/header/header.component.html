@@ -1,5 +1,5 @@
 <!-- header.component.html -->
-<mat-toolbar>
+<mat-toolbar [class.login]="isLoginPage">
   <!-- Toolbar content -->
   <button *ngIf="currentNavMode < NavMode.NORMAL_RETRACTED && !isLoginPage" mat-icon-button class="menu-button"
     (click)="toggleSidenav()">
@@ -42,8 +42,10 @@
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content [ngClass]="matSideNavContentMargin">
-    <mat-card class="full-width-card" [ngClass]="matSideNavContentMargin">
-      <router-outlet></router-outlet>
+    <mat-card class="scrollable-card" [ngClass]="matSideNavContentMargin">
+      <div class="scrollable-content">
+        <router-outlet></router-outlet>
+      </div>
     </mat-card>
   </mat-sidenav-content>
 </mat-sidenav-container>

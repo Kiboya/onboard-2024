@@ -147,10 +147,10 @@ export class HeaderComponent implements OnInit {
     });
 
     // Observes the screen size and sets the navigation mode accordingly.
-    this.breakpointObserver.observe([Breakpoints.Small, Breakpoints.XSmall]).subscribe(result => {
+    this.breakpointObserver.observe([Breakpoints.Medium, Breakpoints.XSmall]).subscribe(result => {
       if (this.breakpointObserver.isMatched(Breakpoints.XSmall)) {
         this.currentNavMode = NavMode.HIDDEN_RETRACTED;
-      } else if (this.breakpointObserver.isMatched(Breakpoints.Small)) {
+      } else if (this.breakpointObserver.isMatched(Breakpoints.Medium) || this.breakpointObserver.isMatched(Breakpoints.Small)) {
         this.currentNavMode = NavMode.REDUCED_RETRACTED;
       } else {
         this.currentNavMode = NavMode.NORMAL_EXPANDED;

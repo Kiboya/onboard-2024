@@ -1,1 +1,47 @@
-home
+<div *ngFor="let card of cards" class="container">
+    <mat-card [ngClass]="card.class">
+      <mat-card-title [ngClass]="card.title.class">
+        {{ card.title.text | transloco }}
+      </mat-card-title>
+      <mat-card-content>
+        <ng-container *ngFor="let node of card.content">
+          <ng-container *ngTemplateOutlet="renderNode; context: { $implicit: node }"></ng-container>
+        </ng-container>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  
+  <ng-template #renderNode let-node>
+    <ng-container [ngSwitch]="node.type">
+      <!-- Text Node -->
+      <span *ngSwitchCase="'text'" [ngClass]="node.class">
+        {{ node.text | transloco }}
+      </span>
+  
+      <!-- Link Node -->
+      <a *ngSwitchCase="'link'" [href]="node.url" [ngClass]="node.class">
+        {{ node.text | transloco }}
+      </a>
+  
+      <!-- Paragraph Node -->
+      <p *ngSwitchCase="'paragraph'" [ngClass]="node.class">
+        <ng-container *ngFor="let child of node.children">
+          <ng-container *ngTemplateOutlet="renderNode; context: { $implicit: child }"></ng-container>
+        </ng-container>
+      </p>
+  
+      <!-- List Node -->
+      <ul *ngSwitchCase="'list'" [ngClass]="node.class">
+        <li *ngFor="let child of node.children">
+          <ng-container *ngTemplateOutlet="renderNode; context: { $implicit: child }"></ng-container>
+        </li>
+      </ul>
+  
+      <!-- Container Node -->
+      <div *ngSwitchCase="'container'" [ngClass]="node.class">
+        <ng-container *ngFor="let child of node.children">
+          <ng-container *ngTemplateOutlet="renderNode; context: { $implicit: child }"></ng-container>
+        </ng-container>
+      </div>
+    </ng-container>
+  </ng-template>
