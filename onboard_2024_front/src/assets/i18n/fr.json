@@ -12,5 +12,336 @@
         "schooling": "Scolarité",
         "absences": "Absences",
         "planning": "Planning"
+    },
+    "home": {
+        "cards": [
+            {
+                "title": {
+                    "text": "Dates Jury Ingénieur de Spécialité",
+                    "class": "card1-title"
+                },
+                "content": [
+                    {
+                        "type": "text",
+                        "class": "warning centered",
+                        "text": "Jury d'année (MECA A1/A3 - BTP A1/A2/A3 et SEC A1/A2/A3)"
+                    },
+                    {
+                        "type": "text",
+                        "class": "centered card1-strong",
+                        "text": "Jury d'année (MECA A1/A3 - BTP A1/A2/A3 et SEC A1/A2/A3)"
+                    },
+                    {
+                        "type": "text",
+                        "class": "centered",
+                        "text": "CPJ : vendredi 28 juin 2024 - 14h\nJury : mardi 02 juillet 2024 - 14h"
+                    },
+                    {
+                        "type": "text",
+                        "class": "centered card1-strong",
+                        "text": "Jury d'année (MECA A2)"
+                    },
+                    {
+                        "type": "text",
+                        "class": "centered",
+                        "text": "CPJ : mardi 27 août 2024 - 14h\nJury : jeudi 29 août 2024 - 16h30"
+                    },
+                    {
+                        "type": "text",
+                        "class": "centered card1-strong",
+                        "text": "Jury de rattrapage (MECA - BTP et SEC)"
+                    },
+                    {
+                        "type": "text",
+                        "class": "centered",
+                        "text": "CPJ : lundi 16 septembre 2024 - 14h\nJury : mercredi 18 septembre 2024 - 9h"
+                    },
+                    {
+                        "type": "text",
+                        "class": "centered card1-strong",
+                        "text": "Jury de diplôme (MECA - BTP et SEC)"
+                    },
+                    {
+                        "type": "text",
+                        "class": "centered",
+                        "text": "CPJ : lundi 14 octobre 2024 - 14h\nJury : mercredi 16 octobre 2024 - 10h"
+                    }
+                ],
+                "class": "card1"
+            },
+            {
+                "title": {
+                    "text": "IMPORTANT : Information relative à la protection de vos données personnelles - obligatoire",
+                    "class": "card2-title"
+                },
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "class": "justified",
+                        "children": [
+                            {
+                                "type": "text",
+                                "text": "L'École Centrale de Nantes est amenée à traiter vos données personnelles dans le cadre de l'inscription, de la gestion administrative et pédagogique de la scolarité des étudiants, des enquêtes sur les conditions de vie des étudiants et à des fins statistiques. Ces données incluent l'identité, les adresses, les coordonnées personnelles et/ou professionnelles, ainsi que des informations sur le parcours scolaire et universitaire. Elles sont traitées de manière confidentielle et seules les personnes habilitées des services administratifs de l'École Centrale de Nantes y ont accès, à des fins strictement internes."
+                            }
+                        ]
+                    },
+                    {
+                        "type": "paragraph",
+                        "class": "justified",
+                        "children": [
+                            {
+                                "type": "text",
+                                "text": "En outre, en vertu des obligations légales incombant au responsable du traitement, certaines données personnelles collectées peuvent être transmises à des administrations publiques telles que le Ministère de l'Enseignement Supérieur et de la Recherche, le CROUS, l'OFII, ou encore d'autres administrations de l'État français."
+                            }
+                        ]
+                    },
+                    {
+                        "type": "paragraph",
+                        "class": "justified",
+                        "children": [
+                            {
+                                "type": "text",
+                                "text": "Les données des candidats non inscrits seront supprimées dans les six mois suivant la fin de la campagne d'inscription. Les données des candidats inscrits seront conservées pendant dix ans à compter de la dernière inscription."
+                            }
+                        ]
+                    },
+                    {
+                        "type": "paragraph",
+                        "class": "justified",
+                        "children": [
+                            {
+                                "type": "text",
+                                "text": "Conformément au Règlement Général sur la Protection des Données (RGPD), vous pouvez obtenir communication et, le cas échéant, demander la rectification ou la suppression de vos informations personnelles, ainsi qu'exercer d'autres droits à cet égard. Pour cela, contactez le délégué à la protection des données à l'adresse : "
+                            },
+                            {
+                                "type": "link",
+                                "text": "dpo@ec-nantes.fr",
+                                "url": "mailto:dpo@ec-nantes.fr"
+                            },
+                            {
+                                "type": "text",
+                                "text": ", en joignant une copie d'un justificatif d'identité en cours de validité."
+                            }
+                        ]
+                    }
+                ],
+                "class": "card2"
+            },
+            {
+                "title": {
+                    "text": "Assocation of Centrale Nantes Students - Bureau des élèves (BDE)",
+                    "class": "card3-title"
+                },
+                "content": [
+                    {
+                        "type": "text",
+                        "text": "[IMPORTANT] [BDE]"
+                    },
+                    {
+                        "type": "text",
+                        "text": "\nLe BDE, c'est l'association de l'école qui permet de gérer la vie des étudiants au niveau associatif."
+                    },
+                    {
+                        "type": "list",
+                        "class": "",
+                        "children": [
+                            {
+                                "type": "container",
+                                "children": [
+                                    {
+                                        "type": "text",
+                                        "text": "Payez votre adhésion pour participer aux clubs et aux soirées: "
+                                    },
+                                    {
+                                        "type": "link",
+                                        "text": "Payer mon adhésion BDE/BDA",
+                                        "url": "https://www.helloasso.com/associations/association-des-etudiants-de-l-ecole-centrale-nantes/adhesions/adhesion-association-des-etudiants-de-centrale-nantes-plus-de-details-en-bas-3"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "container",
+                                "children": [
+                                    {
+                                        "type": "text",
+                                        "text": "Accéder à "
+                                    },
+                                    {
+                                        "type": "link",
+                                        "text": "Nantral Platform",
+                                        "url": "https://nantral-platform.fr/"
+                                    },
+                                    {
+                                        "type": "text",
+                                        "text": ", le site des clubs et assos : "
+                                    },
+                                    {
+                                        "type": "link",
+                                        "text": "Connexion",
+                                        "url": "https://nantral-platform.fr/account/login/?next=/"
+                                    },
+                                    {
+                                        "type": "text",
+                                        "text": " ou "
+                                    },
+                                    {
+                                        "type": "link",
+                                        "text": "Inscription",
+                                        "url": "https://nantral-platform.fr/account/registration/choice/ed9ec74b-81ad-4b23-9748-0e507fc140a1/"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "container",
+                                "children": [
+                                    {
+                                        "type": "text",
+                                        "text": "Rejoignez le groupe Facebook des étudiants: "
+                                    },
+                                    {
+                                        "type": "link",
+                                        "text": "Centrale Nantes 2024-2025",
+                                        "url": "https://www.facebook.com/groups/993934575428773/"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "container",
+                                "children": [
+                                    {
+                                        "type": "text",
+                                        "text": " Contact: email "
+                                    },
+                                    {
+                                        "type": "link",
+                                        "text": "bde@ec-nantes.fr",
+                                        "url": "mailto:bde@ec-nantes.fr"
+                                    },
+                                    {
+                                        "type": "text",
+                                        "text": " ou par "
+                                    },
+                                    {
+                                        "type": "link",
+                                        "text": "Messenger",
+                                        "url": "https://m.me/bde.centralenantes"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "class": "card3"
+            },
+            {
+                "title": {
+                    "text": "Centrale Nantes Alumni (CNA)",
+                    "class": "card4-title"
+                },
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "class": "justified",
+                        "children": [
+                            {
+                                "type": "text",
+                                "text": "Centrale Nantes Alumni, c’est l’asso qui t’ouvre les portes du Réseau Centralien."
+                            }
+                        ]
+                    },
+                    {
+                        "type": "paragraph",
+                        "class": "justified",
+                        "children": [
+                            {
+                                "type": "text",
+                                "text": "Adhérer à CNA, c’est entrer dans une communauté de 20 000 Centraliens de Nantes, 120 000 alumni Centraliens et Supelec dans 80 pays"
+                            },
+                            {
+                                "type": "link",
+                                "text": "(+ d'infos)",
+                                "url": "https://www.centraliens-nantes.org/page/le-reseau-mobilite-dans-44-pays"
+                            },
+                            {
+                                "type": "text",
+                                "text": "Pendant tes études, accède aux services carrière personnalisés "
+                            },
+                            {
+                                "type": "link",
+                                "text": "(+ d'infos)",
+                                "url": "https://www.centraliens-nantes.org/page/solidarite-services"
+                            },
+                            {
+                                "type": "text",
+                                "text": " à "
+                            },
+                            {
+                                "type": "link",
+                                "text": "500 événements",
+                                "url": "https://www.centraliens-nantes.org/agenda"
+                            },
+                            {
+                                "type": "text",
+                                "text": " par an pour créer du lien avec des diplômés, trouver un mentor en fonction de ton projet "
+                            },
+                            {
+                                "type": "link",
+                                "text": "(+ d'infos)",
+                                "url": "https://www.centraliens-nantes.org/page/mentorat"
+                            },
+                            {
+                                "type": "text",
+                                "text": " ... ou tout simplement pour mûrir ta réflexion sur ton projet professionnel et personnel dans un esprit de solidarité, de bienveillance et d’excellence."
+                            }
+                        ]
+                    },
+                    {
+                        "type": "paragraph",
+                        "class": "justified",
+                        "children": [
+                            {
+                                "type": "link",
+                                "text": "Adhère à vie",
+                                "url": "https://www.centraliens-nantes.org/Adhesion-FuturEI1/"
+                            },
+                            {
+                                "type": "text",
+                                "text": " pour 350 € ou 50 €/an pendant 5 ans puis 50 €/trimestre pendant 4 trimestres (soit 450 € au total)."
+                            }
+                        ]
+                    },
+                    {
+                        "type": "paragraph",
+                        "class": "justified",
+                        "children": [
+                            {
+                                "type": "text",
+                                "text": "Active ton compte sur "
+                            },
+                            {
+                                "type": "link",
+                                "text": "www.centraliens-nantes.org",
+                                "url": "https://www.centraliens-nantes.org/"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "paragraph",
+                        "class": "justified",
+                        "children": [
+                            {
+                                "type": "text",
+                                "text": "Contact: "
+                            },
+                            {
+                                "type": "link",
+                                "text": "alumni@ec-nantes.fr",
+                                "url": "mailto:alumni@ec-nantes.fr"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
     }
 }

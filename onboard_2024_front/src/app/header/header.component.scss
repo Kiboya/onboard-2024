@@ -4,17 +4,22 @@
 $header-height: 64px;
 $sidenav-width: 80px;
 $sidenav-expanded-width: 300px;
-$padding-small: 12px;
-$padding-medium: 16px;
+$gap-small: 12px;
+$gap-medium: 16px;
+$gap-large: 24px;
 $transition-duration: 0.3s;
-$background-color: var(--app-background-color);
+$background-color: var(--sys-surface-container-low);
 
 mat-toolbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: inherit;
   height: $header-height;
+  background-color: $background-color;
+
+  &.login {
+    background-color: var(--sys-background);
+  }
 }
 
 .header-controls {
@@ -23,13 +28,12 @@ mat-toolbar {
 }
 
 .theme-toggle-button {
-  background-color: transparent;
   border: none;
   cursor: pointer;
 }
 
 .language-switcher {
-  margin-right: $padding-small;
+  margin-right: $gap-small;
 }
 
 .spacer {
@@ -37,14 +41,13 @@ mat-toolbar {
 }
 
 .menu-button {
-  background-color: transparent;
   border: none;
   cursor: pointer;
   margin-left: 4px;
 }
 
 .menu-button mat-icon-button {
-  padding: 0 $padding-medium;
+  padding: 0 $gap-medium;
 }
 
 .logo-container app-logo {
@@ -53,30 +56,27 @@ mat-toolbar {
   height: auto;
   width: 130px;
   align-items: center;
-  padding: 0px 12px;
-}
-
-
-mat-sidenav-container {
-  background-color: inherit;
+  padding: 0px $gap-small;
 }
 
 mat-sidenav {
   border-radius: 0;
-  background-color: $background-color;
   transition: width $transition-duration ease;
   width: $sidenav-width;
+  background-color: $background-color;
 
   &.sidenav-expanded {
     width: $sidenav-expanded-width;
   }
 
-  padding: 24px $padding-small 16px $padding-small;
+  padding: $gap-large $gap-small $gap-medium $gap-small;
 }
 
 mat-sidenav-content {
   transition: margin-left $transition-duration ease;
   margin-left: $sidenav-width;
+  background-color: $background-color;
+  height: calc(100vh - $header-height);
 
   &.full-margin {
     margin-left: $sidenav-expanded-width;
@@ -85,9 +85,10 @@ mat-sidenav-content {
   &.no-margin {
     margin-left: 0;
     padding-right: 0;
+    background-color: var(--sys-background);
   }
 
-  padding-right: $padding-small;
+  padding-right: $gap-small;
 }
 
 .nav-link {
@@ -101,17 +102,23 @@ mat-sidenav-content {
 }
 
 .icon-text mat-icon {
-  padding-right: $padding-small;
+  padding-right: $gap-small;
   flex-shrink: 0;
 }
 
-.full-width-card {
+.scrollable-card {
   box-shadow: none;
-  overflow-y: auto;
-  height: calc(100vh - 76px);
+  overflow: hidden; 
+  height: calc(100vh - $header-height - $gap-small);
   width: 100%;
 
   &.no-margin {
     height: calc(100vh - $header-height);
+  }
+
+  .scrollable-content {
+    height: 100%;
+    overflow-y: auto;
+    padding: $gap-medium;
   }
 }
