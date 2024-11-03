@@ -114,6 +114,7 @@ mat-sidenav-content {
 
   &.no-margin {
     height: calc(100vh - $header-height);
+    border-radius: 0;
   }
 
   .scrollable-content {

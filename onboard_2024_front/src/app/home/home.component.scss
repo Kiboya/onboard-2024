@@ -2,8 +2,14 @@ $gap-small: 12px;
 $gap-medium: 16px;
 $gap-large: 24px;
 
-.container {
-    padding-bottom: $gap-medium;
+.cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+    @media (max-width: 500px) {
+        grid-template-columns: 1fr;
+    }
+    gap: $gap-medium;
+    justify-items: center;
 }
 
 .warning {
@@ -14,7 +20,7 @@ $gap-large: 24px;
     margin-bottom: 10px;
 }
 
-span{
+span {
     white-space: pre-line;
 }
 
@@ -31,7 +37,7 @@ span{
     text-align: justify;
 }
 
-a{
+a {
     display: inline-block;
     word-spacing: normal;
     color: var(--sys-primary);
@@ -43,10 +49,13 @@ a{
     padding: 10px;
 }
 
+.cards-container mat-card {
+    width: 100%;
+    // max-width: 500px;
+}
+
 mat-card {
     box-shadow: none;
-    max-width: 500px;
-    border-width: 1px;
     background-color: var(--sys-surface-container);
 }
 

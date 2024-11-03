@@ -40,7 +40,9 @@ mat-form-field:has(input:-webkit-autofill) {
 ::-webkit-scrollbar {
   border-radius: 5px;
   width: 10px;
+  height: 10px; 
 }
+
 ::-webkit-scrollbar-track {
   -webkit-box-shadow: none;
   border-radius: 5px;
@@ -50,4 +52,8 @@ mat-form-field:has(input:-webkit-autofill) {
   border-radius: 5px;
   -webkit-box-shadow: none;
   background-color: var(--sys-surface-container-highest);
+}
+
+::-webkit-scrollbar-corner {
+  background-color: var(--sys-background);
 }

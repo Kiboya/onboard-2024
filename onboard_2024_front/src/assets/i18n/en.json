@@ -297,7 +297,6 @@
           },
           {
             "type": "paragraph",
-            "class": "justified",
             "children": [
               {
                 "type": "link",
@@ -312,7 +311,6 @@
           },
           {
             "type": "paragraph",
-            "class": "justified",
             "children": [
               {
                 "type": "text",
@@ -327,7 +325,6 @@
           },
           {
             "type": "paragraph",
-            "class": "justified",
             "children": [
               {
                 "type": "text",
