@@ -245,7 +245,7 @@
                         "children": [
                             {
                                 "type": "text",
-                                "text": "Centrale Nantes Alumni, c’est l’asso qui t’ouvre les portes du Réseau Centralien."
+                                "text": "Centrale Nantes Alumni, c'est l'asso qui t'ouvre les portes du Réseau Centralien."
                             }
                         ]
                     },
@@ -255,7 +255,7 @@
                         "children": [
                             {
                                 "type": "text",
-                                "text": "Adhérer à CNA, c’est entrer dans une communauté de 20 000 Centraliens de Nantes, 120 000 alumni Centraliens et Supelec dans 80 pays"
+                                "text": "Adhérer à CNA, c'est entrer dans une communauté de 20 000 Centraliens de Nantes, 120 000 alumni Centraliens et Supelec dans 80 pays"
                             },
                             {
                                 "type": "link",
@@ -291,13 +291,12 @@
                             },
                             {
                                 "type": "text",
-                                "text": " ... ou tout simplement pour mûrir ta réflexion sur ton projet professionnel et personnel dans un esprit de solidarité, de bienveillance et d’excellence."
+                                "text": " ... ou tout simplement pour mûrir ta réflexion sur ton projet professionnel et personnel dans un esprit de solidarité, de bienveillance et d'excellence."
                             }
                         ]
                     },
                     {
                         "type": "paragraph",
-                        "class": "justified",
                         "children": [
                             {
                                 "type": "link",
@@ -312,7 +311,6 @@
                     },
                     {
                         "type": "paragraph",
-                        "class": "justified",
                         "children": [
                             {
                                 "type": "text",
@@ -327,7 +325,6 @@
                     },
                     {
                         "type": "paragraph",
-                        "class": "justified",
                         "children": [
                             {
                                 "type": "text",
