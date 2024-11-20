@@ -1,68 +1,77 @@
-$gap-small: 12px;
-$gap-medium: 16px;
-$gap-large: 24px;
+// home.component.scss
 
+@use '../../styles/variables' as *;
+
+// **************************
+// Layout Styles
+// **************************
 .cards-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
-    @media (max-width: 500px) {
-        grid-template-columns: 1fr;
-    }
-    gap: $gap-medium;
-    justify-items: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  gap: $gap-medium;
+  justify-items: center;
+
+  @media (max-width: 500px) {
+    grid-template-columns: 1fr;
+  }
+
+  mat-card {
+    width: 100%;
+  }
 }
 
+// **************************
+// Card Styles
+// **************************
+mat-card {
+  box-shadow: none;
+  background-color: var(--sys-surface-container);
+
+  mat-card-title {
+    padding: $gap-small;
+  }
+
+  mat-card-content {
+    padding: $gap-small;
+  }
+}
+
+// **************************
+// Utility Classes
+// **************************
 .warning {
-    color: var(--sys-on-error-container);
-    background-color: var(--sys-error-container);
-    border-radius: 7px;
-    padding: 5px;
-    margin-bottom: 10px;
+  color: var(--sys-on-error-container);
+  background-color: var(--sys-error-container);
+  border-radius: 7px;
+  padding: 5px;
+  margin-bottom: 10px;
 }
 
 span {
-    white-space: pre-line;
+  white-space: pre-line;
 }
 
 .centered {
-    display: block;
-    text-align: center;
-    margin-left: auto;
-    margin-right: auto;
-    width: fit-content;
-    white-space: pre-line;
+  display: block;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  width: fit-content;
+  white-space: pre-line;
 }
 
 .justified {
-    text-align: justify;
+  text-align: justify;
 }
 
 a {
-    display: inline-block;
-    word-spacing: normal;
-    color: var(--sys-primary);
+  display: inline-block;
+  word-spacing: normal;
+  color: var(--sys-primary);
 }
 
 .card1-strong {
-    color: var(--sys-surface-tint);
-    font-size: 18px;
-    padding: 10px;
-}
-
-.cards-container mat-card {
-    width: 100%;
-    // max-width: 500px;
-}
-
-mat-card {
-    box-shadow: none;
-    background-color: var(--sys-surface-container);
-}
-
-mat-card-title {
-    padding: $gap-small;
-}
-
-mat-card-content {
-    padding: $gap-small;
+  color: var(--sys-surface-tint);
+  font-size: 18px;
+  padding: 10px;
 }

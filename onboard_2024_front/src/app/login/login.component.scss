@@ -1,4 +1,8 @@
 /* login.component.scss */
+
+// **************************
+// Layout Styles
+// **************************
 .login-container {
   display: flex;
   flex-direction: column;
@@ -13,6 +17,9 @@
     margin: 0 auto;
   }
 
+  // **************************
+  // Logo Styles
+  // **************************
   .login-logo {
     width: 300px;
     height: auto;
@@ -23,6 +30,9 @@
     }
   }
 
+  // **************************
+  // Login Card Styles
+  // **************************
   .login-card {
     display: flex;
     flex-direction: column;
@@ -33,11 +43,17 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     max-width: 400px;
 
+    // **************************
+    // Form Fields Styles
+    // **************************
     .login-form-field {
       width: 100%;
       margin-bottom: 10px;
     }
 
+    // **************************
+    // Buttons Styles
+    // **************************
     .buttons {
       display: flex;
       flex-direction: column;

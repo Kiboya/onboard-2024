@@ -1,4 +1,7 @@
 {
+    "header": {
+        "today-planning-button": "Aujourd'hui" 
+    },
     "login": {
         "username": "Nom d'Utilisateur",
         "password": "Mot de Passe",
@@ -24,7 +27,7 @@
                     {
                         "type": "text",
                         "class": "warning centered",
-                        "text": "Jury d'année (MECA A1/A3 - BTP A1/A2/A3 et SEC A1/A2/A3)"
+                        "text": "Fin de la saisie des notes 2 jours ouvrés avant la CPJ"
                     },
                     {
                         "type": "text",
@@ -340,5 +343,8 @@
                 ]
             }
         ]
+    },
+    "planning": {
+
     }
 }

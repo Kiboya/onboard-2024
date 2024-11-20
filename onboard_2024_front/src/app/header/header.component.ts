@@ -1,20 +1,39 @@
-// header.component.ts
-import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
+// Angular Core
+import { Component, OnInit, OnDestroy, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
+// Angular Material Modules
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatIconModule } from '@angular/material/icon';
-import { ThemeService } from '../services/theme.service';
-import { LanguageService } from '../services/language.service';
-import { TranslocoModule, getBrowserLang } from '@ngneat/transloco';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
-import { LogoComponent } from '../logo/logo.component';
 
+// Angular CDK
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+
+// Angular Router
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+
+// Third-Party Libraries
+import { TranslocoModule, TranslocoService, getBrowserLang } from '@ngneat/transloco';
+
+// RxJS Library
+import { Subscription} from 'rxjs';
+
+// Local Services and Components
+import { ThemeService } from '../services/theme.service';
+import { LanguageService } from '../services/language.service';
+import { PlanningService } from '../services/planning.service';
+import { LogoComponent } from '../logo/logo.component';
+import { HorizontalScrollDirective } from '../directives/horizontal-scroll.directive';
+
+
+/**
+ * Enum for the different navigation modes.
+ */
 enum NavMode {
   HIDDEN_RETRACTED,
   HIDDEN_EXPANDED,
@@ -24,6 +43,9 @@ enum NavMode {
   NORMAL_EXPANDED,
 }
 
+/**
+ * Interface for a navigation item in the sidenav.
+ */
 interface NavItem {
   routerLink: string;
   icon: string;
@@ -49,20 +71,29 @@ interface NavItem {
     MatToolbarModule,
     MatSidenavModule,
     MatListModule,
-    MatCardModule
+    MatCardModule,
+    HorizontalScrollDirective
   ],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
+  // ViewChild for the sidenav component.
   @ViewChild('sidenav') sidenav!: MatSidenav;
+
+  // Subscriptions 
+  private subscriptions = new Subscription();
+  
+  // Variables used to manage different elements of the header.
   isDarkTheme = false;
   currentLanguage = 'fr';
   isSidenavExpanded = true;
   backdrop = false;
   previousMouseEnter = false;
-  isLoginPage = false; 
-
+  isLoginPage = false;
+  isPlanningPage = false;
+  currentWeekStart!: Date;
+  weekDays: Date[] = [];
 
   // Defines the navigation items for the sidenav.
   navItems: NavItem[] = [
@@ -74,9 +105,6 @@ export class HeaderComponent implements OnInit {
     { routerLink: '/planning', icon: 'calendar_month', labelKey: 'sidenav.planning' }
   ];
 
-  NavMode = NavMode;
-  private _currentNavMode: NavMode = NavMode.NORMAL_EXPANDED;
-
   // Defines the settings for each navigation mode.
   private navModeSettings = {
     [NavMode.HIDDEN_RETRACTED]: { isExpanded: false, backdrop: true, action: 'close' },
@@ -87,28 +115,13 @@ export class HeaderComponent implements OnInit {
     [NavMode.NORMAL_EXPANDED]: { isExpanded: true, backdrop: false, action: 'open' },
   };
 
-  /**
-   * Constructor for HeaderComponent.
-   * @param {ThemeService} themeService - Service to switch the theme.
-   * @param {LanguageService} languageService - Service to switch the language.
-   * @param {BreakpointObserver} breakpointObserver - Service to observe the screen size.
-   * @param {ChangeDetectorRef} cdr - Manually trigger a change detection for the sidenav.
-   * @param {Router} router - Service to navigate between routes.
-   * @param {ActivatedRoute} activatedRoute - Get the current route.
-   */
-  constructor(
-    private themeService: ThemeService,
-    private languageService: LanguageService,
-    private breakpointObserver: BreakpointObserver,
-    private cdr: ChangeDetectorRef,
-    private router: Router,
-    private activatedRoute: ActivatedRoute
-  ) { }
+  NavMode = NavMode;
+  private _currentNavMode: NavMode = NavMode.NORMAL_EXPANDED;
 
   /**
- * Gets the current navigation mode.
- * @returns {NavMode} The current navigation mode.
- */
+  * Gets the current navigation mode.
+  * @returns {NavMode} The current navigation mode.
+  */
   get currentNavMode(): NavMode {
     return this._currentNavMode;
   }
@@ -138,13 +151,42 @@ export class HeaderComponent implements OnInit {
   }
 
   /**
+   * Constructor for HeaderComponent.
+   * @param {ThemeService} themeService - Service to switch the theme.
+   * @param {LanguageService} languageService - Service to switch the language.
+   * @param {BreakpointObserver} breakpointObserver - Service to observe the screen size.
+   * @param {ChangeDetectorRef} cdr - Manually trigger a change detection for the sidenav.
+   * @param {Router} router - Service to navigate between routes.
+   * @param {ActivatedRoute} activatedRoute - Get the current route.
+   * @param {TranslocoService} translocoService - Service to switch the language.
+   */
+  constructor(
+    private themeService: ThemeService,
+    private languageService: LanguageService,
+    private translocoService: TranslocoService,
+    private breakpointObserver: BreakpointObserver,
+    private cdr: ChangeDetectorRef,
+    private router: Router,
+    private planningService: PlanningService
+  ) {
+    // Check if the route is the login page or the planning page
+    const routerSub = this.router.events.subscribe(() => {
+      const currentRoute = this.router.url;
+      this.isLoginPage = currentRoute.includes('/login');
+      this.isPlanningPage = currentRoute.includes('/planning');
+    });
+    this.subscriptions.add(routerSub);
+  }
+
+  /**
    * Initializes the component by observing the theme, screen size, and loading the language.
    */
   ngOnInit(): void {
     // Observes the theme and updates the isDarkTheme variable accordingly.
-    this.themeService.isDarkTheme$.subscribe(isDarkTheme => {
+    const themeSub = this.themeService.isDarkTheme$.subscribe(isDarkTheme => {
       this.isDarkTheme = isDarkTheme;
     });
+    this.subscriptions.add(themeSub);
 
     // Observes the screen size and sets the navigation mode accordingly.
     this.breakpointObserver.observe([Breakpoints.Medium, Breakpoints.XSmall]).subscribe(result => {
@@ -163,11 +205,48 @@ export class HeaderComponent implements OnInit {
     this.currentLanguage = storedLang || browserLang;
     this.languageService.switchLanguage(this.currentLanguage);
 
-    // Check if the route is the login page
-    this.router.events.subscribe(() => {
-      const currentRoute = this.router.url;
-      this.isLoginPage = currentRoute.includes('/login');
+    const langSub = this.translocoService.langChanges$.subscribe(lang => {
+      this.currentLanguage = lang;
     });
+    this.subscriptions.add(langSub);
+
+    const planningSub = this.planningService.currentWeekStart$.subscribe(date => {
+      this.currentWeekStart = date;
+      this.weekDays = Array.from({ length: 6 }, (_, i) => {
+        const day = new Date(date);
+        day.setDate(date.getDate() + i);
+        return day;
+      });
+    });
+    this.subscriptions.add(planningSub);
+  }
+
+  /**
+   * Unsubscribes from all subscriptions when the component is destroyed.
+   */
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
+  }
+
+  /**
+   * Navigates to the previous week.
+   */
+  previousWeek(): void {
+    this.planningService.previousWeek();
+  }
+
+  /**
+   * Navigates to the next week.
+   */
+  nextWeek(): void {
+    this.planningService.nextWeek();
+  }
+
+  /**
+   * Navigates to the current week.
+   */
+  goToToday(): void {
+    this.planningService.goToToday();
   }
 
   /**
@@ -194,6 +273,7 @@ export class HeaderComponent implements OnInit {
     } else {
       this.currentNavMode++;
     }
+    console.log(this.currentNavMode);
   }
 
   /**
@@ -220,18 +300,20 @@ export class HeaderComponent implements OnInit {
    * Handles changes to the navigation mode by updating the sidenav state and triggering change detection.
    * @param {NavMode} newNavMode - The new navigation mode.
    */
-  private onNavModeChange(newNavMode: NavMode = this._currentNavMode): void {
+  private onNavModeChange(newNavMode: NavMode): void {
     const settings = this.navModeSettings[newNavMode];
-    if (settings) {
-      this.isSidenavExpanded = settings.isExpanded;
-      this.backdrop = settings.backdrop;
-      if (this.sidenav) {
-        const action = settings.action as 'open' | 'close';
-        this.sidenav[action]();
-      }
-      this.cdr.detectChanges();
-    } else {
+    if (!settings) {
       console.error('Unknown NavMode:', newNavMode);
+      return;
     }
+  
+    this.isSidenavExpanded = settings.isExpanded;
+    this.backdrop = settings.backdrop;
+  
+    if (this.sidenav) {
+      settings.action === 'open' ? this.sidenav.open() : this.sidenav.close();
+    }
+  
+    this.cdr.detectChanges();
   }
 }
