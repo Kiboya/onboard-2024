@@ -1,5 +1,6 @@
 /* styles.scss */
 @use './m3-theme.scss' as *;
+@use './variables.scss' as *;
 @use '@angular/material' as mat;
 
 :root {

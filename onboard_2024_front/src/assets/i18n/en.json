@@ -1,4 +1,7 @@
 {
+  "header": {
+    "today-planning-button": "Today"
+  },
   "login": {
     "username": "Username",
     "password": "Password",

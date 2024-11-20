@@ -37,8 +37,9 @@
               }
             ],
             "styles": [
-              "src/styles.scss",
-              "src/m3-theme.scss"
+              "src/styles/styles.scss",
+              "src/styles/m3-theme.scss",
+              "./node_modules/@angular/cdk/overlay-prebuilt.css"
             ],
             "scripts": []
           },
@@ -108,8 +109,9 @@
               }
             ],
             "styles": [
-              "src/styles.scss",
-              "src/m3-theme.scss"
+              "src/styles/styles.scss",
+              "src/styles/m3-theme.scss",
+              "./node_modules/@angular/cdk/overlay-prebuilt.css"
             ],
             "scripts": []
           }

@@ -1,0 +1,149 @@
+// planning.component.scss
+
+@use '@angular/material' as mat;
+@use '../../styles/variables' as *;
+
+// **************************
+// Layout Styles
+// **************************
+.weekly-calendar {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  // **************************
+  // Navigation Styles
+  // **************************
+  .navigation {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+
+    .button_today {
+      margin: 0 8px;
+    }
+
+    .current-week {
+      margin-left: auto;
+      font-weight: bold;
+    }
+  }
+
+  // **************************
+  // Calendar Grid Styles
+  // **************************
+  .calendar-grid {
+    flex: 1;
+    overflow: auto;
+    display: grid;
+    grid-template-columns: 50px repeat(6, 1fr);
+    grid-template-rows: auto repeat(13, minmax(60px, 1fr));
+    position: relative;
+
+    // **************************
+    // Header Cell Styles
+    // **************************
+    .header-cell {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      background-color: var(--sys-surface);
+      text-align: center;
+      padding: 8px;
+    }
+
+    // **************************
+    // Time Label Styles
+    // **************************
+    .time-label {
+      position: sticky;
+      left: 0;
+      z-index: 2;
+      background-color: var(--sys-surface);
+      text-align: right;
+      padding-right: 12px;
+      font-size: 12px;
+    }
+
+    // **************************
+    // Day Header Styles
+    // **************************
+    .day-header {
+      width: min-content;
+      justify-self: center;
+      display: flex;
+      flex-direction: column;
+      text-transform: uppercase;
+    }
+
+    // **************************
+    // Day Column Styles
+    // **************************
+    .day-column {
+      position: relative;
+      border-top: 1px solid var(--sys-outline-variant);
+      border-right: 1px solid var(--sys-outline-variant);
+
+      &.first-row {
+        border-top: none;
+      }
+
+      &.last-column {
+        border-right: none;
+      }
+    }
+
+    // **************************
+    // Event Styles
+    // **************************
+    .event {
+      position: absolute;
+      left: 2px;
+      right: 2px;
+      background-color: var(--sys-primary-container);
+      padding: 5px;
+      font-size: 12px;
+      border-radius: 5px;
+      z-index: 1;
+      box-shadow: none;
+      cursor: pointer;
+    }
+  }
+}
+
+// **************************
+// Modal Styles
+// **************************
+mat-dialog-container {
+  display: flex;
+  flex-direction: column;
+}
+
+mat-dialog-content {
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  width: 100%;
+}
+
+mat-tab-group {
+  margin-top: 16px;
+  width: 100%;
+  flex: 1 1 auto;
+  min-height: 0;
+  height: 150px;
+}
+
+.tab {
+  padding-top: 16px;
+}
+
+ul {
+  padding-left: 16px;
+  margin: 0;
+}
+
+mat-dialog-actions {
+  margin-top: 16px;
+}

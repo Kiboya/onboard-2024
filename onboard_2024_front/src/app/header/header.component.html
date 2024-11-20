@@ -1,14 +1,36 @@
 <!-- header.component.html -->
-<mat-toolbar [class.login]="isLoginPage">
-  <!-- Toolbar content -->
+
+<!-- Toolbar content -->
+<mat-toolbar [class.login]="isLoginPage" appHorizontalScroll>
+  <!-- Navigation Controls -->
   <button *ngIf="currentNavMode < NavMode.NORMAL_RETRACTED && !isLoginPage" mat-icon-button class="menu-button"
     (click)="toggleSidenav()">
     <mat-icon class="material-symbols-rounded">menu</mat-icon>
   </button>
+  <!-- Logo -->
   <div *ngIf="!isLoginPage" class="logo-container">
     <a routerLink="/home">
       <app-logo [isDarkTheme]="isDarkTheme" [size]="'medium'"></app-logo>
     </a>
+  </div>
+  <!-- Planning Navigation Controls -->
+  <div *ngIf="isPlanningPage" class="planning-navigation">
+    <button mat-icon-button (click)="previousWeek()">
+      <mat-icon class="material-symbols-rounded">chevron_left</mat-icon>
+    </button>
+    <button mat-stroked-button (click)="goToToday()" class="button_today">
+      {{ 'header.today-planning-button' | transloco }}
+    </button>
+    <button mat-icon-button (click)="nextWeek()">
+      <mat-icon class="material-symbols-rounded">chevron_right</mat-icon>
+    </button>
+    <span class="current-week">
+      {{ currentWeekStart | date: 'MMM dd' : undefined : currentLanguage}} -
+      {{
+      weekDays[weekDays.length - 1] | date: currentWeekStart.getMonth() === weekDays[weekDays.length - 1].getMonth() ?
+      'dd, yyyy' : 'MMM dd, yyyy' : undefined : currentLanguage
+      }}
+    </span>
   </div>
   <span class="spacer"></span>
   <div class="header-controls">
@@ -27,6 +49,7 @@
   </div>
 </mat-toolbar>
 
+<!-- Sidenav content -->
 <mat-sidenav-container *ngIf="!isLoginPage" (backdropClick)="toggleSidenav()" [hasBackdrop]="backdrop">
   <mat-sidenav mode="over" (mouseenter)="onSidenavMouseEnter()" (mouseleave)="onSidenavMouseLeave()" class="sidenav"
     [class.sidenav-expanded]="isSidenavExpanded" [opened]="currentNavMode != NavMode.HIDDEN_RETRACTED">
@@ -50,6 +73,7 @@
   </mat-sidenav-content>
 </mat-sidenav-container>
 
+<!-- Don't display sidenav for login page -->
 <ng-container *ngIf="isLoginPage">
   <router-outlet></router-outlet>
 </ng-container>

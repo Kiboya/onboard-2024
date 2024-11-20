@@ -1,8 +1,17 @@
-import { CommonModule } from '@angular/common';
+
+// Angular Core
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+// Angular Material Modules
 import { MatCardModule } from '@angular/material/card';
+
+// Third-Party Libraries
 import { TranslocoModule, TranslocoService } from '@ngneat/transloco';
 
+/**
+ * Interface for a content node to be displayed on a card.
+ */
 interface ContentNode {
   type: 'text' | 'link' | 'list' | 'paragraph' | 'container';
   text?: string;
@@ -11,156 +20,62 @@ interface ContentNode {
   children?: ContentNode[];
 }
 
+/**
+ * Interface for a title to be displayed on a card.
+ */
 interface Title {
   text: string;
   class?: string;
 }
 
+/**
+ * Interface for a card to be displayed on the home page.
+ */
 interface Card {
   title: Title;
   content: ContentNode[];
   class?: string;
 }
 
+/**
+ * @fileoverview
+ * HomeComponent is responsible for rendering the home page of the application.
+ * It displays a collection of cards with different content nodes such as text, links, and lists.
+ */
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [
-    MatCardModule,
     CommonModule,
+    MatCardModule,
     TranslocoModule,
   ],
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss'] // Fixed 'styleUrls' typo
+  styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+
+  /**
+   * Array of cards to be displayed on the home page.
+   */
   cards: Card[] = [];
 
+  /**
+   * Constructor for HomeComponent.
+   * 
+   * @param translocoService - Service for handling translations.
+   */
   constructor(private translocoService: TranslocoService) {}
 
-  ngOnInit() {
+  /**
+   * Lifecycle hook that is called after data-bound properties of a directive are initialized.
+   * Fetches the cards from the translation service and assigns them to the `cards` array.
+   */
+  ngOnInit(): void {
     this.translocoService
       .selectTranslateObject<Card[]>('home.cards')
       .subscribe((cards) => {
         this.cards = cards;
-        console.log(this.cards);
       });
   }
-
-  
-  // cards: Card[] = [
-  //   {
-  //     title: {
-  //       text: 'home.card1.title',
-  //       class: 'card1-title'
-  //     },
-  //     content: [
-  //       {
-  //         type: 'text',
-  //         class: 'warning centered',
-  //         text: 'home.card1.node1'
-  //       },
-  //       {
-  //         type: 'text',
-  //         class: 'centered card1-strong',
-  //         text: 'home.card1.node2'
-  //       },
-  //       {
-  //         type: 'text',
-  //         class: 'centered',
-  //         text: 'home.card1.node3'
-  //       },
-  //       {
-  //         type: 'text',
-  //         class: 'centered card1-strong',
-  //         text: 'home.card1.node4'
-  //       },
-  //       {
-  //         type: 'text',
-  //         class: 'centered',
-  //         text: 'home.card1.node5'
-  //       },
-  //       {
-  //         type: 'text',
-  //         class: 'centered card1-strong',
-  //         text: 'home.card1.node6'
-  //       },
-  //       {
-  //         type: 'text',
-  //         class: 'centered',
-  //         text: 'home.card1.node7'
-  //       },
-  //       {
-  //         type: 'text',
-  //         class: 'centered card1-strong',
-  //         text: 'home.card1.node8'
-  //       },
-  //       {
-  //         type: 'text',
-  //         class: 'centered',
-  //         text: 'home.card1.node9'
-  //       }
-  //     ],
-  //     class: 'card1'
-  //   },
-  //   {
-  //     title: {
-  //       text: 'home.card2.title',
-  //       class: 'card2-title'
-  //     },
-  //     content: [
-  //       {
-  //         type: 'paragraph',
-  //         class: 'justified',
-  //         children: [
-  //           {
-  //             type: 'text',
-  //             text: 'home.card2.node1'
-  //           }
-  //         ],
-  //       },
-  //       {
-  //         type: 'paragraph',
-  //         class: 'justified',
-  //         children: [
-  //           {
-  //             type: 'text',
-  //             text: 'home.card2.node2'
-  //           }
-  //         ],
-  //       },
-  //       {
-  //         type: 'paragraph',
-  //         class: 'justified',
-  //         children: [
-  //           {
-  //             type: 'text',
-  //             text: 'home.card2.node3'
-  //           }
-  //         ],
-  //       },
-  //       {
-  //         type: 'paragraph',
-  //         class: 'justified',
-  //         children: [
-  //           {
-  //             type: 'text',
-  //             text: 'home.card2.node4'
-  //           },
-  //           {
-  //             type: 'link',
-  //             class: 'no-stretch',
-  //             text: 'home.card2.node5',
-  //             url: 'mailto:dpo@ec-nantes.fr'
-  //           },
-  //           {
-  //             type: 'text',
-  //             text: 'home.card2.node6'
-  //           }
-  //         ],
-  //       },
-  //     ],
-  //     class: 'card2'
-  //   },
-  // ];
 }

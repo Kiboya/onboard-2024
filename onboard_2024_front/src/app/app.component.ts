@@ -2,6 +2,10 @@
 import { Component, OnInit } from '@angular/core';
 import { HeaderComponent } from './header/header.component';
 
+/**
+ * @fileoverview AppComponent is the root component of the application.
+ * It is responsible for rendering the header and the main content of the application.
+ */
 @Component({
   selector: 'app-root',
   standalone: true,

@@ -1,0 +1,72 @@
+<!-- planning.component.html -->
+<div class="weekly-calendar">
+
+    <!-- Calendar Grid -->
+    <div class="calendar-grid">
+        <!-- Header Row -->
+        <div class="time-label header-cell"></div>
+        <div class="header-cell" *ngFor="let day of weekDays">
+            <div class="day-header">
+                <span>{{ day | date: 'EEE' : undefined : currentLanguage }}</span>
+                <span>{{ day | date: 'dd' : undefined : currentLanguage }}</span>
+            </div>
+        </div>
+
+        <!-- Time Slots -->
+        <ng-container *ngFor="let hour of hours; let hourIndex = index">
+            <!-- Time Labels -->
+            <div class="time-label">
+                {{ hour }}:00
+            </div>
+            <!-- Day Columns -->
+            <div class="day-column" *ngFor="let day of weekDays; let dayIndex = index" [ngClass]="{
+                'first-row': hourIndex === 0,
+                'last-column': dayIndex === weekDays.length - 1
+              }">
+                <!-- Events -->
+                <ng-container *ngIf="eventsByDayAndHour[day.toDateString()] && eventsByDayAndHour[day.toDateString()][hour]">
+                    <ng-container *ngFor="let event of eventsByDayAndHour[day.toDateString()][hour]">
+                        <mat-card class="event" 
+                            [style.top.%]="getEventPosition(event).top"
+                            [style.height.%]="getEventPosition(event).height" 
+                            (click)="onEventClick(event)">
+                            {{ event.title }}
+                        </mat-card>
+                    </ng-container>
+                </ng-container>
+            </div>
+        </ng-container>
+    </div>
+</div>
+
+<!-- Event Details Modal -->
+<ng-template #eventDetailsModal let-data>
+    <h2 mat-dialog-title>{{ data.course.label }}</h2>
+    <mat-dialog-content>
+        <p><strong>Module:</strong> {{ data.course.moduleName }}</p>
+        <p><strong>Course Code:</strong> {{ data.course.code }}</p>
+        <p><strong>Group:</strong> {{ data.group.label }} ({{ data.group.code }})</p>
+        <p><strong>Type:</strong> {{ data.classType }}</p>
+        <p><strong>Room:</strong> {{ data.room }}</p>
+
+        <mat-tab-group [dynamicHeight]='false' fitInkBarToContent>
+            <mat-tab label="Instructors">
+                <div class="tab">
+                    <ul>
+                        <li *ngFor="let instructor of data.instructors">{{ instructor }}</li>
+                    </ul>
+                </div>
+            </mat-tab>
+            <mat-tab label="Learners">
+                <div class="tab">
+                    <ul>
+                        <li *ngFor="let learner of data.learners">{{ learner }}</li>
+                    </ul>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <button mat-button mat-dialog-close>Close</button>
+    </mat-dialog-actions>
+</ng-template>

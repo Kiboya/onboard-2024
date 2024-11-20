@@ -1,75 +1,115 @@
 // header.component.scss
 @use '@angular/material' as mat;
+@use '../../styles/variables' as *;
 
+
+// **************************
+// Variables
+// **************************
 $header-height: 64px;
 $sidenav-width: 80px;
 $sidenav-expanded-width: 300px;
-$gap-small: 12px;
-$gap-medium: 16px;
-$gap-large: 24px;
 $transition-duration: 0.3s;
 $background-color: var(--sys-surface-container-low);
 
+// **************************
+// Toolbar Styles
+// **************************
 mat-toolbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   height: $header-height;
   background-color: $background-color;
+  overflow-x: scroll;
+  scrollbar-width: none;
 
   &.login {
     background-color: var(--sys-background);
   }
+
+  // **************************
+  // Menu Button Styles
+  // **************************
+  .menu-button {
+    border: none;
+    cursor: pointer;
+    margin-left: 4px;
+
+    mat-icon-button {
+      padding: 0 $gap-medium;
+    }
+  }
+
+  // **************************
+  // Logo Container Styles
+  // **************************
+  .logo-container {
+    app-logo {
+      cursor: pointer;
+      display: flex;
+      height: auto;
+      width: 130px;
+      align-items: center;
+      padding: 0px $gap-small;
+    }
+  }
+
+  // **************************
+  // Planning Navigation Styles
+  // **************************
+  .planning-navigation {
+    display: flex;
+    align-items: center;
+
+    .current-week {
+      margin: 0 $gap-small;
+      font-weight: bold;
+    }
+
+    .button_today {
+      margin: 0 8px;
+    }
+  }
+
+  // **************************
+  // Spacer Styles
+  // **************************
+  .spacer {
+    flex: 1 1 auto;
+  }
+
+  // **************************
+  // Header Controls Styles
+  // **************************
+  .header-controls {
+    display: flex;
+    align-items: center;
+
+    .language-switcher {
+      margin: 0px $gap-small;
+    }
+
+    .theme-toggle-button {
+      border: none;
+      cursor: pointer;
+    }
+  }
 }
 
-.header-controls {
-  display: flex;
-  align-items: center;
-}
-
-.theme-toggle-button {
-  border: none;
-  cursor: pointer;
-}
-
-.language-switcher {
-  margin-right: $gap-small;
-}
-
-.spacer {
-  flex: 1 1 auto;
-}
-
-.menu-button {
-  border: none;
-  cursor: pointer;
-  margin-left: 4px;
-}
-
-.menu-button mat-icon-button {
-  padding: 0 $gap-medium;
-}
-
-.logo-container app-logo {
-  cursor: pointer;
-  display: flex;
-  height: auto;
-  width: 130px;
-  align-items: center;
-  padding: 0px $gap-small;
-}
-
+// **************************
+// Sidenav Styles
+// **************************
 mat-sidenav {
   border-radius: 0;
   transition: width $transition-duration ease;
   width: $sidenav-width;
   background-color: $background-color;
+  padding: $gap-large $gap-small $gap-medium $gap-small;
 
   &.sidenav-expanded {
     width: $sidenav-expanded-width;
   }
-
-  padding: $gap-large $gap-small $gap-medium $gap-small;
 }
 
 mat-sidenav-content {
@@ -77,6 +117,7 @@ mat-sidenav-content {
   margin-left: $sidenav-width;
   background-color: $background-color;
   height: calc(100vh - $header-height);
+  padding-right: $gap-small;
 
   &.full-margin {
     margin-left: $sidenav-expanded-width;
@@ -88,38 +129,40 @@ mat-sidenav-content {
     background-color: var(--sys-background);
   }
 
-  padding-right: $gap-small;
+  .scrollable-card {
+    box-shadow: none;
+    overflow: hidden; 
+    height: calc(100vh - $header-height - $gap-small);
+    width: 100%;
+    background-color: var(--sys-surface);
+
+    &.no-margin {
+      height: calc(100vh - $header-height);
+      border-radius: 0;
+    }
+
+    .scrollable-content {
+      height: 100%;
+      overflow-y: auto;
+      padding: $gap-medium;
+    }
+  }
 }
 
+// **************************
+// Navigation Link Styles
+// **************************
 .nav-link {
   cursor: pointer;
   width: 100%;
-}
 
-.icon-text {
-  display: flex;
-  align-items: center;
-}
+  .icon-text {
+    display: flex;
+    align-items: center;
 
-.icon-text mat-icon {
-  padding-right: $gap-small;
-  flex-shrink: 0;
-}
-
-.scrollable-card {
-  box-shadow: none;
-  overflow: hidden; 
-  height: calc(100vh - $header-height - $gap-small);
-  width: 100%;
-
-  &.no-margin {
-    height: calc(100vh - $header-height);
-    border-radius: 0;
-  }
-
-  .scrollable-content {
-    height: 100%;
-    overflow-y: auto;
-    padding: $gap-medium;
+    mat-icon {
+      padding-right: $gap-small;
+      flex-shrink: 0;
+    }
   }
 }
