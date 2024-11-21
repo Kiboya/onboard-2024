@@ -2,6 +2,8 @@
 // Angular Core
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 // Angular Material Modules
 import { MatCardModule } from '@angular/material/card';
@@ -16,6 +18,10 @@ import { TranslocoModule } from '@ngneat/transloco';
 // Local Services and Components
 import { ThemeService } from '../services/theme.service';
 import { LogoComponent } from '../logo/logo.component';
+import { AuthService } from '../services/auth.service';
+
+// RxJS
+import { tap } from 'rxjs';
 
 /**
  * @fileoverview
@@ -23,40 +29,49 @@ import { LogoComponent } from '../logo/logo.component';
  * It includes a form for the user to input their credentials and log in.
  */
 @Component({
-    selector: 'app-login',
-    imports: [
-        CommonModule,
-        MatCardModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatButtonModule,
-        MatIconModule,
-        LogoComponent,
-        TranslocoModule,
-    ],
-    templateUrl: './login.component.html',
-    styleUrls: ['./login.component.scss']
+  selector: 'app-login',
+  imports: [
+    CommonModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatIconModule,
+    LogoComponent,
+    TranslocoModule,
+    ReactiveFormsModule
+  ],
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss']
 })
+
 export class LoginComponent implements OnInit {
   /**
    * Indicates whether the dark theme is active.
    */
   isDarkTheme: boolean = false;
 
-  /**
-   * Constructor for LoginComponent.
-   * 
-   * @param themeService - Service for handling theme changes.
-   */
   constructor(private themeService: ThemeService) { }
 
-  /**
-   * Lifecycle hook that is called after data-bound properties are initialized.
-   * Subscribes to the theme service to get the current theme.
-   */
   ngOnInit(): void {
     this.themeService.isDarkTheme$.subscribe((isDarkTheme: boolean) => {
       this.isDarkTheme = isDarkTheme;
     });
+  }
+  public connexion(): void {
+    if (this.loginForm.valid) {
+      const { login, password } = this.loginForm.value;
+      this.authService
+        .login(login, password)
+        .pipe(
+          tap((res) => {
+            this.authService.saveToken(res.token.access_token);
+            this.router.navigate(['/login']).then(() => {
+              window.location.reload();
+            });
+          })
+        )
+        .subscribe();
+    }
   }
 }
