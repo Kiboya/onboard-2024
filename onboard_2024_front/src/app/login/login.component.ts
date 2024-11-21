@@ -16,47 +16,75 @@ import { TranslocoModule } from '@ngneat/transloco';
 // Local Services and Components
 import { ThemeService } from '../services/theme.service';
 import { LogoComponent } from '../logo/logo.component';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
+import { tap } from 'rxjs';
 
-/**
- * @fileoverview
- * LoginComponent is responsible for rendering the login page of the application.
- * It includes a form for the user to input their credentials and log in.
- */
+
 @Component({
-    selector: 'app-login',
-    imports: [
-        CommonModule,
-        MatCardModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatButtonModule,
-        MatIconModule,
-        LogoComponent,
-        TranslocoModule,
-    ],
-    templateUrl: './login.component.html',
-    styleUrls: ['./login.component.scss']
+  selector: 'app-login',
+  standalone: true,
+  imports: [
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    CommonModule,
+    LogoComponent,
+    ReactiveFormsModule
+  ],
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss']
 })
+
 export class LoginComponent implements OnInit {
   /**
    * Indicates whether the dark theme is active.
    */
   isDarkTheme: boolean = false;
 
-  /**
+  public loginForm: FormGroup;
+    /**
    * Constructor for LoginComponent.
    * 
    * @param themeService - Service for handling theme changes.
    */
-  constructor(private themeService: ThemeService) { }
-
-  /**
+  public constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router,
+    private themeService: ThemeService)
+  {
+    this.loginForm = this.fb.group({
+      login: ['', Validators.required],
+      password: ['', Validators.required],
+    });
+  }
+  
+    /**
    * Lifecycle hook that is called after data-bound properties are initialized.
    * Subscribes to the theme service to get the current theme.
    */
   ngOnInit(): void {
     this.themeService.isDarkTheme$.subscribe((isDarkTheme: boolean) => {
-      this.isDarkTheme = isDarkTheme;
+      this.isDarkTheme = isDarkTheme;    
     });
+  }
+  public connexion(): void {
+    if (this.loginForm.valid) {
+      const { login, password } = this.loginForm.value;
+      this.authService
+        .login(login, password)
+        .pipe(
+          tap((res) => {
+            this.authService.saveToken(res.token.access_token);
+            this.router.navigate(['/login']).then(() => {
+              window.location.reload();
+            });
+          })
+        )
+        .subscribe();
+    }
   }
 }
