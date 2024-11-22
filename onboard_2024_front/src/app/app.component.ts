@@ -20,34 +20,31 @@ import { LoginComponent } from './login/login.component';
 import { LogoComponent } from './logo/logo.component';
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [
-    RouterOutlet,
-    CommonModule,
-
-    // Custom components
-    LoginComponent,
-    LogoComponent,
-
-    // Material modules
-    MatToolbarModule,
-    MatCardModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    MatCheckboxModule,
-    MatRadioModule,
-    MatProgressBarModule,
-    MatProgressSpinnerModule,
-    MatTableModule,
-    MatExpansionModule,
-    MatIconModule,
-    MatButtonToggleModule,
-  ],
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+    selector: 'app-root',
+    imports: [
+        RouterOutlet,
+        CommonModule,
+        // Custom components
+        LoginComponent,
+        LogoComponent,
+        // Material modules
+        MatToolbarModule,
+        MatCardModule,
+        MatButtonModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatSelectModule,
+        MatCheckboxModule,
+        MatRadioModule,
+        MatProgressBarModule,
+        MatProgressSpinnerModule,
+        MatTableModule,
+        MatExpansionModule,
+        MatIconModule,
+        MatButtonToggleModule,
+    ],
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
   title = 'onboard_2024_front';
