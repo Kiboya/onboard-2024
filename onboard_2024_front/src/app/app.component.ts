@@ -7,13 +7,12 @@ import { HeaderComponent } from './header/header.component';
  * It is responsible for rendering the header and the main content of the application.
  */
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [
-    HeaderComponent,
-  ],
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+    selector: 'app-root',
+    imports: [
+        HeaderComponent,
+    ],
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
   title = 'onboard_2024_front';

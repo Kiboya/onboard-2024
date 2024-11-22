@@ -7,22 +7,20 @@
 // Global Styles
 // **************************
 :root {
+  --mdc-filled-text-field-container-color: #1a1c1c; // Default text color for text fields
+  background-color: var(--sys-background);
+
   @include mat.all-component-themes($light-theme);
   @include mat.system-level-typography($light-theme);
   @include mat.system-level-colors($light-theme);
-
-  --mdc-filled-text-field-container-color: #1a1c1c; // Default text color for text fields
-  
-  background-color: var(--sys-background);
 }
 
 .dark-theme {
+  --mdc-filled-text-field-container-color: #e2e2e2; 
+  background-color: var(--sys-background);
+  
   @include mat.all-component-colors($dark-theme);
   @include mat.system-level-colors($dark-theme);
-
-  --mdc-filled-text-field-container-color: #e2e2e2; 
-
-  background-color: var(--sys-background);
 }
 
 html, body {

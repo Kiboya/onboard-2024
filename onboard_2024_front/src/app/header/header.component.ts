@@ -61,25 +61,24 @@ interface NavItem {
  * The component also handles different navigation modes based on screen size and user interactions.
  */
 @Component({
-  selector: 'app-header',
-  standalone: true,
-  imports: [
-    LogoComponent,
-    RouterModule,
-    CommonModule,
-    MatButtonToggleModule,
-    MatButtonModule,
-    MatIconModule,
-    TranslocoModule,
-    MatToolbarModule,
-    MatSidenavModule,
-    MatListModule,
-    MatCardModule,
-    MatExpansionModule,
-    HorizontalScrollDirective
-  ],
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+    selector: 'app-header',
+    imports: [
+        LogoComponent,
+        RouterModule,
+        CommonModule,
+        MatButtonToggleModule,
+        MatButtonModule,
+        MatIconModule,
+        TranslocoModule,
+        MatToolbarModule,
+        MatSidenavModule,
+        MatListModule,
+        MatCardModule,
+        MatExpansionModule,
+        HorizontalScrollDirective
+    ],
+    templateUrl: './header.component.html',
+    styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   // ViewChild for the sidenav component.
