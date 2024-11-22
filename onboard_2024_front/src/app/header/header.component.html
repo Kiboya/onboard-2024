@@ -54,14 +54,9 @@
   <mat-sidenav mode="over" (mouseenter)="onSidenavMouseEnter()" (mouseleave)="onSidenavMouseLeave()" class="sidenav"
     [class.sidenav-expanded]="isSidenavExpanded" [opened]="currentNavMode != NavMode.HIDDEN_RETRACTED">
     <mat-nav-list>
-      <a *ngFor="let item of navItems" mat-list-item [routerLink]="item.routerLink" class="nav-link">
-        <div class="icon-text">
-          <mat-icon class="material-symbols-rounded">{{ item.icon }}</mat-icon>
-          <span>
-            {{ item.labelKey | transloco }}
-          </span>
-        </div>
-      </a>
+      <ng-container *ngFor="let item of navItems">
+        <ng-container *ngTemplateOutlet="renderNavItem; context: { $implicit: item }"></ng-container>
+      </ng-container>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content [ngClass]="matSideNavContentMargin">
@@ -77,3 +72,31 @@
 <ng-container *ngIf="isLoginPage">
   <router-outlet></router-outlet>
 </ng-container>
+
+<ng-template #renderNavItem let-item>
+  <ng-container *ngIf="!item.children">
+    <a mat-list-item [routerLink]="item.routerLink" class="nav-link">
+      <div class="icon-text">
+        <mat-icon class="material-symbols-rounded">{{ item.icon }}</mat-icon>
+        <span>{{ item.labelKey | transloco }}</span>
+      </div>
+    </a>
+  </ng-container>
+  <ng-container *ngIf="item.children">
+    <mat-expansion-panel [expanded]="isSidenavExpanded && item.expanded" [hideToggle]="!isSidenavExpanded">
+      <mat-expansion-panel-header (click)="toggleExpansion(item)">
+        <mat-icon class="material-symbols-rounded">{{ item.icon }}</mat-icon>
+        <mat-panel-title>{{ item.labelKey | transloco }}</mat-panel-title>
+        <mat-panel-description></mat-panel-description>
+      </mat-expansion-panel-header>
+      <mat-nav-list>
+        <a mat-list-item *ngFor="let child of item.children" [routerLink]="child.routerLink" class="nav-link">
+          <div class="icon-text">
+            <mat-icon class="material-symbols-rounded">{{ item.icon }}</mat-icon>
+            <span>{{ item.labelKey | transloco }}</span>
+          </div>
+        </a>
+      </mat-nav-list>
+    </mat-expansion-panel>
+  </ng-container>
+</ng-template>

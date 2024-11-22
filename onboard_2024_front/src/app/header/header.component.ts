@@ -10,18 +10,19 @@ import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 // Angular CDK
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 // Angular Router
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router, RouterModule } from '@angular/router';
 
 // Third-Party Libraries
 import { TranslocoModule, TranslocoService, getBrowserLang } from '@ngneat/transloco';
 
 // RxJS Library
-import { Subscription} from 'rxjs';
+import { Subscription } from 'rxjs';
 
 // Local Services and Components
 import { ThemeService } from '../services/theme.service';
@@ -47,9 +48,11 @@ enum NavMode {
  * Interface for a navigation item in the sidenav.
  */
 interface NavItem {
-  routerLink: string;
+  routerLink?: string;
   icon: string;
   labelKey: string;
+  expanded?: boolean;
+  children?: NavItem[];
 }
 
 /**
@@ -72,6 +75,7 @@ interface NavItem {
     MatSidenavModule,
     MatListModule,
     MatCardModule,
+    MatExpansionModule,
     HorizontalScrollDirective
   ],
   templateUrl: './header.component.html',
@@ -83,7 +87,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   // Subscriptions 
   private subscriptions = new Subscription();
-  
+
   // Variables used to manage different elements of the header.
   isDarkTheme = false;
   currentLanguage = 'fr';
@@ -97,12 +101,21 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   // Defines the navigation items for the sidenav.
   navItems: NavItem[] = [
-    { routerLink: '/reference-documents', icon: 'description', labelKey: 'sidenav.reference-documents' },
-    { routerLink: '/informations', icon: 'person', labelKey: 'sidenav.informations' },
-    { routerLink: '/administrative-documents', icon: 'folder', labelKey: 'sidenav.administrative-documents' },
-    { routerLink: '/schooling', icon: 'school', labelKey: 'sidenav.schooling' },
-    { routerLink: '/absences', icon: 'event_busy', labelKey: 'sidenav.absences' },
-    { routerLink: '/planning', icon: 'calendar_month', labelKey: 'sidenav.planning' }
+    { icon: 'description', routerLink: '/reference-documents', labelKey: 'sidenav.reference-documents' },
+    { icon: 'person', routerLink: '/informations', labelKey: 'sidenav.informations' },
+    { icon: 'folder', routerLink: '/administrative-documents', labelKey: 'sidenav.administrative-documents' },
+    { icon: 'school', routerLink: '/schooling', labelKey: 'sidenav.schooling' },
+    { icon: 'event_busy', routerLink: '/absences', labelKey: 'sidenav.absences' },
+    {
+      icon: 'calendar_month',
+      labelKey: 'sidenav.planning',
+      expanded: false,
+      children: [
+        { icon: 'calendar_month', routerLink: '/planning', labelKey: 'sidenav.my-planning' },
+        { icon: 'calendar_month', routerLink: '/planning', labelKey: 'sidenav.group-planning' },
+        { icon: 'calendar_month', routerLink: '/planning', labelKey: 'sidenav.room-planning' }
+      ]
+    },
   ];
 
   // Defines the settings for each navigation mode.
@@ -111,7 +124,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     [NavMode.HIDDEN_EXPANDED]: { isExpanded: true, backdrop: true, action: 'open' },
     [NavMode.REDUCED_RETRACTED]: { isExpanded: false, backdrop: false, action: 'open' },
     [NavMode.REDUCED_EXPANDED]: { isExpanded: true, backdrop: true, action: 'open' },
-    [NavMode.NORMAL_RETRACTED]: { isExpanded: true, backdrop: true, action: 'open' },
+    [NavMode.NORMAL_RETRACTED]: { isExpanded: true, backdrop: false, action: 'open' },
     [NavMode.NORMAL_EXPANDED]: { isExpanded: true, backdrop: false, action: 'open' },
   };
 
@@ -170,10 +183,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private planningService: PlanningService
   ) {
     // Check if the route is the login page or the planning page
-    const routerSub = this.router.events.subscribe(() => {
-      const currentRoute = this.router.url;
-      this.isLoginPage = currentRoute.includes('/login');
-      this.isPlanningPage = currentRoute.includes('/planning');
+    const routerSub = this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        const currentRoute = this.router.url;
+        this.isLoginPage = currentRoute.includes('/login');
+        this.isPlanningPage = currentRoute.includes('/planning');
+  
+        // Reset navigation mode on route change
+        this.initializeNavMode();
+      }
     });
     this.subscriptions.add(routerSub);
   }
@@ -219,6 +237,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
       });
     });
     this.subscriptions.add(planningSub);
+
+    // Set the initial navigation mode when the component initializes
+    this.initializeNavMode();
   }
 
   /**
@@ -273,7 +294,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     } else {
       this.currentNavMode++;
     }
-    console.log(this.currentNavMode);
   }
 
   /**
@@ -297,6 +317,27 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   /**
+  * Toggles the expansion state of a nav item.
+  * @param item The navigation item to toggle.
+  */
+  toggleExpansion(item: NavItem): void {
+    if (this.isSidenavExpanded) {
+      item.expanded = !item.expanded;
+    }
+  }
+
+  /**
+   * Initializes the navigation mode based on the current screen size.
+   */
+  private initializeNavMode(): void {
+    if (this.currentNavMode === NavMode.HIDDEN_EXPANDED) {
+      this.currentNavMode = NavMode.HIDDEN_RETRACTED;
+    } else if (this.currentNavMode === NavMode.REDUCED_EXPANDED) {
+      this.currentNavMode = NavMode.REDUCED_RETRACTED;
+    }
+  }
+
+  /**
    * Handles changes to the navigation mode by updating the sidenav state and triggering change detection.
    * @param {NavMode} newNavMode - The new navigation mode.
    */
@@ -306,14 +347,22 @@ export class HeaderComponent implements OnInit, OnDestroy {
       console.error('Unknown NavMode:', newNavMode);
       return;
     }
-  
+
     this.isSidenavExpanded = settings.isExpanded;
     this.backdrop = settings.backdrop;
-  
+
     if (this.sidenav) {
       settings.action === 'open' ? this.sidenav.open() : this.sidenav.close();
     }
-  
+
+    if (!this.isSidenavExpanded) {
+      this.navItems.forEach(item => {
+        if (item.children) {
+          item.expanded = false;
+        }
+      });
+    }
+
     this.cdr.detectChanges();
   }
 }
