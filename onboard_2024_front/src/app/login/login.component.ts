@@ -45,6 +45,7 @@ import { tap } from 'rxjs';
   styleUrls: ['./login.component.scss']
 })
 
+
 export class LoginComponent implements OnInit {
   /**
    * Indicates whether the dark theme is active.
@@ -55,8 +56,24 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.themeService.isDarkTheme$.subscribe((isDarkTheme: boolean) => {
-      this.isDarkTheme = isDarkTheme;
+      this.isDarkTheme = isDarkTheme;    
     });
+  }
+  public connexion(): void {
+    if (this.loginForm.valid) {
+      const { login, password } = this.loginForm.value;
+      this.authService
+        .login(login, password)
+        .pipe(
+          tap((res) => {
+            this.authService.saveToken(res.token.access_token);
+            this.router.navigate(['/login']).then(() => {
+              window.location.reload();
+            });
+          })
+        )
+        .subscribe();
+    }
   }
   public connexion(): void {
     if (this.loginForm.valid) {
