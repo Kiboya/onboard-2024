@@ -3,6 +3,9 @@
 @use './variables.scss' as *;
 @use '@angular/material' as mat;
 
+// **************************
+// Global Styles
+// **************************
 :root {
   @include mat.all-component-themes($light-theme);
   @include mat.system-level-typography($light-theme);
@@ -30,7 +33,9 @@ html, body {
   font-family: Roboto, sans-serif;
 }
 
-// Override autofill color for text fields
+// **************************
+// Input form field styles
+// **************************
 mat-form-field:has(input:-webkit-autofill) {
   input:-webkit-autofill {
     -webkit-background-clip: text;
@@ -38,6 +43,9 @@ mat-form-field:has(input:-webkit-autofill) {
   }
 }
 
+// **************************
+// Scrollbar styles
+// **************************
 ::-webkit-scrollbar {
   border-radius: 5px;
   width: 10px;
@@ -57,4 +65,11 @@ mat-form-field:has(input:-webkit-autofill) {
 
 ::-webkit-scrollbar-corner {
   background-color: var(--sys-background);
+}
+
+// **************************
+// Material Expansion Panel
+// **************************
+mat-expansion-panel-header .mat-content.mat-content-hide-toggle {
+  margin-right: 0;
 }
