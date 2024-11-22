@@ -57,18 +57,17 @@ interface EventsMapping {
  * It displays a weekly calendar with scheduled events and handles event interactions.
  */
 @Component({
-  selector: 'app-planning',
-  standalone: true,
-  imports: [
-    CommonModule,
-    MatCardModule,
-    MatButtonModule,
-    MatIconModule,
-    MatDialogModule,
-    MatTabsModule,
-  ],
-  templateUrl: './planning.component.html',
-  styleUrls: ['./planning.component.scss'],
+    selector: 'app-planning',
+    imports: [
+        CommonModule,
+        MatCardModule,
+        MatButtonModule,
+        MatIconModule,
+        MatDialogModule,
+        MatTabsModule,
+    ],
+    templateUrl: './planning.component.html',
+    styleUrls: ['./planning.component.scss']
 })
 export class PlanningComponent implements OnInit, OnDestroy {
   // ViewChild for the event details modal template.

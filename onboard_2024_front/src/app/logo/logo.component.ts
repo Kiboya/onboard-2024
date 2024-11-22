@@ -10,14 +10,13 @@ import { MatIconModule } from '@angular/material/icon';
  * The component allows for customization of the logo size and theme.
  */
 @Component({
-  selector: 'app-logo',
-  standalone: true,
-  imports: [
-    MatIconModule,
-    CommonModule
-  ],
-  templateUrl: './logo.component.html',
-  styleUrl: './logo.component.scss'
+    selector: 'app-logo',
+    imports: [
+        MatIconModule,
+        CommonModule
+    ],
+    templateUrl: './logo.component.html',
+    styleUrl: './logo.component.scss'
 })
 export class LogoComponent {
   /**

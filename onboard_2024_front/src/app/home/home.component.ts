@@ -43,15 +43,14 @@ interface Card {
  * It displays a collection of cards with different content nodes such as text, links, and lists.
  */
 @Component({
-  selector: 'app-home',
-  standalone: true,
-  imports: [
-    CommonModule,
-    MatCardModule,
-    TranslocoModule,
-  ],
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+    selector: 'app-home',
+    imports: [
+        CommonModule,
+        MatCardModule,
+        TranslocoModule,
+    ],
+    templateUrl: './home.component.html',
+    styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
 
