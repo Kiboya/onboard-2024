@@ -1,26 +1,28 @@
 <!-- login.component.html -->
-
 <!-- Login content -->
 <div class="login-container">
-  <form [formGroup]="loginForm" (submit)="connexion()" class="login-container">
-
-    <!-- Logo -->
-    <app-logo class="login-logo" [isDarkTheme]="isDarkTheme" [size]="'large'"></app-logo>
-    <!-- Login Card -->
-    <mat-card class="login-card">
-      <mat-form-field appearance="outline" class="login-form-field">
-        <mat-label>{{'login.username' | transloco}}</mat-label>
+  <!-- Logo -->
+  <div class="logo-wrapper">
+    <app-logo [isDarkTheme]="isDarkTheme" [width]="logoWidth" [height]="'auto'" [size]="'large'"></app-logo>
+  </div>
+  <!-- Login Card -->
+  <mat-card class="login-card">
+    <form [formGroup]="loginForm" (ngSubmit)="connexion()">
+      <mat-form-field appearance="outline" class="login-form-field" hideRequiredMarker="true">
+        <mat-label>{{ 'login.username' | transloco }}</mat-label>
         <input matInput type="text" formControlName="login">
       </mat-form-field>
-      <mat-form-field appearance="outline" class="login-form-field">
-        <mat-label>{{'login.password' | transloco}}</mat-label>
+
+      <mat-form-field appearance="outline" class="login-form-field" hideRequiredMarker="true">
+        <mat-label>{{ 'login.password' | transloco }}</mat-label>
         <input matInput type="password" formControlName="password">
       </mat-form-field>
+
       <div class="buttons">
-        <button mat-flat-button type="submit" class="login-button">{{'login.login' | transloco}}</button>
-        <button mat-stroked-button type="button" class="forgot-password-button">{{'login.forgotPassword' |
-          transloco}}</button>
+        <button mat-flat-button type="submit" class="login-button">{{ 'login.login' | transloco }}</button>
+        <button mat-stroked-button type="button" class="forgot-password-button">{{ 'login.forgotPassword' | transloco
+          }}</button>
       </div>
-    </mat-card>
-  </form>
+    </form>
+  </mat-card>
 </div>

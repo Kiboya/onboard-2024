@@ -41,4 +41,9 @@ export class UsersService {
     Object.assign(user, updateUserDto);
     return await this.usersRepository.save(user);
   }
+
+  async createUser(userDto: UserDto): Promise<User> {
+    const user = this.usersRepository.create(userDto);
+    return await this.usersRepository.save(user);
+  }
 }

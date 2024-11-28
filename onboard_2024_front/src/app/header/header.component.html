@@ -8,9 +8,9 @@
     <mat-icon class="material-symbols-rounded">menu</mat-icon>
   </button>
   <!-- Logo -->
-  <div *ngIf="!isLoginPage" class="logo-container">
+  <div *ngIf="!isLoginPage" class="logo-wrapper">
     <a routerLink="/home">
-      <app-logo [isDarkTheme]="isDarkTheme" [size]="'medium'"></app-logo>
+      <app-logo [isDarkTheme]="isDarkTheme" [size]="'medium'" [width]="'130px'" height="'auto'"></app-logo>
     </a>
   </div>
   <!-- Planning Navigation Controls -->
@@ -51,13 +51,24 @@
 
 <!-- Sidenav content -->
 <mat-sidenav-container *ngIf="!isLoginPage" (backdropClick)="toggleSidenav()" [hasBackdrop]="backdrop">
-  <mat-sidenav mode="over" (mouseenter)="onSidenavMouseEnter()" (mouseleave)="onSidenavMouseLeave()" class="sidenav"
-    [class.sidenav-expanded]="isSidenavExpanded" [opened]="currentNavMode != NavMode.HIDDEN_RETRACTED">
-    <mat-nav-list>
-      <ng-container *ngFor="let item of navItems">
-        <ng-container *ngTemplateOutlet="renderNavItem; context: { $implicit: item }"></ng-container>
-      </ng-container>
-    </mat-nav-list>
+  <mat-sidenav mode="over" (mouseenter)="onSidenavMouseEnter()"
+    (mouseleave)="onSidenavMouseLeave()" class="sidenav" [class.sidenav-expanded]="isSidenavExpanded"
+    [opened]="currentNavMode != NavMode.HIDDEN_RETRACTED" [disableClose]="true">
+    <div class="sidenav-container">
+      <mat-nav-list>
+        <ng-container *ngFor="let item of navItems">
+          <ng-container *ngTemplateOutlet="renderNavItem; context: { $implicit: item }"></ng-container>
+        </ng-container>
+      </mat-nav-list>
+      <mat-nav-list class="bottom-nav">
+        <mat-list-item (click)="logout()" class="nav-link">
+          <div class="icon-text">
+            <mat-icon class="material-symbols-rounded">logout</mat-icon>
+            <span>{{ 'header.logout' | transloco }}</span>
+          </div>
+        </mat-list-item>
+      </mat-nav-list>
+    </div>
   </mat-sidenav>
   <mat-sidenav-content [ngClass]="matSideNavContentMargin">
     <mat-card class="scrollable-card" [ngClass]="matSideNavContentMargin">
@@ -75,12 +86,12 @@
 
 <ng-template #renderNavItem let-item>
   <ng-container *ngIf="!item.children">
-    <a mat-list-item [routerLink]="item.routerLink" class="nav-link">
+    <mat-list-item [routerLink]="item.routerLink" class="nav-link">
       <div class="icon-text">
         <mat-icon class="material-symbols-rounded">{{ item.icon }}</mat-icon>
         <span>{{ item.labelKey | transloco }}</span>
       </div>
-    </a>
+    </mat-list-item>
   </ng-container>
   <ng-container *ngIf="item.children">
     <mat-expansion-panel [expanded]="isSidenavExpanded && item.expanded" [hideToggle]="!isSidenavExpanded">
@@ -90,12 +101,12 @@
         <mat-panel-description></mat-panel-description>
       </mat-expansion-panel-header>
       <mat-nav-list>
-        <a mat-list-item *ngFor="let child of item.children" [routerLink]="child.routerLink" class="nav-link">
+        <mat-list-item *ngFor="let child of item.children" [routerLink]="child.routerLink" class="nav-link">
           <div class="icon-text">
             <mat-icon class="material-symbols-rounded">{{ item.icon }}</mat-icon>
             <span>{{ item.labelKey | transloco }}</span>
           </div>
-        </a>
+        </mat-list-item>
       </mat-nav-list>
     </mat-expansion-panel>
   </ng-container>

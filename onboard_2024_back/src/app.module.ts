@@ -5,6 +5,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './user/user.entity';
 import { PlanningModule } from './planning/planning.module';
 import { AuthModule } from './auth/auth.module';
+import * as dotenv from 'dotenv';
+
+dotenv.config();
 
 
 @Module({
@@ -13,8 +16,8 @@ import { AuthModule } from './auth/auth.module';
       type: 'postgres',
       host: 'localhost',
       port: 5432,
-      username: 'postgres',
-      password: 'postgres',
+      username: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,      
       database: 'onboard',
       entities: [User],
       synchronize: true,

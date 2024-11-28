@@ -30,6 +30,7 @@ import { LanguageService } from '../services/language.service';
 import { PlanningService } from '../services/planning.service';
 import { LogoComponent } from '../logo/logo.component';
 import { HorizontalScrollDirective } from '../directives/horizontal-scroll.directive';
+import { AuthService } from '../services/auth.service';
 
 
 /**
@@ -61,24 +62,24 @@ interface NavItem {
  * The component also handles different navigation modes based on screen size and user interactions.
  */
 @Component({
-    selector: 'app-header',
-    imports: [
-        LogoComponent,
-        RouterModule,
-        CommonModule,
-        MatButtonToggleModule,
-        MatButtonModule,
-        MatIconModule,
-        TranslocoModule,
-        MatToolbarModule,
-        MatSidenavModule,
-        MatListModule,
-        MatCardModule,
-        MatExpansionModule,
-        HorizontalScrollDirective
-    ],
-    templateUrl: './header.component.html',
-    styleUrls: ['./header.component.scss']
+  selector: 'app-header',
+  imports: [
+    LogoComponent,
+    RouterModule,
+    CommonModule,
+    MatButtonToggleModule,
+    MatButtonModule,
+    MatIconModule,
+    TranslocoModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatListModule,
+    MatCardModule,
+    MatExpansionModule,
+    HorizontalScrollDirective
+  ],
+  templateUrl: './header.component.html',
+  styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   // ViewChild for the sidenav component.
@@ -166,11 +167,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
    * Constructor for HeaderComponent.
    * @param {ThemeService} themeService - Service to switch the theme.
    * @param {LanguageService} languageService - Service to switch the language.
+   * @param {TranslocoService} translocoService - Service to switch the language.
    * @param {BreakpointObserver} breakpointObserver - Service to observe the screen size.
    * @param {ChangeDetectorRef} cdr - Manually trigger a change detection for the sidenav.
    * @param {Router} router - Service to navigate between routes.
-   * @param {ActivatedRoute} activatedRoute - Get the current route.
-   * @param {TranslocoService} translocoService - Service to switch the language.
+   * @param {PlanningService} planningService - Service to manage the planning data.
+   * @param {AuthService} authService - Service to manage the authentication state.
    */
   constructor(
     private themeService: ThemeService,
@@ -179,7 +181,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private breakpointObserver: BreakpointObserver,
     private cdr: ChangeDetectorRef,
     private router: Router,
-    private planningService: PlanningService
+    private planningService: PlanningService,
+    private authService: AuthService,
   ) {
     // Check if the route is the login page or the planning page
     const routerSub = this.router.events.subscribe(event => {
@@ -187,7 +190,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         const currentRoute = this.router.url;
         this.isLoginPage = currentRoute.includes('/login');
         this.isPlanningPage = currentRoute.includes('/planning');
-  
+
         // Reset navigation mode on route change
         this.initializeNavMode();
       }
@@ -323,6 +326,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
     if (this.isSidenavExpanded) {
       item.expanded = !item.expanded;
     }
+  }
+
+  /**
+  * Logs out the user and navigates to the login page.
+  */
+  logout(): void {
+    this.authService.logout();
+    this.router.navigate(['/login']);
   }
 
   /**

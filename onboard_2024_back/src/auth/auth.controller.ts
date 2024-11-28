@@ -8,7 +8,6 @@ export class AuthController {
 
   @Post('login')
   async login(@Body() body: { username: string; password: string }) {
-    console.log('Login attempt', body);
     const { username, password } = body;
     
     const user: UserDto = await this.authService.validateUser(username, password);
@@ -20,5 +19,11 @@ export class AuthController {
     const token = await this.authService.login(user);
 
     return { message: 'Login successful', user, token };
+  }
+
+  @Post('register')
+  async register(@Body() userDto: UserDto) {
+    const user = await this.authService.register(userDto);
+    return { message: 'User registered successfully', user };
   }
 }

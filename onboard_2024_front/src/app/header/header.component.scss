@@ -44,14 +44,13 @@ mat-toolbar {
   // **************************
   // Logo Container Styles
   // **************************
-  .logo-container {
+  .logo-wrapper {
+    padding: 0px $gap-small;
+    
     app-logo {
       cursor: pointer;
       display: flex;
-      height: auto;
-      width: 130px;
       align-items: center;
-      padding: 0px $gap-small;
     }
   }
 
@@ -106,9 +105,32 @@ mat-sidenav {
   width: $sidenav-width;
   background-color: $background-color;
   padding: $gap-large $gap-small $gap-medium $gap-small;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 
   &.sidenav-expanded {
     width: $sidenav-expanded-width;
+  }
+
+  .sidenav-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    // Main nav list grows to fill space
+    mat-nav-list:first-child {
+      flex: 1 1 auto;
+      overflow-y: auto;
+    }
+
+    // Bottom nav list stays at bottom
+    .bottom-nav {
+      flex: 0 0 auto;
+      margin-top: $gap-medium;
+      border-top: 1px solid var(--sys-outline-variant);
+      padding-top: $gap-medium;
+    }
   }
 }
 
@@ -174,6 +196,7 @@ mat-expansion-panel {
   mat-expansion-panel-header {
     padding: 0 $gap-medium;
     height: 48px;
+    border-radius: 9999px;
 
     mat-icon {
       padding-right: $gap-small;
