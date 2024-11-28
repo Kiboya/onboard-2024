@@ -51,9 +51,9 @@
 
 <!-- Sidenav content -->
 <mat-sidenav-container *ngIf="!isLoginPage" (backdropClick)="toggleSidenav()" [hasBackdrop]="backdrop">
-  <mat-sidenav mode="over" (mouseenter)="onSidenavMouseEnter()"
-    (mouseleave)="onSidenavMouseLeave()" class="sidenav" [class.sidenav-expanded]="isSidenavExpanded"
-    [opened]="currentNavMode != NavMode.HIDDEN_RETRACTED" [disableClose]="true">
+  <mat-sidenav mode="over" (mouseenter)="onSidenavMouseEnter()" (mouseleave)="onSidenavMouseLeave()" class="sidenav"
+    [class.sidenav-expanded]="isSidenavExpanded" [opened]="currentNavMode != NavMode.HIDDEN_RETRACTED"
+    [disableClose]="true">
     <div class="sidenav-container">
       <mat-nav-list>
         <ng-container *ngFor="let item of navItems">

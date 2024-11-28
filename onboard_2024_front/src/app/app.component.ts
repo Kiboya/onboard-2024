@@ -1,5 +1,8 @@
-// app.component.ts
-import { Component, OnInit } from '@angular/core';
+// src/app/app.component.ts
+
+// Angular Core
+import { Component } from '@angular/core';
+// Components
 import { HeaderComponent } from './header/header.component';
 
 /**
@@ -17,6 +20,9 @@ import { HeaderComponent } from './header/header.component';
 export class AppComponent {
   title = 'onboard_2024_front';
 
+  /**
+   * Constructor for AppComponent.
+   */
   constructor() { }
 
 }

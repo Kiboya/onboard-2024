@@ -1,3 +1,5 @@
+// src/app/logo/logo.component.ts
+
 // Angular Core
 import { CommonModule } from '@angular/common';
 import { Component, Input, HostBinding } from '@angular/core';

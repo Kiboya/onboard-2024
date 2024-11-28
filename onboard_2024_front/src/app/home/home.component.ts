@@ -1,3 +1,4 @@
+// src/app/home/home.component.ts
 
 // Angular Core
 import { Component, OnInit } from '@angular/core';

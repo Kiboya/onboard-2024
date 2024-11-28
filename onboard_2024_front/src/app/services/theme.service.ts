@@ -1,4 +1,8 @@
+// src/app/services/theme.service.ts
+
+// Angular Core
 import { Injectable } from '@angular/core';
+// RxJS
 import { BehaviorSubject } from 'rxjs';
 
 /**

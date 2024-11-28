@@ -1,4 +1,8 @@
+// src/app/services/planning.service.ts
+
+// Angular Core
 import { Injectable } from '@angular/core';
+// RxJS
 import { BehaviorSubject } from 'rxjs';
 
 /**
@@ -9,10 +13,15 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class PlanningService {
+  // BehaviorSubject to store the start date of the current week
   private _currentWeekStart = new BehaviorSubject<Date>(this.getStartOfWeek(new Date()));
+  // Observable for the current week start date
   currentWeekStart$ = this._currentWeekStart.asObservable();
 
-  constructor() {}
+  /**
+   * Constructor for PlanningService.
+   */
+  constructor() { }
 
   /**
    * Gets the start date of the current week.

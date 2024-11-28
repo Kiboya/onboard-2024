@@ -1,7 +1,14 @@
+// src/app/services/auth.service.ts
+
+// Angular Core
 import { Injectable } from '@angular/core';
+// RxJS
 import { Observable } from 'rxjs';
+// Interfaces
 import { LoginResponse } from '../type/loginResponse.interface';
+// Angular HTTP
 import { HttpClient } from '@angular/common/http';
+// Environments
 import { environment } from '../../environements/environment';
 
 /**

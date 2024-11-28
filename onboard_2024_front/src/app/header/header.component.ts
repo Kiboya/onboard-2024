@@ -1,3 +1,5 @@
+// src/app/header/header.component.ts
+
 // Angular Core
 import { Component, OnInit, OnDestroy, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';

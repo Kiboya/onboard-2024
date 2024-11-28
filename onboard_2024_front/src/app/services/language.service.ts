@@ -1,9 +1,11 @@
+// src/app/services/language.service.ts
+
 // Angular Core
 import { Injectable } from '@angular/core';
 
 // Third Party Libraries
 import { TranslocoService, } from '@ngneat/transloco';
- 
+
 /**
  * @fileoverview LanguageService is responsible for handling language switching in the application.
  */
@@ -11,6 +13,11 @@ import { TranslocoService, } from '@ngneat/transloco';
   providedIn: 'root'
 })
 export class LanguageService {
+
+  /**
+   * Constructor for LanguageService.
+   * @param {TranslocoService} translocoService - The Transloco Service
+   */
   constructor(private translocoService: TranslocoService) { }
 
   /**

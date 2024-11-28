@@ -1,4 +1,4 @@
-// planning.component.ts
+// src/app/planning/planning.component.ts
 
 // Angular Core
 import { Component, OnInit, TemplateRef, ViewChild, OnDestroy } from '@angular/core';

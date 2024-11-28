@@ -1,3 +1,4 @@
+// src/app/login/login.component.ts
 
 // Angular Core
 import { Component, OnDestroy, OnInit } from '@angular/core';

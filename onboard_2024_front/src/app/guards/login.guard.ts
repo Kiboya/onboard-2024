@@ -1,6 +1,10 @@
 // src/app/guards/login.guard.ts
+
+// Angular Core
 import { Injectable } from '@angular/core';
+// Angular Router
 import { CanActivate, Router } from '@angular/router';
+// Services
 import { AuthService } from '../services/auth.service';
 
 /**
@@ -11,6 +15,12 @@ import { AuthService } from '../services/auth.service';
   providedIn: 'root'
 })
 export class LoginGuard implements CanActivate {
+
+  /**
+   * Constructor for LoginGuard.
+   * @param {AuthService} authService - The Auth Service.
+   * @param {Router} router - The Router.
+   */
   constructor(private authService: AuthService, private router: Router) {}
 
   /**
