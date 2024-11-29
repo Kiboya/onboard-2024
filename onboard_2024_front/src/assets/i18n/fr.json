@@ -14,7 +14,8 @@
         "administrative-documents": "Documents Administratifs",
         "schooling": "Scolarité",
         "absences": "Absences",
-        "planning": "Planning"
+        "planning": "Planning",
+        "logout": "Déconnexion"
     },
     "home": {
         "cards": [

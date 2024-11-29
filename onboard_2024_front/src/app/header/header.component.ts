@@ -1,7 +1,7 @@
 // src/app/header/header.component.ts
 
 // Angular Core
-import { Component, OnInit, OnDestroy, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ChangeDetectorRef, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 // Angular Material Modules
@@ -86,6 +86,15 @@ interface NavItem {
 export class HeaderComponent implements OnInit, OnDestroy {
   // ViewChild for the sidenav component.
   @ViewChild('sidenav') sidenav!: MatSidenav;
+
+  /**
+   * Listens for window resize events to update the navigation mode.
+   * @param {Event} event - The window resize event.
+   */
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event): void {
+    this.updateNavMode();
+  }
 
   // Subscriptions 
   private subscriptions = new Subscription();
@@ -209,17 +218,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.isDarkTheme = isDarkTheme;
     });
     this.subscriptions.add(themeSub);
-
-    // Observes the screen size and sets the navigation mode accordingly.
-    this.breakpointObserver.observe([Breakpoints.Medium, Breakpoints.XSmall]).subscribe(result => {
-      if (this.breakpointObserver.isMatched(Breakpoints.XSmall)) {
-        this.currentNavMode = NavMode.HIDDEN_RETRACTED;
-      } else if (this.breakpointObserver.isMatched(Breakpoints.Medium) || this.breakpointObserver.isMatched(Breakpoints.Small)) {
-        this.currentNavMode = NavMode.REDUCED_RETRACTED;
-      } else {
-        this.currentNavMode = NavMode.NORMAL_EXPANDED;
-      }
-    });
 
     // Loads the language from local storage or browser settings
     const storedLang = localStorage.getItem('language');
@@ -376,5 +374,18 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
 
     this.cdr.detectChanges();
+  }
+
+  /**
+   * Updates the navigation mode based on the current screen size.
+   */
+  private updateNavMode(): void {
+    if (this.breakpointObserver.isMatched(Breakpoints.XSmall)) {
+      this.currentNavMode = NavMode.HIDDEN_RETRACTED;
+    } else if (this.breakpointObserver.isMatched(Breakpoints.Medium) || this.breakpointObserver.isMatched(Breakpoints.Small)) {
+      this.currentNavMode = NavMode.REDUCED_RETRACTED;
+    } else {
+      this.currentNavMode = NavMode.NORMAL_EXPANDED;
+    }
   }
 }
