@@ -8,11 +8,10 @@
     <mat-icon class="material-symbols-rounded">menu</mat-icon>
   </button>
   <!-- Logo -->
-  <div *ngIf="!isLoginPage" class="logo-wrapper">
-    <a routerLink="/home">
+    <a *ngIf="!isLoginPage" class="logo-wrapper" routerLink="/home">
       <app-logo [isDarkTheme]="isDarkTheme" [size]="'medium'" [width]="'130px'" height="'auto'"></app-logo>
     </a>
-  </div>
+  
   <!-- Planning Navigation Controls -->
   <div *ngIf="isPlanningPage" class="planning-navigation">
     <button mat-icon-button (click)="previousWeek()">

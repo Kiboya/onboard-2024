@@ -24,6 +24,10 @@ mat-toolbar {
   overflow-x: scroll;
   scrollbar-width: none;
 
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
   &.login {
     background-color: var(--sys-background);
   }
@@ -46,11 +50,11 @@ mat-toolbar {
   // **************************
   .logo-wrapper {
     padding: 0px $gap-small;
+    display: flex;
+    align-items: center;
     
     app-logo {
       cursor: pointer;
-      display: flex;
-      align-items: center;
     }
   }
 

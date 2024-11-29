@@ -18,7 +18,7 @@ import { MatIconModule } from '@angular/material/icon';
         CommonModule
     ],
     templateUrl: './logo.component.html',
-    styleUrl: './logo.component.scss'
+    styleUrls: ['./logo.component.scss']
 })
 export class LogoComponent {
   /**
