@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CourseDto } from 'src/dto/course.dto';
+import { ClassDto } from 'src/dto/class.dto';
 import { Planning } from './planning.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -13,10 +13,10 @@ export class PlanningService {
         private jwtService: JwtService,
     ) {}
 
-    async addCourse(CourseDto: CourseDto): Promise <Planning> 
+    async addClass(ClassDto: ClassDto): Promise <Planning> 
     {
-        const course = this.planningRepository.create(CourseDto);
-        return await this.planningRepository.save(course);
+        const class_instance = this.planningRepository.create(ClassDto);
+        return await this.planningRepository.save(class_instance);
     }
 
 }

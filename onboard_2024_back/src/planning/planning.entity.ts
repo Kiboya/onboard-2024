@@ -33,7 +33,7 @@ export class Planning {
   courseModule: string;
 
   @Column()
-  courseType: string;
+  classType: string;
 
   @Column()
   groupCode: string;

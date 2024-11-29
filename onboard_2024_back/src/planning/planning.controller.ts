@@ -1,15 +1,15 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { PlanningService } from 'src/planning/planning.service';
-import { CourseDto } from 'src/dto/course.dto';
+import { ClassDto } from 'src/dto/class.dto';
 
 @Controller('planning')
 export class PlanningController {
     constructor(private readonly planningService: PlanningService) {}
 
-    @Post('addcourse')
-    async addCourse(@Body() CourseDto: CourseDto) {
-    const course = await this.planningService.addCourse(CourseDto);
-    return { message: 'Course added successfully', course };
+    @Post('addclass')
+    async addClass(@Body() ClassDto: ClassDto) {
+    const class_instance = await this.planningService.addClass(ClassDto);
+    return { message: 'Class added successfully', class_instance };
     }
 
 }
