@@ -122,6 +122,11 @@ mat-sidenav {
     mat-nav-list:first-child {
       flex: 1 1 auto;
       overflow-y: auto;
+      scrollbar-width: none;
+    }
+
+    mat-nav-list::-webkit-scrollbar {
+      display: none;
     }
 
     // Bottom nav list stays at bottom
