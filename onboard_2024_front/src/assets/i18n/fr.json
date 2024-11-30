@@ -1,6 +1,6 @@
 {
     "header": {
-        "today-planning-button": "Aujourd'hui" 
+        "today-planning-button": "Aujourd'hui"
     },
     "login": {
         "username": "Nom d'Utilisateur",
@@ -14,7 +14,12 @@
         "administrative-documents": "Documents Administratifs",
         "schooling": "Scolarité",
         "absences": "Absences",
-        "planning": "Planning",
+        "planning": {
+            "label": "Planning",
+            "my-planning": "Mon Planning",
+            "group-planning": "Planning de Groupe",
+            "room-planning": "Planning de Salle"
+        },
         "logout": "Déconnexion"
     },
     "home": {
@@ -345,7 +350,5 @@
             }
         ]
     },
-    "planning": {
-
-    }
+    "planning": {}
 }

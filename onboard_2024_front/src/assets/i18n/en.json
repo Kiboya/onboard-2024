@@ -14,7 +14,12 @@
     "administrative-documents": "Administrative Documents",
     "schooling": "Schooling",
     "absences": "Absences",
-    "planning": "Planning",
+    "planning": {
+      "label": "Planning",
+      "my-planning": "My Planning",
+      "group-planning": "Group Planning",
+      "room-planning": "Room Planning"
+    },
     "logout": "Logout"
   },
   "home": {

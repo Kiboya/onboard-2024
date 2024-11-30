@@ -3,15 +3,15 @@
 <!-- Toolbar content -->
 <mat-toolbar [class.login]="isLoginPage" appHorizontalScroll>
   <!-- Navigation Controls -->
-  <button *ngIf="currentNavMode < NavMode.NORMAL_RETRACTED && !isLoginPage" mat-icon-button class="menu-button"
-    (click)="toggleSidenav()">
+  <button *ngIf="displaySidenavButton" mat-icon-button class="menu-button"
+    (click)="onHeaderButtonClick()">
     <mat-icon class="material-symbols-rounded">menu</mat-icon>
   </button>
   <!-- Logo -->
-    <a *ngIf="!isLoginPage" class="logo-wrapper" routerLink="/home">
-      <app-logo [isDarkTheme]="isDarkTheme" [size]="'medium'" [width]="'130px'" height="'auto'"></app-logo>
-    </a>
-  
+  <a *ngIf="!isLoginPage" class="logo-wrapper" routerLink="/home">
+    <app-logo [isDarkTheme]="isDarkTheme" [size]="'medium'" [width]="'130px'" height="'auto'"></app-logo>
+  </a>
+
   <!-- Planning Navigation Controls -->
   <div *ngIf="isPlanningPage" class="planning-navigation">
     <button mat-icon-button (click)="previousWeek()">
@@ -47,66 +47,3 @@
     </button>
   </div>
 </mat-toolbar>
-
-<!-- Sidenav content -->
-<mat-sidenav-container *ngIf="!isLoginPage" (backdropClick)="toggleSidenav()" [hasBackdrop]="backdrop">
-  <mat-sidenav mode="over" (mouseenter)="onSidenavMouseEnter()" (mouseleave)="onSidenavMouseLeave()" class="sidenav"
-    [class.sidenav-expanded]="isSidenavExpanded" [opened]="currentNavMode != NavMode.HIDDEN_RETRACTED"
-    [disableClose]="true">
-    <div class="sidenav-container">
-      <mat-nav-list>
-        <ng-container *ngFor="let item of navItems">
-          <ng-container *ngTemplateOutlet="renderNavItem; context: { $implicit: item }"></ng-container>
-        </ng-container>
-      </mat-nav-list>
-      <mat-nav-list class="bottom-nav">
-        <mat-list-item (click)="logout()" class="nav-link">
-          <div class="icon-text">
-            <mat-icon class="material-symbols-rounded">logout</mat-icon>
-            <span>{{ 'sidenav.logout' | transloco }}</span>
-          </div>
-        </mat-list-item>
-      </mat-nav-list>
-    </div>
-  </mat-sidenav>
-  <mat-sidenav-content [ngClass]="matSideNavContentMargin">
-    <mat-card class="scrollable-card" [ngClass]="matSideNavContentMargin">
-      <div class="scrollable-content">
-        <router-outlet></router-outlet>
-      </div>
-    </mat-card>
-  </mat-sidenav-content>
-</mat-sidenav-container>
-
-<!-- Don't display sidenav for login page -->
-<ng-container *ngIf="isLoginPage">
-  <router-outlet></router-outlet>
-</ng-container>
-
-<ng-template #renderNavItem let-item>
-  <ng-container *ngIf="!item.children">
-    <mat-list-item [routerLink]="item.routerLink" class="nav-link">
-      <div class="icon-text">
-        <mat-icon class="material-symbols-rounded">{{ item.icon }}</mat-icon>
-        <span>{{ item.labelKey | transloco }}</span>
-      </div>
-    </mat-list-item>
-  </ng-container>
-  <ng-container *ngIf="item.children">
-    <mat-expansion-panel [expanded]="isSidenavExpanded && item.expanded" [hideToggle]="!isSidenavExpanded">
-      <mat-expansion-panel-header (click)="toggleExpansion(item)">
-        <mat-icon class="material-symbols-rounded">{{ item.icon }}</mat-icon>
-        <mat-panel-title>{{ item.labelKey | transloco }}</mat-panel-title>
-        <mat-panel-description></mat-panel-description>
-      </mat-expansion-panel-header>
-      <mat-nav-list>
-        <mat-list-item *ngFor="let child of item.children" [routerLink]="child.routerLink" class="nav-link">
-          <div class="icon-text">
-            <mat-icon class="material-symbols-rounded">{{ item.icon }}</mat-icon>
-            <span>{{ item.labelKey | transloco }}</span>
-          </div>
-        </mat-list-item>
-      </mat-nav-list>
-    </mat-expansion-panel>
-  </ng-container>
-</ng-template>
