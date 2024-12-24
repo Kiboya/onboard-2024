@@ -51,7 +51,7 @@
 <!-- Template for rendering nav items -->
 <ng-template #renderNavItem let-item>
     <ng-container *ngIf="!item.children">
-        <mat-list-item [routerLink]="item.routerLink" class="nav-link">
+        <mat-list-item [routerLink]="item.routerLink" class="nav-link mat-mdc-list-item-interactive" matRipple>
             <div class="icon-text">
                 <mat-icon class="material-symbols-rounded">{{ item.icon }}</mat-icon>
                 <span>{{ item.labelKey | transloco }}</span>
@@ -65,7 +65,7 @@
                 <mat-panel-title>{{ item.labelKey | transloco }}</mat-panel-title>
             </mat-expansion-panel-header>
             <mat-nav-list>
-                <mat-list-item *ngFor="let child of item.children" [routerLink]="child.routerLink" class="nav-link">
+                <mat-list-item *ngFor="let child of item.children" [routerLink]="child.routerLink" class="nav-link mat-mdc-list-item-interactive" matRipple>
                     <div class="icon-text">
                         <mat-icon class="material-symbols-rounded">{{ child.icon }}</mat-icon>
                         <span>{{ child.labelKey | transloco }}</span>
