@@ -41,11 +41,14 @@
 
 <!-- Event Details Modal -->
 <ng-template #eventDetailsModal let-data>
-    <h2 mat-dialog-title>{{ data.course.label }}</h2>
+    <h2 mat-dialog-title>{{ data.course.name }}</h2>
     <mat-dialog-content>
-        <p><strong>Module:</strong> {{ data.course.moduleName }}</p>
-        <p><strong>Course Code:</strong> {{ data.course.code }}</p>
-        <p><strong>Group:</strong> {{ data.group.label }} ({{ data.group.code }})</p>
+        <p><strong>Module:</strong> {{ data.course.name }}</p>
+        <p><strong>Groups:</strong>
+            <span *ngFor="let group of data.groups; let last = last">
+            {{ group.name }}<span *ngIf="!last">, </span>
+            </span>
+        </p>
         <p><strong>Type:</strong> {{ data.classType }}</p>
         <p><strong>Room:</strong> {{ data.room }}</p>
 

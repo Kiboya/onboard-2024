@@ -28,8 +28,8 @@ export class AuthGuard implements CanActivate {
    * @returns {boolean} True if the user is authenticated, false otherwise.
    */
   canActivate(): boolean {
-    const isLoggedIn = !!localStorage.getItem('token');
-    if (!isLoggedIn) {
+    const token = this.authService.getToken();
+    if (!token) {
       this.router.navigate(['/login']);
       return false;
     }

@@ -8,31 +8,35 @@ import { CanActivate, Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 
 /**
- * @fileoverview LoginGuard is responsible for protecting the login route.
+ * @fileoverview
+ * LoginGuard is responsible for protecting the login route.
  * The guard checks if the user is already authenticated before allowing access to the route.
  */
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LoginGuard implements CanActivate {
-
   /**
    * Constructor for LoginGuard.
-   * @param {AuthService} authService - The Auth Service.
-   * @param {Router} router - The Router.
+   * @param {AuthService} authService - The Auth Service to manage authentication state.
+   * @param {Router} router - The Router to navigate between routes.
    */
   constructor(private authService: AuthService, private router: Router) {}
 
   /**
-   * Checks if the user is authenticated before allowing access to the login route.
-   * @returns {boolean} True if the user is not authenticated, false otherwise.
+   * Determines whether the login route can be activated.
+   * If the user is already authenticated, redirects to the home page.
+   * @returns {boolean} True if the user is not authenticated, allowing access to the login route; otherwise, false.
    */
   canActivate(): boolean {
-    const isLoggedIn = !!localStorage.getItem('token');
+    const token = this.authService.getToken();
+    const isLoggedIn = !!token;
+
     if (isLoggedIn) {
-      this.router.navigate(['/home']);
+      this.router.navigate(['/home']); 
       return false;
     }
+
     return true;
   }
 }

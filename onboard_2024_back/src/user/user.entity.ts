@@ -1,3 +1,6 @@
+// src/user/user.entity.ts
+
+// Modules
 import {
   Entity,
   Column,
@@ -6,7 +9,13 @@ import {
   JoinTable,
 } from 'typeorm';
 
-@Entity()
+// Entities
+import { Group } from '../group/group.entity';
+
+/**
+ * @fileoverview Defines the User entity with its properties and relationships to other entities.
+ */
+@Entity('users')
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
@@ -16,4 +25,18 @@ export class User {
 
   @Column()
   password: string;
+
+  @Column()
+  firstName: string;
+
+  @Column()
+  lastName: string;
+
+  @ManyToMany(() => Group, group => group.users, { eager: true })
+  @JoinTable({
+    name: 'user_groups',
+    joinColumn: { name: 'user_id', referencedColumnName: 'id' },
+    inverseJoinColumn: { name: 'group_id', referencedColumnName: 'id' },
+  })
+  groups: Group[];
 }

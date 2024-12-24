@@ -1,30 +1,40 @@
+// src/app.module.ts
+
+// Modules
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from './user/user.entity';
+
+// Controllers
+import { AppController } from './app.controller';
+
+// Services
+import { AppService } from './app.service';
+
+// Other Modules
 import { AuthModule } from './auth/auth.module';
-import * as dotenv from 'dotenv';
-import { Planning } from './planning/planning.entity';
-import { PlanningModule } from './planning/planning.module';
+import { ClassModule } from './class/class.module';
+import { UserModule } from './user/user.module';
 
-dotenv.config();
-
-
+/**
+ * @fileoverview Defines the root application module, configuring imports, controllers, and providers.
+ */
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: process.env.DB_USER,
-      password: process.env.DB_PASSWORD,      
-      database: 'onboard',
-      entities: [User, Planning],
-      synchronize: true,
+    TypeOrmModule.forRootAsync({
+      useFactory: () => ({
+        type: 'postgres',
+        host: process.env.DB_HOST,
+        port: parseInt(process.env.DB_PORT, 10),
+        username: process.env.DB_USER,
+        password: process.env.DB_PASSWORD,
+        database: process.env.DB_NAME,
+        entities: [__dirname + '/**/*.entity{.ts,.js}'],
+        synchronize: true,
+      }),
     }),
     AuthModule,
-    PlanningModule,
+    ClassModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService],

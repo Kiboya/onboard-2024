@@ -9,24 +9,31 @@ import { routes } from './app.routes';
 // Angular Animations
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 // HttpClient
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 // Transloco
 import { TranslocoHttpLoader } from './transloco-loader';
 import { provideTransloco } from '@ngneat/transloco';
+// Auth Interceptor
+import { authInterceptor } from './auth.interceptor';
 
 /**
  * Application Configuration
  * @type {ApplicationConfig}
  */
 export const appConfig: ApplicationConfig = {
-  providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), provideAnimationsAsync(), provideHttpClient(), provideTransloco({
-        config: { 
-          availableLangs: ['fr', 'en'],
-          defaultLang: 'fr',
-          // Remove this option if your application doesn't support changing language in runtime.
-          reRenderOnLangChange: true,
-          prodMode: !isDevMode(),
-        },
-        loader: TranslocoHttpLoader
-      })]
+  providers: [
+    provideZoneChangeDetection({ eventCoalescing: true }),
+    provideRouter(routes),
+    provideAnimationsAsync(),
+    provideHttpClient(withInterceptors([authInterceptor])),
+    provideTransloco({
+      config: { 
+        availableLangs: ['fr', 'en'],
+        defaultLang: 'fr',
+        reRenderOnLangChange: true,
+        prodMode: !isDevMode(),
+      },
+      loader: TranslocoHttpLoader
+    }),
+  ],
 };

@@ -19,6 +19,7 @@ import { Subscription } from 'rxjs';
 
 // Local Services and Components
 import { PlanningService } from '../services/planning.service';
+import { ClassService } from '../services/class.service';
 
 /**
  * Interface for a calendar event.
@@ -31,14 +32,11 @@ interface CalendarEvent {
   room: string;
   instructors: string[];
   learners: string[];
-  group: {
-    code: string;
-    label: string;
-  };
+  groups: {
+    name: string;
+  }[];
   course: {
-    code: string;
-    label: string;
-    moduleName: string;
+    name: string;
   };
 }
 
@@ -57,17 +55,17 @@ interface EventsMapping {
  * It displays a weekly calendar with scheduled events and handles event interactions.
  */
 @Component({
-    selector: 'app-planning',
-    imports: [
-        CommonModule,
-        MatCardModule,
-        MatButtonModule,
-        MatIconModule,
-        MatDialogModule,
-        MatTabsModule,
-    ],
-    templateUrl: './planning.component.html',
-    styleUrls: ['./planning.component.scss']
+  selector: 'app-planning',
+  imports: [
+    CommonModule,
+    MatCardModule,
+    MatButtonModule,
+    MatIconModule,
+    MatDialogModule,
+    MatTabsModule,
+  ],
+  templateUrl: './planning.component.html',
+  styleUrls: ['./planning.component.scss']
 })
 export class PlanningComponent implements OnInit, OnDestroy {
   // ViewChild for the event details modal template.
@@ -93,8 +91,9 @@ export class PlanningComponent implements OnInit, OnDestroy {
   constructor(
     private dialog: MatDialog,
     private planningService: PlanningService,
+    private classService: ClassService,
     private translocoService: TranslocoService
-  ) {}
+  ) { }
 
   /**
    * Initializes the component by subscribing to language changes and setting up the current week.
@@ -115,291 +114,29 @@ export class PlanningComponent implements OnInit, OnDestroy {
     });
     this.subscriptions.add(weekSub);
 
-    // Initialize events
-    this.initializeEvents();
-
-    // Compute events mapping
-    this.computeEventsMapping();
-  }
-
-  /**
-   * Initializes the events array with predefined events.
-   */
-  private initializeEvents(): void {
-    this.events = [
-      {
-        title: 'AMC',
-        start: new Date(2024, 10, 4, 8, 0),
-        end: new Date(2024, 10, 4, 12, 15),
-        classType: 'Lab',
-        room: 'Room A101',
-        instructors: ['Dr. Smith', 'Prof. Johnson'],
-        learners: ['Alice', 'Bob', 'Charlie', 'David', 'Eve', 'Frank', 'Grace', 'Helen', 'Ivy', 'Jack', 'Karl', 'Liam', 'Mia', 'Nina', 'Oscar', 'Paul', 'Quinn', 'Rose', 'Sam', 'Tina', 'Uma', 'Vera', 'Will', 'Xena', 'Yann', 'Zoe'],
-        group: {
-          code: 'G1',
-          label: 'Group 1',
-        },
-        course: {
-          code: 'AMC101',
-          label: 'Architectures multi-cœur',
-          moduleName: 'UV_203',
-        },
+    // Fetch classes from backend
+    const classSub = this.classService.getUserClasses().subscribe({
+      next: (classes) => {
+        this.events = classes.map(cls => ({
+          title: cls.course.name,
+          start: new Date(`${cls.date}T${cls.startingTime}`),
+          end: new Date(`${cls.date}T${cls.endingTime}`),
+          classType: cls.classType,
+          room: cls.room.name,
+          instructors: cls.professors.map(prof => prof.name),
+          learners: cls.attendees.map(user => `${user.firstName} ${user.lastName}`),
+          groups: cls.groups.map(group => ({ name: group.name })), 
+          course: {
+            name: cls.course.name,
+          },
+        }));
+        this.computeEventsMapping();
       },
-      {
-        title: 'GL',
-        start: new Date(2024, 10, 4, 13, 45),
-        end: new Date(2024, 10, 4, 15, 45),
-        classType: 'Lecture',
-        room: 'Room A102',
-        instructors: ['Dr. Smith', 'Prof. Johnson'],
-        learners: ['Alice', 'Bob', 'Charlie'],
-        group: {
-          code: 'G1',
-          label: 'Group 1',
-        },
-        course: {
-          code: 'GL101',
-          label: 'Génie logiciel',
-          moduleName: 'UV_203',
-        },
-
-      },
-      {
-        title: 'GPU',
-        start: new Date(2024, 10, 4, 16, 0),
-        end: new Date(2024, 10, 4, 18, 0),
-        classType: 'Tutorial',
-        room: 'Room A103',
-        instructors: ['Dr. Smith', 'Prof. Johnson'],
-        learners: ['Alice', 'Bob', 'Charlie'],
-        group: {
-          code: 'G1',
-          label: 'Group 1',
-        },
-        course: {
-          code: 'GPU101',
-          label: 'GPU',
-          moduleName: 'UV_203',
-        },
-      },
-      {
-        title: 'IA',
-        start: new Date(2024, 10, 5, 8, 0),
-        end: new Date(2024, 10, 5, 12, 15),
-        classType: 'Lab',
-        room: 'Room A101',
-        instructors: ['Dr. Smith', 'Prof. Johnson'],
-        learners: ['Alice', 'Bob', 'Charlie'],
-        group: {
-          code: 'G1',
-          label: 'Group 1',
-        },
-        course: {
-          code: 'IA101',
-          label: 'Intelligence artificielle',
-          moduleName: 'UV_203',
-        },
-      },
-      {
-        title: 'ISC',
-        start: new Date(2024, 10, 5, 13, 45),
-        end: new Date(2024, 10, 5, 18, 0),
-        classType: 'Tutorial',
-        room: 'Room A103',
-        instructors: ['Dr. Smith', 'Prof. Johnson'],
-        learners: ['Alice', 'Bob', 'Charlie'],
-        group: {
-          code: 'G1',
-          label: 'Group 1',
-        },
-        course: {
-          code: 'ISC101',
-          label: 'Ingénierie de systèmes complexes',
-          moduleName: 'UV_203',
-        },
-      },
-      {
-        title: 'PW',
-        start: new Date(2024, 10, 6, 8, 0),
-        end: new Date(2024, 10, 6, 12, 15),
-        classType: 'Lab',
-        room: 'Room A101',
-        instructors: ['Dr. Smith', 'Prof. Johnson'],
-        learners: ['Alice', 'Bob', 'Charlie'],
-        group: {
-          code: 'G1',
-          label: 'Group 1',
-        },
-        course: {
-          code: 'PW101',
-          label: 'Programmation web',
-          moduleName: 'UV_203',
-        },
-
-      },
-      {
-        title: 'RLP',
-        start: new Date(2024, 10, 6, 13, 45),
-        end: new Date(2024, 10, 6, 15, 45),
-        classType: 'Lecture',
-        room: 'Room A102',
-        instructors: ['Dr. Smith', 'Prof. Johnson'],
-        learners: ['Alice', 'Bob', 'Charlie'],
-        group: {
-          code: 'G1',
-          label: 'Group 1',
-        },
-        course: {
-          code: 'RLP101',
-          label: 'Robotique et langage Python',
-          moduleName: 'UV_203',
-        },
-      },
-      {
-        title: 'ROS',
-        start: new Date(2024, 10, 6, 16, 0),
-        end: new Date(2024, 10, 6, 18, 0),
-        classType: 'Tutorial',
-        room: 'Room A103',
-        instructors: ['Dr. Smith', 'Prof. Johnson'],
-        learners: ['Alice', 'Bob', 'Charlie'],
-        group: {
-          code: 'G1',
-          label: 'Group 1',
-        },
-        course: {
-          code: 'ROS101',
-          label: 'Robot Operating System',
-          moduleName: 'UV_203',
-        },
-      },
-      {
-        title: 'SIE',
-        start: new Date(2024, 10, 7, 8, 0),
-        end: new Date(2024, 10, 7, 10, 0),
-        classType: 'Lab',
-        room: 'Room A101',
-        instructors: ['Dr. Smith', 'Prof. Johnson'],
-        learners: ['Alice', 'Bob', 'Charlie'],
-        group: {
-          code: 'G1',
-          label: 'Group 1',
-        },
-        course: {
-          code: 'SIE101',
-          label: 'Systèmes informatiques embarqués',
-          moduleName: 'UV_203',
-        },
-      },
-      {
-        title: 'VPO',
-        start: new Date(2024, 10, 7, 10, 15),
-        end: new Date(2024, 10, 7, 12, 15),
-        classType: 'Lecture',
-        room: 'Room A102',
-        instructors: ['Dr. Smith', 'Prof. Johnson'],
-        learners: ['Alice', 'Bob', 'Charlie'],
-        group: {
-          code: 'G1',
-          label: 'Group 1',
-        },
-        course: {
-          code: 'VPO101',
-          label: 'Vision par ordinateur',
-          moduleName: 'UV_203',
-        },
-      },
-      {
-        title: 'AMC',
-        start: new Date(2024, 10, 7, 13, 45),
-        end: new Date(2024, 10, 7, 15, 45),
-        classType: 'Tutorial',
-        room: 'Room A103',
-        instructors: ['Dr. Smith', 'Prof. Johnson'],
-        learners: ['Alice', 'Bob', 'Charlie'],
-        group: {
-          code: 'G1',
-          label: 'Group 1',
-        },
-        course: {
-          code: 'AMC101',
-          label: 'Architectures multi-cœur',
-          moduleName: 'UV_203',
-        },
-      },
-      {
-        title: 'GL',
-        start: new Date(2024, 10, 7, 16, 0),
-        end: new Date(2024, 10, 7, 18, 0),
-        classType: 'Lab',
-        room: 'Room A101',
-        instructors: ['Dr. Smith', 'Prof. Johnson'],
-        learners: ['Alice', 'Bob', 'Charlie'],
-        group: {
-          code: 'G1',
-          label: 'Group 1',
-        },
-        course: {
-          code: 'GL101',
-          label: 'Génie logiciel',
-          moduleName: 'UV_203',
-        }
-      },
-      {
-        title: 'GPU',
-        start: new Date(2024, 10, 8, 8, 0),
-        end: new Date(2024, 10, 8, 12, 15),
-        classType: 'Lecture',
-        room: 'Room A102',
-        instructors: ['Dr. Smith', 'Prof. Johnson'],
-        learners: ['Alice', 'Bob', 'Charlie'],
-        group: {
-          code: 'G1',
-          label: 'Group 1',
-        },
-        course: {
-          code: 'GPU101',
-          label: 'GPU',
-          moduleName: 'UV_203',
-        },
-      },
-      {
-        title: 'IA',
-        start: new Date(2024, 10, 8, 13, 45),
-        end: new Date(2024, 10, 8, 15, 45),
-        classType: 'Tutorial',
-        room: 'Room A103',
-        instructors: ['Dr. Smith', 'Prof. Johnson'],
-        learners: ['Alice', 'Bob', 'Charlie'],
-        group: {
-          code: 'G1',
-          label: 'Group 1',
-        },
-        course: {
-          code: 'IA101',
-          label: 'Intelligence artificielle',
-          moduleName: 'UV_203',
-        },
-      },
-      {
-        title: 'ISC',
-        start: new Date(2024, 10, 8, 16, 0),
-        end: new Date(2024, 10, 8, 18, 0),
-        classType: 'Lab',
-        room: 'Room A101',
-        instructors: ['Dr. Smith', 'Prof. Johnson'],
-        learners: ['Alice', 'Bob', 'Charlie'],
-        group: {
-          code: 'G1',
-          label: 'Group 1',
-        },
-        course: {
-          code: 'ISC101',
-          label: 'Ingénierie de systèmes complexes',
-          moduleName: 'UV_203',
-        },
+      error: (error) => {
+        console.error('Error fetching classes:', error);
       }
-    ];
+    });
+    this.subscriptions.add(classSub);
   }
 
   /**
