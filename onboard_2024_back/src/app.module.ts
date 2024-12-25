@@ -14,6 +14,8 @@ import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { ClassModule } from './class/class.module';
 import { UserModule } from './user/user.module';
+import { RoomModule } from './room/room.module';
+import { GroupModule } from './group/group.module';
 
 /**
  * @fileoverview Defines the root application module, configuring imports, controllers, and providers.
@@ -35,6 +37,8 @@ import { UserModule } from './user/user.module';
     AuthModule,
     ClassModule,
     UserModule,
+    RoomModule,
+    GroupModule,
   ],
   controllers: [AppController],
   providers: [AppService],

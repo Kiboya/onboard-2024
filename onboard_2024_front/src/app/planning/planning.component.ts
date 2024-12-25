@@ -20,6 +20,8 @@ import { Subscription } from 'rxjs';
 // Local Services and Components
 import { PlanningService } from '../services/planning.service';
 import { ClassService } from '../services/class.service';
+import { ActivatedRoute } from '@angular/router';
+import { ClassResponseDto } from '../models/class-response-dto.interface';
 
 /**
  * Interface for a calendar event.
@@ -87,26 +89,33 @@ export class PlanningComponent implements OnInit, OnDestroy {
    * 
    * @param dialog - Service to open dialogs.
    * @param planningService - Service to manage planning data.
+   * @param classService - Service to manage class data.
    * @param translocoService - Service for handling translations.
+   * @param route - Service to access route parameters.
    */
   constructor(
     private dialog: MatDialog,
     private planningService: PlanningService,
     private classService: ClassService,
-    private translocoService: TranslocoService
+    private translocoService: TranslocoService,
+    private route: ActivatedRoute,
   ) { }
 
   /**
    * Initializes the component by subscribing to language changes and setting up the current week.
    */
   ngOnInit(): void {
-    // Load user classes
-    this.loadUserClasses();
+
+    // Subscribe to route query params that define the classes to display
+    const routeSub = this.route.queryParamMap.subscribe((params) => {
+      this.loadClassesFromParams();
+    });
+    this.subscriptions.add(routeSub);
 
     // Subscribe to language changes
     const langSub = this.translocoService.langChanges$.subscribe(lang => {
       this.currentLanguage = lang;
-      this.loadUserClasses();
+      this.loadClassesFromParams();
     });
     this.subscriptions.add(langSub);
 
@@ -121,31 +130,85 @@ export class PlanningComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Loads the user's classes and sets up the events mapping.
+   * Loads classes based on the query parameters in the route.
    */
-  private loadUserClasses(): void {
-    const classSub = this.classService.getUserClasses().subscribe({
+  private loadClassesFromParams(): void {
+    const params = this.route.snapshot.queryParamMap;
+    const groupParam = params.get('groupIds');
+    const roomParam = params.get('roomIds');
+  
+    if (groupParam) {
+      const groupIds = groupParam.split(',').map(id => parseInt(id, 10));
+      this.loadClassesByGroups(groupIds);
+    } else if (roomParam) {
+      const roomIds = roomParam.split(',').map(id => parseInt(id, 10));
+      this.loadClassesByRooms(roomIds);
+    } else {
+      this.loadUserClasses();
+    }
+  }
+
+  /**
+   * Loads classes where the user is an attendee.
+   */
+  loadUserClasses(): void {
+    this.classService.getUserClasses().subscribe({
       next: (classes) => {
-        this.events = classes.map(cls => ({
-          title: cls.course.name,
-          start: new Date(`${cls.date}T${cls.startingTime}`),
-          end: new Date(`${cls.date}T${cls.endingTime}`),
-          classType: cls.classType,
-          room: cls.room.name,
-          instructors: cls.professors.map(prof => prof.name),
-          learners: cls.attendees.map(user => `${user.firstName} ${user.lastName}`),
-          groups: cls.groups.map(group => ({ name: group.name })),
-          course: {
-            name: cls.course.name,
-          },
-        }));
+        this.events = this.mapClassesToEvents(classes);
         this.computeEventsMapping();
       },
-      error: (error) => {
-        console.error('Error fetching classes:', error);
-      }
+      error: (error) => console.error('Error fetching user classes:', error)
     });
-    this.subscriptions.add(classSub);
+  }
+
+  /**
+   * Loads classes for the provided group IDs.
+   * @param groupIds - The IDs of the groups to load classes for.
+   */
+  loadClassesByGroups(groupIds: number[]): void {
+    this.classService.getClassesByGroups(groupIds).subscribe({
+      next: (classes) => {
+        this.events = this.mapClassesToEvents(classes);
+        this.computeEventsMapping();
+      },
+      error: (error) => console.error('Error fetching classes by groups:', error)
+    });
+  }
+
+  /**
+   * Loads classes for the provided room IDs.
+   * @param roomIds - The IDs of the rooms to load classes
+   */
+  loadClassesByRooms(roomIds: number[]): void {
+    this.classService.getClassesByRooms(roomIds).subscribe({
+      next: (classes) => {
+        this.events = this.mapClassesToEvents(classes);
+        this.computeEventsMapping();
+      },
+      error: (error) => console.error('Error fetching classes by rooms:', error)
+    });
+  }
+
+  /**
+   * Maps class data to calendar events.
+   * 
+   * @param classes - The classes to map.
+   * @returns An array of calendar events.
+   */
+  mapClassesToEvents(classes: ClassResponseDto[]): CalendarEvent[] {
+    return classes.map(cls => ({
+      title: cls.course.name,
+      start: new Date(`${cls.date}T${cls.startingTime}`),
+      end: new Date(`${cls.date}T${cls.endingTime}`),
+      classType: cls.classType,
+      room: cls.room.name,
+      instructors: cls.professors.map(prof => prof.name),
+      learners: cls.attendees.map(user => `${user.firstName} ${user.lastName}`),
+      groups: cls.groups.map(group => ({ name: group.name })),
+      course: {
+        name: cls.course.name,
+      },
+    }));
   }
 
   /**

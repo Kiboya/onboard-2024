@@ -31,6 +31,14 @@
       "instructors": "Instructors",
       "students": "Students",
       "close": "Close"
+    },
+    "filter": {
+      "title": {
+        "rooms": "Rooms",
+        "groups": "Groups"
+      },
+      "apply": "Apply",
+      "validation-message": "Please select one or multiple {{ title }} to apply the filter"
     }
   },
   "home": {

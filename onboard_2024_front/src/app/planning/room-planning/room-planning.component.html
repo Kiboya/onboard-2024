@@ -1,0 +1,8 @@
+<!-- src/app/planning/room-planning/room-planning.component.html -->
+
+<app-filter-selection
+  title="{{'planning.filter.title.rooms' | transloco}}"
+  [availableItems]="availableRooms"
+  (itemsSelected)="onRoomsSelected($event)"
+  article="une">
+</app-filter-selection>

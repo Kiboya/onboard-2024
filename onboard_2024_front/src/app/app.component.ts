@@ -108,8 +108,8 @@ export class AppComponent implements OnInit, OnDestroy {
       expanded: false,
       children: [
         { icon: 'calendar_month', routerLink: '/planning', labelKey: 'sidenav.planning.my-planning' },
-        { icon: 'calendar_month', routerLink: '/planning', labelKey: 'sidenav.planning.group-planning' },
-        { icon: 'calendar_month', routerLink: '/planning', labelKey: 'sidenav.planning.room-planning' }
+        { icon: 'calendar_month', routerLink: '/group-planning', labelKey: 'sidenav.planning.group-planning' },
+        { icon: 'calendar_month', routerLink: '/room-planning', labelKey: 'sidenav.planning.room-planning' }
       ]
     },
   ];

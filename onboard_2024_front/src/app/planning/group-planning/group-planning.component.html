@@ -1,0 +1,8 @@
+<!-- src/app/planning/group-planning/group-planning.component.html -->
+
+<app-filter-selection
+  title="{{'planning.filter.title.groups' | transloco}}"
+  [availableItems]="availableGroups"
+  (itemsSelected)="onGroupsSelected($event)"
+  article="un">
+</app-filter-selection>

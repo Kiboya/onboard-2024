@@ -31,6 +31,14 @@
             "instructors": "Intervenants",
             "students": "Étudiants",
             "close": "Fermer"
+        },
+        "filter": {
+            "title": {
+                "rooms": "Salles",
+                "groups": "Groupes"
+            },
+            "apply": "Appliquer",
+            "validation-message": "Veuillez sélectionner {{ article }} ou plusieurs {{ title }} pour appliquer le filtre."
         }
     },
     "home": {

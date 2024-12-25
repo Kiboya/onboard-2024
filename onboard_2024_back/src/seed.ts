@@ -102,6 +102,28 @@ export async function seedDatabase(dataSource: DataSource) {
         lastName: 'Builder',
         groupNames: ['Génie Civil', 'Mathématiques'],
       },
+      // Additional Users
+      {
+        username: 'carol.white',
+        password: 'carolpwd',
+        firstName: 'Carol',
+        lastName: 'White',
+        groupNames: ['Droit', 'Physique'],
+      },
+      {
+        username: 'dave.green',
+        password: 'davepwd',
+        firstName: 'Dave',
+        lastName: 'Green',
+        groupNames: ['Informatique', 'Mathématiques'],
+      },
+      {
+        username: 'eve.black',
+        password: 'evepwd',
+        firstName: 'Eve',
+        lastName: 'Black',
+        groupNames: ['Génie Civil', 'Physique'],
+      },
     ];
 
     for (const userData of usersData) {
@@ -154,6 +176,22 @@ export async function seedDatabase(dataSource: DataSource) {
         name_en: 'Quantum Physics',
         groupNames: ['Physique'],
       },
+      // Additional Courses
+      {
+        name: 'Droit International',
+        name_en: 'International Law',
+        groupNames: ['Droit'],
+      },
+      {
+        name: 'Algèbre Linéaire',
+        name_en: 'Linear Algebra',
+        groupNames: ['Mathématiques'],
+      },
+      {
+        name: 'Architecture Informatique',
+        name_en: 'Computer Architecture',
+        groupNames: ['Informatique'],
+      },
     ];
 
     for (const courseData of coursesData) {
@@ -187,6 +225,11 @@ export async function seedDatabase(dataSource: DataSource) {
       { name: 'Jane Doe' },
       { name: 'Albert Newton' },
       { name: 'Marie Curie' },
+      // Additional Professors
+      { name: 'Isaac Einstein' },
+      { name: 'Grace Hopper' },
+      { name: 'Alan Turing' },
+      { name: 'Ada Lovelace' },
     ];
 
     const professors = [];
@@ -209,6 +252,8 @@ export async function seedDatabase(dataSource: DataSource) {
       { name: 'E102' },
       { name: 'B201' },
       { name: 'C201' },
+      { name: 'A301' },
+      { name: 'F401' },
     ];
 
     const rooms = [];
@@ -230,42 +275,74 @@ export async function seedDatabase(dataSource: DataSource) {
     startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay()); // Sunday
     const classesData = [];
 
-    for (let i = 0; i < 5; i++) { // Monday to Friday
-      const classDate = new Date(startOfWeek);
-      classDate.setDate(startOfWeek.getDate() + i);
+    // Define class times
+    const classTimes = [
+      { startingTime: '09:00', endingTime: '10:30' },
+      { startingTime: '11:00', endingTime: '12:30' },
+      { startingTime: '14:00', endingTime: '15:30' },
+      { startingTime: '16:00', endingTime: '17:30' },
+    ];
 
-      classesData.push(
-        {
+    // Retrieve all courses, rooms, and professors
+    const allCourses = await courseRepository.find();
+    const allRooms = await roomRepository.find();
+    const allProfessors = await professorRepository.find();
+
+    for (let i = 1; i <= 5; i++) { // Monday to Friday
+      const classDate = new Date(startOfWeek);
+      classDate.setDate(startOfWeek.getDate() + i); // Monday is 1
+
+      for (const time of classTimes) {
+        // Select a course in rotation
+        const course = allCourses[(i + hashCode(time.startingTime)) % allCourses.length];
+        // Select a room in rotation
+        const room = allRooms[(i + hashCode(time.startingTime)) % allRooms.length];
+        // Select a professor in rotation
+        const professor = allProfessors[(i + hashCode(time.startingTime)) % allProfessors.length];
+
+        classesData.push({
           date: classDate,
-          startingTime: '09:00',
-          endingTime: '10:30',
-          classType: 'Cours Magistral',
-          classType_en: 'Lecture',
-          courseName: 'Programmation Web',
-          roomName: 'D101',
-          professorNames: ['John Smith'],
-        },
-        {
+          startingTime: time.startingTime,
+          endingTime: time.endingTime,
+          classType: course.name === 'Travaux Pratiques' ? 'Travaux Pratiques' : 'Cours Magistral',
+          classType_en: course.name === 'Travaux Pratiques' ? 'Lab' : 'Lecture',
+          courseName: course.name,
+          roomName: room.name,
+          professorNames: [professor.name],
+        });
+      }
+    }
+
+    // Additional Classes for Expanded Courses
+    for (let i = 1; i <= 5; i++) { // Monday to Friday
+      const classDate = new Date(startOfWeek);
+      classDate.setDate(startOfWeek.getDate() + i); // Monday is 1
+
+      // Evening Classes
+      const eveningTimes = [
+        { startingTime: '18:00', endingTime: '19:30' },
+        { startingTime: '20:00', endingTime: '21:30' },
+      ];
+
+      for (const time of eveningTimes) {
+        // Select a different course
+        const course = allCourses[(i * 2 + hashCode(time.startingTime)) % allCourses.length];
+        // Select a different room
+        const room = allRooms[(i * 2 + hashCode(time.startingTime)) % allRooms.length];
+        // Select a different professor
+        const professor = allProfessors[(i * 2 + hashCode(time.startingTime)) % allProfessors.length];
+
+        classesData.push({
           date: classDate,
-          startingTime: '11:00',
-          endingTime: '12:30',
-          classType: 'Cours Magistral',
-          classType_en: 'Lecture',
-          courseName: 'Calcul',
-          roomName: 'B201',
-          professorNames: ['Albert Newton'],
-        },
-        {
-          date: classDate,
-          startingTime: '14:00',
-          endingTime: '15:30',
-          classType: 'Travaux Pratiques',
-          classType_en: 'Lab',
-          courseName: 'Physique Quantique',
-          roomName: 'C201',
-          professorNames: ['Marie Curie'],
-        },
-      );
+          startingTime: time.startingTime,
+          endingTime: time.endingTime,
+          classType: course.name === 'Travaux Pratiques' ? 'Travaux Pratiques' : 'Cours Magistral',
+          classType_en: course.name === 'Travaux Pratiques' ? 'Lab' : 'Lecture',
+          courseName: course.name,
+          roomName: room.name,
+          professorNames: [professor.name],
+        });
+      }
     }
 
     for (const classData of classesData) {
@@ -280,7 +357,7 @@ export async function seedDatabase(dataSource: DataSource) {
       // Assign course to class
       const course = await courseRepository.findOne({
         where: { name: classData.courseName },
-        relations: ['classes'],
+        relations: ['groups'],
       });
       if (course) {
         classEntity.course = course;
@@ -302,7 +379,7 @@ export async function seedDatabase(dataSource: DataSource) {
       }
 
       await classRepository.save(classEntity);
-      console.log(`Class for course '${classData.courseName}' on ${classData.date.toDateString()} added.`);
+      console.log(`Class for course '${classData.courseName}' on ${classData.date.toDateString()} at ${classData.startingTime} added.`);
     }
   } else {
     console.log('Classes already seeded.');
@@ -310,3 +387,18 @@ export async function seedDatabase(dataSource: DataSource) {
 
   console.log('Database seeding completed.');
 }
+
+/**
+ * Generates a hash code for the given string.
+ * @param str The string for which to generate a hash code.
+ * @returns The hash code for the given string. 
+ */
+export function hashCode(str: string): number {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    const char = str.charCodeAt(i);
+    hash = ((hash << 5) - hash) + char;
+    hash |= 0; // Convert to 32bit integer
+  }
+  return Math.abs(hash);
+};

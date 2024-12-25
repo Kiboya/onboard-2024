@@ -1,0 +1,24 @@
+<!-- src/app/planning/filter-selection/filter-selection.component.html -->
+
+<div class="filter-selection">
+    <h3>{{ title }}</h3>
+    <mat-form-field appearance="fill" class="full-width">
+        <mat-label>{{ title }}</mat-label>
+        <mat-select multiple [(value)]="selectedItems">
+            <mat-option *ngFor="let item of availableItems" [value]="item.id">
+                {{ item.name }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <button 
+        mat-flat-button 
+        (click)="applySelection()" 
+        [disabled]="selectedItems.length === 0">
+        {{ 'planning.filter.apply' | transloco }}
+    </button>
+
+    <div *ngIf="selectedItems.length === 0" class="validation-message">
+        {{ 'planning.filter.validation-message' | transloco: { article: article, title: title.toLowerCase() } }}
+    </div>
+</div>
