@@ -52,14 +52,6 @@ export class Class {
   @ManyToOne(() => Room, room => room.classes, { eager: true })
   room: Room;
 
-  @ManyToMany(() => Group, group => group.classes, { eager: true })
-  @JoinTable({
-      name: 'class_groups',
-      joinColumn: { name: 'class_id', referencedColumnName: 'id' },
-      inverseJoinColumn: { name: 'group_id', referencedColumnName: 'id' },
-  })
-  groups: Group[];
-
   @ManyToMany(() => Professor, professor => professor.classes, { eager: true })
   @JoinTable({
       name: 'class_professors',

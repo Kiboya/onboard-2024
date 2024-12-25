@@ -243,7 +243,6 @@ export async function seedDatabase(dataSource: DataSource) {
           classType_en: 'Lecture',
           courseName: 'Programmation Web',
           roomName: 'D101',
-          groupNames: ['Informatique'],
           professorNames: ['John Smith'],
         },
         {
@@ -254,7 +253,6 @@ export async function seedDatabase(dataSource: DataSource) {
           classType_en: 'Lecture',
           courseName: 'Calcul',
           roomName: 'B201',
-          groupNames: ['Mathématiques'],
           professorNames: ['Albert Newton'],
         },
         {
@@ -265,9 +263,8 @@ export async function seedDatabase(dataSource: DataSource) {
           classType_en: 'Lab',
           courseName: 'Physique Quantique',
           roomName: 'C201',
-          groupNames: ['Physique'],
           professorNames: ['Marie Curie'],
-        }
+        },
       );
     }
 
@@ -293,15 +290,6 @@ export async function seedDatabase(dataSource: DataSource) {
       const room = await roomRepository.findOne({ where: { name: classData.roomName } });
       if (room) {
         classEntity.room = room;
-      }
-
-      // Assign groups to class
-      classEntity.groups = [];
-      for (const groupName of classData.groupNames) {
-        const group = await groupRepository.findOne({ where: { name: groupName } });
-        if (group) {
-          classEntity.groups.push(group);
-        }
       }
 
       // Assign professors to class

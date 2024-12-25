@@ -11,7 +11,6 @@ import {
   // Entities
   import { User } from '../user/user.entity';
   import { Course } from '../course/course.entity';
-  import { Class } from '../class/class.entity';
   
   /**
    * @fileoverview Defines the Group entity with its properties and relationships to other entities.
@@ -32,7 +31,4 @@ import {
   
     @ManyToMany(() => Course, course => course.groups)
     courses: Course[];
-  
-    @ManyToMany(() => Class, classEntity => classEntity.groups)
-    classes: Class[];
   }
