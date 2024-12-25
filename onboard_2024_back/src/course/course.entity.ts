@@ -24,6 +24,9 @@ import {
   
     @Column()
     name: string;
+
+    @Column({ nullable: true })
+    name_en: string;
   
     @ManyToMany(() => Group, group => group.courses)
     @JoinTable({

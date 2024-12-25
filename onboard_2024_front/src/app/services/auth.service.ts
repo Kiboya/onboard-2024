@@ -9,8 +9,10 @@ import { catchError, Observable, tap, throwError } from 'rxjs';
 import { LoginResponse } from '../models/login-response.interface';
 // Angular HTTP
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
+
 // Environments
-import { environment } from '../../environements/environment';
+
 
 /**
  * @fileoverview AuthService is responsible for handling user authentication.

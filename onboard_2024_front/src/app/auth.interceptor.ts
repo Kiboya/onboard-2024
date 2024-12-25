@@ -11,6 +11,7 @@ import { catchError } from 'rxjs/operators';
 
 // Services
 import { AuthService } from './services/auth.service';
+import { LanguageService } from './services/language.service';
 
 /**
  * AuthInterceptor is responsible for adding the user's token to the request headers.
@@ -24,18 +25,18 @@ export const authInterceptor: HttpInterceptorFn = (
   next: HttpHandlerFn
 ): Observable<HttpEvent<unknown>> => {
   const authService = inject(AuthService);
+  const languageService = inject(LanguageService);
   const router = inject(Router);
-  const token = authService.getToken();
 
-  // Clone the request and add the token to the headers
-  let clonedRequest = request;
-  if (token) {
-    clonedRequest = request.clone({
-      setHeaders: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-  }
+  const token = authService.getToken();
+  const currentLang = languageService.getActiveLanguage(); 
+
+  let clonedRequest = request.clone({
+    setHeaders: {
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      'accept-Language': currentLang
+    },
+  });
 
   // Handle the request and response errors
   return next(clonedRequest).pipe(

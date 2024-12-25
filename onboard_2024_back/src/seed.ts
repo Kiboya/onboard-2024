@@ -29,11 +29,26 @@ export async function seedDatabase(dataSource: DataSource) {
   if (groupCount === 0) {
     console.log('Seeding Groups...');
     const groupsData = [
-      { name: 'Computer Science' },
-      { name: 'Civil Engineering' },
-      { name: 'Law' },
-      { name: 'Mathematics' }, 
-      { name: 'Physics' },      
+      {
+        name: 'Informatique',
+        name_en: 'Computer Science'
+      },
+      {
+        name: 'Génie Civil',
+        name_en: 'Civil Engineering'
+      },
+      {
+        name: 'Droit',
+        name_en: 'Law'
+      },
+      {
+        name: 'Mathématiques',
+        name_en: 'Mathematics'
+      },
+      {
+        name: 'Physique',
+        name_en: 'Physics'
+      },
     ];
 
     const groups = [];
@@ -57,37 +72,36 @@ export async function seedDatabase(dataSource: DataSource) {
         password: 'password123',
         firstName: 'John',
         lastName: 'Doe',
-        groupNames: ['Computer Science'],
+        groupNames: ['Informatique', 'Génie Civil'],
       },
       {
         username: 'jane.smith',
         password: 'password123',
         firstName: 'Jane',
         lastName: 'Smith',
-        groupNames: ['Civil Engineering'],
+        groupNames: ['Informatique', 'Droit'],
       },
       {
         username: 'amo',
         password: 'riz',
         firstName: 'Amo',
         lastName: 'Riz',
-        groupNames: ['Computer Science'],
+        groupNames: ['Informatique', 'Droit'],
       },
       {
         username: 'alice.wonder',
         password: 'alicepwd',
         firstName: 'Alice',
         lastName: 'Wonder',
-        groupNames: ['Mathematics', 'Physics'],
+        groupNames: ['Mathématiques', 'Physique'],
       },
       {
         username: 'bob.builder',
         password: 'buildit',
         firstName: 'Bob',
         lastName: 'Builder',
-        groupNames: ['Law'],
+        groupNames: ['Génie Civil', 'Mathématiques'],
       },
-      // Add more users as needed
     ];
 
     for (const userData of usersData) {
@@ -121,26 +135,31 @@ export async function seedDatabase(dataSource: DataSource) {
     console.log('Seeding Courses...');
     const coursesData = [
       {
-        name: 'Web Programming',
-        groupNames: ['Computer Science'],
+        name: 'Programmation Web',
+        name_en: 'Web Programming',
+        groupNames: ['Informatique'],
       },
       {
-        name: 'Thermodynamics',
-        groupNames: ['Civil Engineering'],
+        name: 'Thermodynamique',
+        name_en: 'Thermodynamics',
+        groupNames: ['Génie Civil'],
       },
       {
-        name: 'Calculus',
-        groupNames: ['Mathematics'],
+        name: 'Calcul',
+        name_en: 'Calculus',
+        groupNames: ['Mathématiques', 'Physique'],
       },
       {
-        name: 'Quantum Physics',
-        groupNames: ['Physics'],
+        name: 'Physique Quantique',
+        name_en: 'Quantum Physics',
+        groupNames: ['Physique'],
       },
     ];
 
     for (const courseData of coursesData) {
       const course = courseRepository.create({
         name: courseData.name,
+        name_en: courseData.name_en,
       });
 
       // Assign groups to course
@@ -164,10 +183,10 @@ export async function seedDatabase(dataSource: DataSource) {
   if (professorCount === 0) {
     console.log('Seeding Professors...');
     const professorsData = [
-      { name: 'Prof. John Smith' },
-      { name: 'Prof. Jane Doe' },
-      { name: 'Prof. Albert Newton' }, 
-      { name: 'Prof. Marie Curie' }, 
+      { name: 'John Smith' },
+      { name: 'Jane Doe' },
+      { name: 'Albert Newton' },
+      { name: 'Marie Curie' },
     ];
 
     const professors = [];
@@ -186,10 +205,10 @@ export async function seedDatabase(dataSource: DataSource) {
   if (roomCount === 0) {
     console.log('Seeding Rooms...');
     const roomsData = [
-      { name: 'Room 101' },
-      { name: 'Room 102' },
-      { name: 'Room 201' }, 
-      { name: 'Lab 1' }, 
+      { name: 'D101' },
+      { name: 'E102' },
+      { name: 'B201' },
+      { name: 'C201' },
     ];
 
     const rooms = [];
@@ -214,37 +233,40 @@ export async function seedDatabase(dataSource: DataSource) {
     for (let i = 0; i < 5; i++) { // Monday to Friday
       const classDate = new Date(startOfWeek);
       classDate.setDate(startOfWeek.getDate() + i);
-      
+
       classesData.push(
         {
           date: classDate,
           startingTime: '09:00',
           endingTime: '10:30',
-          classType: 'Lecture',
-          courseName: 'Web Programming',
-          roomName: 'Room 101',
-          groupNames: ['Computer Science'],
-          professorNames: ['Prof. John Smith'],
+          classType: 'Cours Magistral',
+          classType_en: 'Lecture',
+          courseName: 'Programmation Web',
+          roomName: 'D101',
+          groupNames: ['Informatique'],
+          professorNames: ['John Smith'],
         },
         {
           date: classDate,
           startingTime: '11:00',
           endingTime: '12:30',
-          classType: 'Lecture',
-          courseName: 'Calculus',
-          roomName: 'Room 201',
-          groupNames: ['Mathematics'],
-          professorNames: ['Prof. Albert Newton'],
+          classType: 'Cours Magistral',
+          classType_en: 'Lecture',
+          courseName: 'Calcul',
+          roomName: 'B201',
+          groupNames: ['Mathématiques'],
+          professorNames: ['Albert Newton'],
         },
         {
           date: classDate,
           startingTime: '14:00',
           endingTime: '15:30',
-          classType: 'Lab',
-          courseName: 'Quantum Physics',
-          roomName: 'Lab 1',
-          groupNames: ['Physics'],
-          professorNames: ['Prof. Marie Curie'],
+          classType: 'Travaux Pratiques',
+          classType_en: 'Lab',
+          courseName: 'Physique Quantique',
+          roomName: 'C201',
+          groupNames: ['Physique'],
+          professorNames: ['Marie Curie'],
         }
       );
     }
@@ -255,6 +277,7 @@ export async function seedDatabase(dataSource: DataSource) {
         startingTime: classData.startingTime,
         endingTime: classData.endingTime,
         classType: classData.classType,
+        classType_en: classData.classType_en,
       });
 
       // Assign course to class

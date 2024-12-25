@@ -8,6 +8,7 @@ export class ClassDto {
     startingTime: string;
     endingTime: string;
     classType: string;
+    classType_en: string;
     labelCode: string;
     course: Course;
     room: Room;

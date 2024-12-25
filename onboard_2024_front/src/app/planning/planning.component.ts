@@ -12,7 +12,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatTabsModule } from '@angular/material/tabs';
 
 // Third-Party Libraries
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoModule, TranslocoService } from '@ngneat/transloco';
 
 // RxJS
 import { Subscription } from 'rxjs';
@@ -63,6 +63,7 @@ interface EventsMapping {
     MatIconModule,
     MatDialogModule,
     MatTabsModule,
+    TranslocoModule,
   ],
   templateUrl: './planning.component.html',
   styleUrls: ['./planning.component.scss']
@@ -99,9 +100,13 @@ export class PlanningComponent implements OnInit, OnDestroy {
    * Initializes the component by subscribing to language changes and setting up the current week.
    */
   ngOnInit(): void {
+    // Load user classes
+    this.loadUserClasses();
+
     // Subscribe to language changes
     const langSub = this.translocoService.langChanges$.subscribe(lang => {
       this.currentLanguage = lang;
+      this.loadUserClasses();
     });
     this.subscriptions.add(langSub);
 
@@ -113,8 +118,12 @@ export class PlanningComponent implements OnInit, OnDestroy {
       this.setCurrentWeek(date);
     });
     this.subscriptions.add(weekSub);
+  }
 
-    // Fetch classes from backend
+  /**
+   * Loads the user's classes and sets up the events mapping.
+   */
+  private loadUserClasses(): void {
     const classSub = this.classService.getUserClasses().subscribe({
       next: (classes) => {
         this.events = classes.map(cls => ({
@@ -125,7 +134,7 @@ export class PlanningComponent implements OnInit, OnDestroy {
           room: cls.room.name,
           instructors: cls.professors.map(prof => prof.name),
           learners: cls.attendees.map(user => `${user.firstName} ${user.lastName}`),
-          groups: cls.groups.map(group => ({ name: group.name })), 
+          groups: cls.groups.map(group => ({ name: group.name })),
           course: {
             name: cls.course.name,
           },

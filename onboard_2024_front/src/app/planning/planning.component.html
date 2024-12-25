@@ -43,24 +43,24 @@
 <ng-template #eventDetailsModal let-data>
     <h2 mat-dialog-title>{{ data.course.name }}</h2>
     <mat-dialog-content>
-        <p><strong>Module:</strong> {{ data.course.name }}</p>
-        <p><strong>Groups:</strong>
+        <p><strong>{{ 'planning.modal.module' | transloco}}:</strong> {{ data.course.name }}</p>
+        <p><strong>{{ 'planning.modal.groups' | transloco}}:</strong>
             <span *ngFor="let group of data.groups; let last = last">
             {{ group.name }}<span *ngIf="!last">, </span>
             </span>
         </p>
-        <p><strong>Type:</strong> {{ data.classType }}</p>
-        <p><strong>Room:</strong> {{ data.room }}</p>
+        <p><strong>{{ 'planning.modal.type' | transloco}}:</strong> {{ data.classType }}</p>
+        <p><strong>{{ 'planning.modal.room' | transloco}}:</strong> {{ data.room }}</p>
 
         <mat-tab-group [dynamicHeight]='false' fitInkBarToContent>
-            <mat-tab label="Instructors">
+            <mat-tab label="{{ 'planning.modal.instructors' | transloco}}">
                 <div class="tab">
                     <ul>
                         <li *ngFor="let instructor of data.instructors">{{ instructor }}</li>
                     </ul>
                 </div>
             </mat-tab>
-            <mat-tab label="Learners">
+            <mat-tab label="{{ 'planning.modal.students' | transloco}}">
                 <div class="tab">
                     <ul>
                         <li *ngFor="let learner of data.learners">{{ learner }}</li>

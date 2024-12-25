@@ -33,8 +33,18 @@ export class Class {
   @Column({ type: 'time' })
   endingTime: string;
 
-  @Column()
-  classType: string;
+  @Column({ 
+    type: 'enum',
+    enum: ['Cours Magistral', 'Travaux Pratiques', 'Travaux Dirigés', 'Devoir Surveillé', 'Evénement'],
+  })
+  classType: 'Cours Magistral' | 'Travaux Pratiques' | 'Travaux Dirigés' | 'Devoir Surveillé' | 'Evénement';
+
+  @Column({
+    type: 'enum',
+    enum: ['Lecture', 'Lab', 'Tutorials', 'Test', 'Event'],
+    nullable: true,
+  })
+  classType_en: 'Lecture' | 'Lab' | 'Tutorials' | 'Test' | 'Event';
 
   @ManyToOne(() => Course, course => course.classes, { eager: true })
   course: Course;

@@ -31,10 +31,15 @@ import { Class } from './class.entity';
 export class ClassController {
   constructor(private readonly classService: ClassService) { }
 
+  private getLanguage(req: any): 'en' | 'fr' {
+    const langHeader = req.headers['accept-language'] || req.headers['x-lang'];
+    return langHeader === 'en' ? 'en' : 'fr';
+  }
+
   /**
    * Retrieves classes associated with the authenticated user.
    *
-   * @param req - The request object containing the authorization header.
+   * @param req - The request object containing the authorization header and language preference.
    * @returns An array of ClassResponseDto objects.
    * @throws {UnauthorizedException} If the token is invalid.
    */
@@ -43,7 +48,8 @@ export class ClassController {
   async getUserClasses(@Req() req: any): Promise<ClassResponseDto[]> {
     try {
       const token = req.headers.authorization.split(' ')[1];
-      return await this.classService.getClassesForUser(token);
+      const lang = this.getLanguage(req);
+      return await this.classService.getClassesForUser(token, lang);
     } catch (error) {
       throw error;
     }
@@ -53,30 +59,36 @@ export class ClassController {
    * Retrieves classes based on the provided group IDs.
    *
    * @param groupIds - A comma-separated string of group IDs.
+   * @param req - The request object containing the language preference.
    * @returns An array of ClassResponseDto objects.
    */
   @UseGuards(JwtAuthGuard)
   @Get('group')
   async getClassesByGroups(
-    @Query('groupIds') groupIds: string
+    @Query('groupIds') groupIds: string,
+    @Req() req: any
   ): Promise<ClassResponseDto[]> {
     const ids = groupIds.split(',').map(id => parseInt(id, 10));
-    return this.classService.getClassesByGroups(ids);
+    const lang = this.getLanguage(req);
+    return this.classService.getClassesByGroups(ids, lang);
   }
 
   /**
    * Retrieves classes based on the provided room IDs.
    *
    * @param roomIds - A comma-separated string of room IDs.
+   * @param req - The request object containing the language preference.
    * @returns An array of ClassResponseDto objects.
    */
   @UseGuards(JwtAuthGuard)
   @Get('rooms')
   async getClassesByRooms(
-    @Query('roomIds') roomIds: string
+    @Query('roomIds') roomIds: string,
+    @Req() req: any
   ): Promise<ClassResponseDto[]> {
     const ids = roomIds.split(',').map(id => parseInt(id, 10));
-    return this.classService.getClassesByRooms(ids);
+    const lang = this.getLanguage(req);
+    return this.classService.getClassesByRooms(ids, lang);
   }
 
   /**

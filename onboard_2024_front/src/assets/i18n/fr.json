@@ -22,6 +22,17 @@
         },
         "logout": "Déconnexion"
     },
+    "planning": {
+        "modal": {
+            "module": "Module",
+            "groups": "Groupes",
+            "type": "Type",
+            "room": "Salle",
+            "instructors": "Intervenants",
+            "students": "Étudiants",
+            "close": "Fermer"
+        }
+    },
     "home": {
         "cards": [
             {
@@ -349,6 +360,5 @@
                 ]
             }
         ]
-    },
-    "planning": {}
+    }
 }

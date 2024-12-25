@@ -29,4 +29,13 @@ export class LanguageService {
     this.translocoService.setActiveLang(language);
     localStorage.setItem('language', language);
   }
+
+  /**
+   * Gets the active language in the application.
+   * 
+   * @returns The active language.
+   */
+  getActiveLanguage() {
+    return this.translocoService.getActiveLang();
+  }
 }

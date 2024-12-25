@@ -23,6 +23,9 @@ import {
   
     @Column({ unique: true })
     name: string;
+
+    @Column({ nullable: true })
+    name_en: string;
   
     @ManyToMany(() => User, user => user.groups)
     users: User[];

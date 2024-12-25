@@ -22,6 +22,17 @@
     },
     "logout": "Logout"
   },
+  "planning": {
+    "modal": {
+      "module": "Module",
+      "groups": "Groups",
+      "type": "Type",
+      "room": "Room",
+      "instructors": "Instructors",
+      "students": "Students",
+      "close": "Close"
+    }
+  },
   "home": {
     "cards": [
       {
