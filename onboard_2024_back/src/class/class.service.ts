@@ -168,11 +168,16 @@ export class ClassService {
         name: lang === 'en' && g.name_en ? g.name_en : g.name,
       })),
       professors: cls.professors,
-      attendees: Array.from(new Set(cls.course.groups.flatMap(g => g.users))).map(u => ({
-        username: u.username,
-        firstName: u.firstName,
-        lastName: u.lastName,
-      })),
+      attendees: Array.from(new Set(cls.course.groups.flatMap(g => g.users.map(u => u.id))))
+        .map(id => {
+          const user = cls.course.groups.flatMap(g => g.users).find(u => u.id === id);
+          return user ? {
+            username: user.username,
+            firstName: user.firstName,
+            lastName: user.lastName,
+          } : null;
+        })
+        .filter(u => u !== null),
     }));
   }
 
@@ -207,11 +212,16 @@ export class ClassService {
         name: lang === 'en' && g.name_en ? g.name_en : g.name,
       })),
       professors: cls.professors,
-      attendees: Array.from(new Set(cls.course.groups.flatMap(g => g.users))).map(u => ({
-        username: u.username,
-        firstName: u.firstName,
-        lastName: u.lastName,
-      })),
+      attendees: Array.from(new Set(cls.course.groups.flatMap(g => g.users.map(u => u.id))))
+        .map(id => {
+          const user = cls.course.groups.flatMap(g => g.users).find(u => u.id === id);
+          return user ? {
+            username: user.username,
+            firstName: user.firstName,
+            lastName: user.lastName,
+          } : null;
+        })
+        .filter(u => u !== null),
     }));
   }
 }
