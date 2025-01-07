@@ -1,0 +1,67 @@
+// **************************
+// Card Container Styles
+// **************************
+.card-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+// **************************
+// Absence Form Container Styles
+// **************************
+.absence-form-container {
+    padding: 24px;
+    box-shadow: none;
+    overflow: hidden;
+    background-color: var(--sys-surface-container);
+    max-width: 700px;
+    width: 100%;
+    margin: 0;
+}
+
+// **************************
+// Form Header Styles
+// **************************
+.form-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+
+    h2 {
+        font-size: 1.5rem;
+        font-weight: 600;
+    }
+}
+
+// **************************
+// Absence Form Styles
+// **************************
+.absence-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    .form-group {
+        display: flex;
+        gap: 16px;
+
+        .half-width {
+            flex: 1;
+        }
+    }
+
+    button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        width: fit-content;
+        margin: 0 auto;
+        padding: 12px 24px;
+        font-size: 1rem;
+        font-weight: 600;
+    }
+}

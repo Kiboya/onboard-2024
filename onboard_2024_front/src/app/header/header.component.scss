@@ -1,6 +1,5 @@
 // header.component.scss
 @use '@angular/material' as mat;
-@use '../../styles/variables' as *;
 
 
 // **************************
@@ -38,7 +37,7 @@ mat-toolbar {
     margin-left: 4px;
 
     mat-icon-button {
-      padding: 0 $gap-medium;
+      padding: 0 16px;
     }
   }
 
@@ -46,10 +45,10 @@ mat-toolbar {
   // Logo Container Styles
   // **************************
   .logo-wrapper {
-    padding: 0px $gap-small;
+    padding: 0px 12px;
     display: flex;
     align-items: center;
-    
+
     app-logo {
       cursor: pointer;
     }
@@ -63,7 +62,7 @@ mat-toolbar {
     align-items: center;
 
     .current-week {
-      margin: 0 $gap-small;
+      margin: 0 12px;
       font-weight: bold;
     }
 
@@ -87,7 +86,7 @@ mat-toolbar {
     align-items: center;
 
     .language-switcher {
-      margin: 0px $gap-small;
+      margin: 0px 12px;
     }
 
     .theme-toggle-button {

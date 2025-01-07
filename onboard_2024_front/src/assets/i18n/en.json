@@ -13,7 +13,11 @@
     "informations": "Informations",
     "administrative-documents": "Administrative Documents",
     "schooling": "Schooling",
-    "absences": "Absences",
+    "absences": {
+      "label": "Absences",
+      "submit": "Notify/Justify",
+      "list": "History"
+    },
     "planning": {
       "label": "Planning",
       "my-planning": "My Planning",
@@ -38,7 +42,32 @@
         "groups": "Groups"
       },
       "apply": "Apply",
-      "validation-message": "Please select one or multiple {{ title }} to apply the filter"
+      "minSelected": "Please select at least one item."
+    }
+  },
+  "absences": {
+    "form": {
+      "title": "Notify/Justify an Absence",
+      "reason": "Reason",
+      "dateRange": "Date Range",
+      "startDate": "Start Date",
+      "endDate": "End Date",
+      "additionalInfo": "Additional Information",
+      "submit": "Submit",
+      "errors": {
+        "reason": {
+          "required": "Reason is required."
+        },
+        "startDate": {
+          "required": "Start date is required."
+        },
+        "endDate": {
+          "required": "End date is required."
+        }
+      }
+    },
+    "list": {
+      "title": "Absence List"
     }
   },
   "home": {

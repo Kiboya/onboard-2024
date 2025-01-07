@@ -1,0 +1,63 @@
+// src/app/absences/absence-list/absence-list.component.scss
+
+// **************************
+// Absence Card Styles
+// **************************
+.absence-card {
+    display: flex;
+    flex-direction: column;
+    border-left: 6px solid transparent;
+    border-radius: 8px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    padding: 12px;
+    margin-bottom: 16px;
+
+    &.approved {
+        border-color: #4caf50;
+    }
+
+    &.pending {
+        border-color: #ff9800;
+    }
+
+    &.rejected {
+        border-color: #f44336;
+    }
+
+    .status-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+
+        .approved {
+            color: #4caf50;
+        }
+
+        .pending {
+            color: #ff9800;
+        }
+
+        .rejected {
+            color: #f44336;
+        }
+    }
+
+    mat-card-title {
+        font-weight: bold;
+        font-size: 1.2rem;
+    }
+
+    mat-card-subtitle {
+        font-size: 0.9rem;
+        color: rgba(255, 255, 255, 0.6);
+    }
+
+    mat-card-content {
+        font-size: 0.9rem;
+        margin-top: 8px;
+    }
+}

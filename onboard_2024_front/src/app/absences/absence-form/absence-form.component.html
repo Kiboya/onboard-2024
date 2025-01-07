@@ -1,0 +1,48 @@
+<!-- src/app/absences/absence-form/absence-form.component.html -->
+
+<!-- Absence Form Container -->
+<div class="card-container">
+    <mat-card class="absence-form-container">
+        <!-- Form Header -->
+        <div class="form-header">
+            <mat-icon class="form-icon material-symbols-rounded" aria-hidden="true">event_note</mat-icon>
+            <h2>{{ 'absences.form.title' | transloco }}</h2>
+        </div>
+
+        <!-- Absence Form Template -->
+        <form [formGroup]="absenceForm" (ngSubmit)="onSubmit()" class="absence-form">
+            <div class="form-group">
+                <!-- Reason Input Field -->
+                <mat-form-field appearance="outline" class="half-width" hideRequiredMarker>
+                    <mat-label>{{ 'absences.form.reason' | transloco }}</mat-label>
+                    <input matInput formControlName="reason" required />
+                </mat-form-field>
+
+                <!-- Date Range Input Fields -->
+                <mat-form-field appearance="outline" class="half-width" hideRequiredMarker>
+                    <mat-label>{{ 'absences.form.dateRange' | transloco }}</mat-label>
+                    <mat-date-range-input [formGroup]="dateRange" [rangePicker]="picker">
+                        <input matStartDate formControlName="start"
+                            placeholder="{{ 'absences.form.startDate' | transloco }}" required />
+                        <input matEndDate formControlName="end" placeholder="{{ 'absences.form.endDate' | transloco }}"
+                            required />
+                    </mat-date-range-input>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-date-range-picker #picker touchUi="true"></mat-date-range-picker>
+                </mat-form-field>
+            </div>
+
+            <!-- Additional Info Input Field -->
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>{{ 'absences.form.additionalInfo' | transloco }}</mat-label>
+                <textarea matInput formControlName="additionalInfo"></textarea>
+            </mat-form-field>
+
+            <!-- Submit Button -->
+            <button mat-flat-button color="primary" type="submit" [disabled]="!absenceForm.valid">
+                <mat-icon class="material-symbols-rounded">send</mat-icon>
+                {{ 'absences.form.submit' | transloco }}
+            </button>
+        </form>
+    </mat-card>
+</div>

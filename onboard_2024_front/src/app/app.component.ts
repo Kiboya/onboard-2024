@@ -18,7 +18,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
 
 // Third-Party Libraries
-import { TranslocoModule} from '@ngneat/transloco';
+import { TranslocoModule } from '@ngneat/transloco';
 
 // RxJS Library
 import { Subscription } from 'rxjs';
@@ -94,14 +94,23 @@ export class AppComponent implements OnInit, OnDestroy {
   previousMouseEnter = false;
   isLoginPage = false;
   isPlanningPage = false;
+  mouseLeftSidenav = false;
 
   // Defines the navigation items for the sidenav.
   navItems: NavItem[] = [
-    { icon: 'description', routerLink: '/reference-documents', labelKey: 'sidenav.reference-documents' },
-    { icon: 'person', routerLink: '/informations', labelKey: 'sidenav.informations' },
-    { icon: 'folder', routerLink: '/administrative-documents', labelKey: 'sidenav.administrative-documents' },
-    { icon: 'school', routerLink: '/schooling', labelKey: 'sidenav.schooling' },
-    { icon: 'event_busy', routerLink: '/absences', labelKey: 'sidenav.absences' },
+    // { icon: 'description', routerLink: '/reference-documents', labelKey: 'sidenav.reference-documents' }, // Not implemented yet
+    // { icon: 'person', routerLink: '/informations', labelKey: 'sidenav.informations' }, // Not implemented yet
+    // { icon: 'folder', routerLink: '/administrative-documents', labelKey: 'sidenav.administrative-documents' }, // Not implemented yet
+    // { icon: 'school', routerLink: '/schooling', labelKey: 'sidenav.schooling' }, // Not implemented yet
+    {
+      icon: 'event_busy',
+      labelKey: 'sidenav.absences.label',
+      expanded: false,
+      children: [
+        { icon: 'add', routerLink: '/absences/submit', labelKey: 'sidenav.absences.submit', },
+        { icon: 'list', routerLink: '/absences/list', labelKey: 'sidenav.absences.list', },
+      ],
+    },
     {
       icon: 'calendar_month',
       labelKey: 'sidenav.planning.label',
@@ -206,10 +215,19 @@ export class AppComponent implements OnInit, OnDestroy {
    * Toggles the sidenav between expanded and retracted states.
    */
   toggleSidenav(): void {
-    if (this.isSidenavExpanded) {
-      this.currentNavMode--;
-    } else {
-      this.currentNavMode++;
+    if (this.mouseLeftSidenav) {
+      return;
+    }
+    if (this.currentNavMode === NavMode.HIDDEN_RETRACTED) {
+      this.currentNavMode = NavMode.HIDDEN_EXPANDED;
+    } else if (this.currentNavMode === NavMode.HIDDEN_EXPANDED) {
+      this.currentNavMode = NavMode.HIDDEN_RETRACTED;
+    } else if (this.currentNavMode === NavMode.REDUCED_RETRACTED) {
+      this.currentNavMode = NavMode.REDUCED_EXPANDED;
+      console.log('Toggled to REDUCED_EXPANDED');
+    } else if (this.currentNavMode === NavMode.REDUCED_EXPANDED) {
+      this.currentNavMode = NavMode.REDUCED_RETRACTED;
+      console.log('Toggled to REDUCED_RETRACTED');
     }
   }
 
@@ -224,12 +242,16 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Retracts the sidenav when the mouse leaves if the current mode is REDUCED_EXPANDED and it was expanded by mouse enter.
+   * Retracts the sidenav when the mouse leaves if the current mode is REDUCED_EXPANDED and starts a timeout to prevent toggling.
    */
   onSidenavMouseLeave(): void {
     if (this.currentNavMode === NavMode.REDUCED_EXPANDED && this.previousMouseEnter) {
       this.previousMouseEnter = false;
       this.currentNavMode = NavMode.REDUCED_RETRACTED;
+      this.mouseLeftSidenav = true;
+      setTimeout(() => {
+        this.mouseLeftSidenav = false;
+      }, 300);
     }
   }
 

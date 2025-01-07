@@ -16,6 +16,7 @@ import { ClassModule } from './class/class.module';
 import { UserModule } from './user/user.module';
 import { RoomModule } from './room/room.module';
 import { GroupModule } from './group/group.module';
+import { AbsenceModule } from './absence/absence.module';
 
 /**
  * @fileoverview Defines the root application module, configuring imports, controllers, and providers.
@@ -39,8 +40,9 @@ import { GroupModule } from './group/group.module';
     UserModule,
     RoomModule,
     GroupModule,
+    AbsenceModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }

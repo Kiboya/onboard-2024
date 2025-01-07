@@ -1,24 +1,27 @@
-<!-- src/app/planning/filter-selection/filter-selection.component.html -->
+<div class="card-container">
+    <mat-card class="filter-selection-container">
+        <div class="form-header">
+            <mat-icon class="form-icon material-symbols-rounded" aria-hidden="true">filter_list</mat-icon>
+            <h2>{{ title }}</h2>
+        </div>
 
-<div class="filter-selection">
-    <h3>{{ title }}</h3>
-    <mat-form-field appearance="fill" class="full-width">
-        <mat-label>{{ title }}</mat-label>
-        <mat-select multiple [(value)]="selectedItems">
-            <mat-option *ngFor="let item of availableItems" [value]="item.id">
-                {{ item.name }}
-            </mat-option>
-        </mat-select>
-    </mat-form-field>
+        <form [formGroup]="filterForm" (ngSubmit)="applySelection()">
+            <mat-form-field appearance="outline" class="full-width" hideRequiredMarker>
+                <mat-label>{{ title }}</mat-label>
+                <mat-select multiple formControlName="selectedItems">
+                    <mat-option *ngFor="let item of availableItems" [value]="item.id">
+                        {{ item.name }}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="filterForm.get('selectedItems')?.hasError('minSelected')">
+                    {{ 'planning.filter.minSelected' | transloco }}
+                </mat-error>
+            </mat-form-field>
 
-    <button 
-        mat-flat-button 
-        (click)="applySelection()" 
-        [disabled]="selectedItems.length === 0">
-        {{ 'planning.filter.apply' | transloco }}
-    </button>
-
-    <div *ngIf="selectedItems.length === 0" class="validation-message">
-        {{ 'planning.filter.validation-message' | transloco: { article: article, title: title.toLowerCase() } }}
-    </div>
+            <button mat-flat-button color="primary" type="submit" [disabled]="!filterForm.valid">
+                <mat-icon class="material-symbols-rounded">done</mat-icon>
+                {{ 'planning.filter.apply' | transloco }}
+            </button>
+        </form>
+    </mat-card>
 </div>

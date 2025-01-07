@@ -7,10 +7,12 @@ import {
   PrimaryGeneratedColumn,
   ManyToMany,
   JoinTable,
+  OneToMany,
 } from 'typeorm';
 
 // Entities
 import { Group } from '../group/group.entity';
+import { Absence } from '../absence/absence.entity';
 
 /**
  * @fileoverview Defines the User entity with its properties and relationships to other entities.
@@ -39,4 +41,7 @@ export class User {
     inverseJoinColumn: { name: 'group_id', referencedColumnName: 'id' },
   })
   groups: Group[];
+
+  @OneToMany(() => Absence, absence => absence.user)
+  absences: Absence[];
 }

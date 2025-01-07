@@ -1,8 +1,13 @@
+// src/dto/class.dto.ts
+
+// Entities
 import { Course } from 'src/course/course.entity';
-import { Group } from 'src/group/group.entity';
 import { Professor } from 'src/professor/professor.entity';
 import { Room } from 'src/room/room.entity';
 
+/**
+ * @fileoverview Defines the ClassDto class to represent the data transfer object for classes.
+ */
 export class ClassDto {
   date: Date;
   startingTime: string;

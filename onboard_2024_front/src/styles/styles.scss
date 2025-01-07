@@ -1,6 +1,5 @@
 /* styles.scss */
 @use './m3-theme.scss' as *;
-@use './variables.scss' as *;
 @use '@angular/material' as mat;
 
 // **************************
@@ -16,14 +15,15 @@
 }
 
 .dark-theme {
-  --mdc-filled-text-field-container-color: #e2e2e2; 
+  --mdc-filled-text-field-container-color: #e2e2e2;
   background-color: var(--sys-background);
-  
+
   @include mat.all-component-colors($dark-theme);
   @include mat.system-level-colors($dark-theme);
 }
 
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   height: 100%;
@@ -47,7 +47,7 @@ mat-form-field:has(input:-webkit-autofill) {
 ::-webkit-scrollbar {
   border-radius: 5px;
   width: 10px;
-  height: 10px; 
+  height: 10px;
 }
 
 ::-webkit-scrollbar-track {

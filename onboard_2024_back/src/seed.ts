@@ -11,6 +11,7 @@ import { Course } from './course/course.entity';
 import { Class } from './class/class.entity';
 import { Room } from './room/room.entity';
 import { Professor } from './professor/professor.entity';
+import { Absence } from './absence/absence.entity';
 
 /**
  * @fileoverview Seeds the database with initial data for users, groups, courses, classes, rooms, and professors.
@@ -23,6 +24,7 @@ export async function seedDatabase(dataSource: DataSource) {
   const classRepository = dataSource.getRepository(Class);
   const roomRepository = dataSource.getRepository(Room);
   const professorRepository = dataSource.getRepository(Professor);
+  const absenceRepository = dataSource.getRepository(Absence);
 
   // Seed Groups
   const groupCount = await groupRepository.count();
@@ -321,7 +323,7 @@ export async function seedDatabase(dataSource: DataSource) {
       // Evening Classes
       const eveningTimes = [
         { startingTime: '18:00', endingTime: '19:30' },
-        { startingTime: '20:00', endingTime: '21:30' },
+        { startingTime: '20:00', endingTime: '21:00' },
       ];
 
       for (const time of eveningTimes) {
@@ -383,6 +385,45 @@ export async function seedDatabase(dataSource: DataSource) {
     }
   } else {
     console.log('Classes already seeded.');
+  }
+
+  // Seed Absences
+  const absenceCount = await absenceRepository.count();
+  if (absenceCount === 0) {
+    console.log('Seeding Absences...');
+    const users = await userRepository.find();
+
+    const reasons = ['Sick leave', 'Family emergency', 'Vacation', 'Personal reasons', 'Conference'];
+    const additionalInfos = ['Flu', 'Hospital visit', 'Trip to Europe', 'Personal time', 'Attending conference'];
+    const statuses = ['approved', 'pending', 'rejected'];
+
+    for (const user of users) {
+      const absencesData = [];
+      const numberOfAbsences = Math.floor(Math.random() * 3) + 1; // Each user will have 1 to 3 absences
+
+      for (let i = 0; i < numberOfAbsences; i++) {
+        const startDate = new Date(2024, Math.floor(Math.random() * 12), Math.floor(Math.random() * 28) + 1);
+        const endDate = new Date(startDate);
+        endDate.setDate(startDate.getDate() + Math.floor(Math.random() * 5) + 1);
+
+        absencesData.push({
+          startDate: startDate.toISOString().split('T')[0],
+          endDate: endDate.toISOString().split('T')[0],
+          reason: reasons[Math.floor(Math.random() * reasons.length)],
+          additionalInfo: additionalInfos[Math.floor(Math.random() * additionalInfos.length)],
+          status: statuses[Math.floor(Math.random() * statuses.length)],
+          user: user,
+        });
+      }
+
+      for (const absenceData of absencesData) {
+        const absence = absenceRepository.create(absenceData);
+        await absenceRepository.save(absence);
+        console.log(`Absence for user '${user.username}' added.`);
+      }
+    }
+  } else {
+    console.log('Absences already seeded.');
   }
 
   console.log('Database seeding completed.');

@@ -1,14 +1,12 @@
 // home.component.scss
 
-@use '../../styles/variables' as *;
-
 // **************************
 // Layout Styles
 // **************************
 .cards-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-  gap: $gap-medium;
+  gap: 16px;
   justify-items: center;
 
   @media (max-width: 500px) {
@@ -28,11 +26,11 @@ mat-card {
   background-color: var(--sys-surface-container);
 
   mat-card-title {
-    padding: $gap-small;
+    padding: 12px;
   }
 
   mat-card-content {
-    padding: $gap-small;
+    padding: 12px;
   }
 }
 

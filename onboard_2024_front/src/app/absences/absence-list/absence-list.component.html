@@ -1,0 +1,31 @@
+<!-- src/app/absences/absence-list/absence-list.component.html -->
+
+<!-- Absence List Title -->
+<h2>{{ 'absences.list.title' | transloco }}</h2>
+
+<!-- Absence Cards Container -->
+<mat-card *ngFor="let absence of absences" class="absence-card" [ngClass]="absence.status">
+    <mat-card-header>
+        <!-- Status Icon -->
+        <div mat-card-avatar class="status-icon">
+            <mat-icon *ngIf="absence.status === 'approved'"
+                class="approved material-symbols-rounded">check_circle</mat-icon>
+            <mat-icon *ngIf="absence.status === 'pending'"
+                class="pending material-symbols-rounded">hourglass_empty</mat-icon>
+            <mat-icon *ngIf="absence.status === 'rejected'" class="rejected material-symbols-rounded">cancel</mat-icon>
+        </div>
+        <!-- Absence Reason -->
+        <mat-card-title>{{ absence.reason }}</mat-card-title>
+        <!-- Absence Dates -->
+        <mat-card-subtitle>
+            {{ absence.startDate | date: (currentLanguage === 'fr' ? 'd MMM y' : 'MMM d, y') : undefined :
+            currentLanguage }} -
+            {{ absence.endDate | date: (currentLanguage === 'fr' ? 'd MMM y' : 'MMM d, y') : undefined : currentLanguage
+            }}
+        </mat-card-subtitle>
+    </mat-card-header>
+    <!-- Additional Info -->
+    <mat-card-content>
+        <p>{{ absence.additionalInfo }}</p>
+    </mat-card-content>
+</mat-card>
