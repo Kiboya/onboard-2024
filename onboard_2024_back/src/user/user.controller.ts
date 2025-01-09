@@ -9,12 +9,26 @@ import { UsersService } from './user.service';
 // Guards
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
+// DTOs
+import { UserInfoDto } from 'src/dto/user.dto';
+
 /**
  * @fileoverview Handles user-related operations such as retrieving user profiles.
  */
 @Controller('user')
 export class UserController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(private readonly usersService: UsersService) { }
+
+  /**
+   * Retrieves the language from the request headers.
+   *
+   * @param req - The request object containing the accept-language header.
+   * @returns The language code.
+   */
+  private getLanguage(req: any): 'en' | 'fr' {
+    const langHeader = req.headers['accept-language'] || req.headers['x-lang'];
+    return langHeader === 'en' ? 'en' : 'fr';
+  }
 
   /**
    * Retrieves the profile of the authenticated user.
@@ -25,13 +39,9 @@ export class UserController {
    */
   @UseGuards(JwtAuthGuard)
   @Get('profile')
-  async getProfile(@Request() req) {
+  async getProfile(@Request() req): Promise<UserInfoDto> {
     const token = req.headers.authorization.split(' ')[1];
-    const user = await this.usersService.findProfile(token);
-    return {
-      id: user.id,
-      username: user.username,
-      groups: user.groups,
-    };
+    const lang = this.getLanguage(req);
+    return this.usersService.getProfile(token, lang);
   }
 }

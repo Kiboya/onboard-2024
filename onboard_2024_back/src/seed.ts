@@ -74,6 +74,9 @@ export async function seedDatabase(dataSource: DataSource) {
         password: 'password123',
         firstName: 'John',
         lastName: 'Doe',
+        dateOfBirth: '1990-01-15',
+        mobilePhone: '+33612345678',
+        email: 'john.doe@example.com',
         groupNames: ['Informatique', 'Génie Civil'],
       },
       {
@@ -81,6 +84,9 @@ export async function seedDatabase(dataSource: DataSource) {
         password: 'password123',
         firstName: 'Jane',
         lastName: 'Smith',
+        dateOfBirth: '1992-03-21',
+        mobilePhone: '+33623456789',
+        email: 'jane.smith@example.com',
         groupNames: ['Informatique', 'Droit'],
       },
       {
@@ -88,6 +94,9 @@ export async function seedDatabase(dataSource: DataSource) {
         password: 'riz',
         firstName: 'Amo',
         lastName: 'Riz',
+        dateOfBirth: '1995-07-08',
+        mobilePhone: '+33634567890',
+        email: 'amo.riz@example.com',
         groupNames: ['Informatique', 'Droit'],
       },
       {
@@ -95,6 +104,9 @@ export async function seedDatabase(dataSource: DataSource) {
         password: 'alicepwd',
         firstName: 'Alice',
         lastName: 'Wonder',
+        dateOfBirth: '1993-11-30',
+        mobilePhone: '+33645678901',
+        email: 'alice.wonder@example.com',
         groupNames: ['Mathématiques', 'Physique'],
       },
       {
@@ -102,6 +114,9 @@ export async function seedDatabase(dataSource: DataSource) {
         password: 'buildit',
         firstName: 'Bob',
         lastName: 'Builder',
+        dateOfBirth: '1991-05-25',
+        mobilePhone: '+33656789012',
+        email: 'bob.builder@example.com',
         groupNames: ['Génie Civil', 'Mathématiques'],
       },
       // Additional Users
@@ -110,6 +125,9 @@ export async function seedDatabase(dataSource: DataSource) {
         password: 'carolpwd',
         firstName: 'Carol',
         lastName: 'White',
+        dateOfBirth: '1994-09-12',
+        mobilePhone: '+33667890123',
+        email: 'carol.white@example.com',
         groupNames: ['Droit', 'Physique'],
       },
       {
@@ -117,6 +135,9 @@ export async function seedDatabase(dataSource: DataSource) {
         password: 'davepwd',
         firstName: 'Dave',
         lastName: 'Green',
+        dateOfBirth: '1989-12-03',
+        mobilePhone: '+33678901234',
+        email: 'dave.green@example.com',
         groupNames: ['Informatique', 'Mathématiques'],
       },
       {
@@ -124,6 +145,9 @@ export async function seedDatabase(dataSource: DataSource) {
         password: 'evepwd',
         firstName: 'Eve',
         lastName: 'Black',
+        dateOfBirth: '1996-02-18',
+        mobilePhone: '+33689012345',
+        email: 'eve.black@example.com',
         groupNames: ['Génie Civil', 'Physique'],
       },
     ];
@@ -135,6 +159,9 @@ export async function seedDatabase(dataSource: DataSource) {
         password: hashedPassword,
         firstName: userData.firstName,
         lastName: userData.lastName,
+        dateOfBirth: userData.dateOfBirth,
+        mobilePhone: userData.mobilePhone,
+        email: userData.email,
       });
 
       // Assign groups to user

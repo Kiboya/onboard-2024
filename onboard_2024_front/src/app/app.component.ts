@@ -99,7 +99,7 @@ export class AppComponent implements OnInit, OnDestroy {
   // Defines the navigation items for the sidenav.
   navItems: NavItem[] = [
     // { icon: 'description', routerLink: '/reference-documents', labelKey: 'sidenav.reference-documents' }, // Not implemented yet
-    // { icon: 'person', routerLink: '/informations', labelKey: 'sidenav.informations' }, // Not implemented yet
+    { icon: 'person', routerLink: '/profile', labelKey: 'sidenav.profile' }, 
     // { icon: 'folder', routerLink: '/administrative-documents', labelKey: 'sidenav.administrative-documents' }, // Not implemented yet
     // { icon: 'school', routerLink: '/schooling', labelKey: 'sidenav.schooling' }, // Not implemented yet
     {

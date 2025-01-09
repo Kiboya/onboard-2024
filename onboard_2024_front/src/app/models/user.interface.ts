@@ -8,18 +8,28 @@
  * User interface.
  */
 export interface User {
+  username: string;
   firstName: string;
   lastName: string;
-  email: string;
   password?: string;
 }
 
 /**
- * User request interface.
+ * User profile information interface.
  */
-export interface userRequest {
+export interface UserInfo {
+  id: number;
+  username: string;
   firstName: string;
   lastName: string;
+  dateOfBirth: Date;
+  mobilePhone: string;
   email: string;
-  password?: string;
+  groups: {
+    name: string;
+  }[];
+  courses: {
+    id: number;
+    name: string;
+  }[];
 }

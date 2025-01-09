@@ -34,6 +34,15 @@ export class User {
   @Column()
   lastName: string;
 
+  @Column()
+  dateOfBirth: Date;
+
+  @Column()
+  mobilePhone: string;
+
+  @Column()
+  email: string;
+
   @ManyToMany(() => Group, group => group.users, { eager: true })
   @JoinTable({
     name: 'user_groups',

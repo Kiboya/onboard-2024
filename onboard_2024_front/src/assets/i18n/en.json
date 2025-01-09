@@ -10,7 +10,7 @@
   },
   "sidenav": {
     "reference-documents": "Reference Documents",
-    "informations": "Informations",
+    "profile": "Profile",
     "administrative-documents": "Administrative Documents",
     "schooling": "Schooling",
     "absences": {
@@ -69,6 +69,18 @@
     "list": {
       "title": "Absence List"
     }
+  },
+  "profile": {
+    "personalInfo": "Personal Information",
+    "username": "Username",
+    "name": "Name",
+    "birthDate": "Birth Date",
+    "contactInfo": "Contact Information",
+    "email": "Email",
+    "phone": "Phone",
+    "academicInfo": "Academic Information",
+    "groups": "Groups",
+    "courses": "Courses"
   },
   "home": {
     "cards": [

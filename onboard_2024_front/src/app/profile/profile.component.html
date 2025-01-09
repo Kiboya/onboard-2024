@@ -1,0 +1,81 @@
+<!-- Profile Component Template -->
+
+<!-- User Information Container with Async Pipe -->
+<div class="user-info-container" *ngIf="userInfo">
+    <!-- Personal Information Card -->
+    <mat-card class="info-card">
+        <mat-card-header>
+            <mat-icon matCardAvatar class="material-symbols-rounded">person</mat-icon>
+            <mat-card-title>{{ 'profile.personalInfo' | transloco }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <!-- Personal Info Details -->
+            <div class="info-row">
+                <span class="label">{{ 'profile.username' | transloco }}:</span>
+                <span>{{userInfo.username}}</span>
+            </div>
+            <div class="info-row">
+                <span class="label">{{ 'profile.name' | transloco }}:</span>
+                <span>{{userInfo.firstName}} {{userInfo.lastName}}</span>
+            </div>
+            <div class="info-row">
+                <span class="label">{{ 'profile.birthDate' | transloco }}:</span>
+                <span>{{userInfo.dateOfBirth | date: (currentLanguage === 'fr' ? 'd MMM y' : 'MMM d, y') : undefined : currentLanguage}}</span>
+            </div>
+        </mat-card-content>
+    </mat-card>
+
+    <!-- Contact Information Card -->
+    <mat-card class="info-card">
+        <mat-card-header>
+            <mat-icon matCardAvatar class="material-symbols-rounded">contact_mail</mat-icon>
+            <mat-card-title>{{ 'profile.contactInfo' | transloco }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <!-- Contact Info Details -->
+            <div class="info-row">
+                <span class="label">{{ 'profile.email' | transloco }}:</span>
+                <span>{{userInfo.email}}</span>
+            </div>
+            <div class="info-row">
+                <span class="label">{{ 'profile.phone' | transloco }}:</span>
+                <span>{{userInfo.mobilePhone}}</span>
+            </div>
+        </mat-card-content>
+    </mat-card>
+
+    <!-- Academic Information Card -->
+    <mat-card class="info-card">
+        <mat-card-header>
+            <mat-icon matCardAvatar class="material-symbols-rounded">school</mat-icon>
+            <mat-card-title>{{ 'profile.academicInfo' | transloco }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <!-- Groups Section -->
+            <div class="section">
+                <h3>
+                    <mat-icon class="material-symbols-rounded">groups</mat-icon>
+                    {{ 'profile.groups' | transloco }}
+                </h3>
+                <ul class="info-list">
+                    <li *ngFor="let group of userInfo.groups">
+                        {{group.name}}
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Courses Section -->
+            <div class="section">
+                <h3>
+                    <mat-icon class="material-symbols-rounded">book</mat-icon>
+                    {{ 'profile.courses' | transloco }}
+                </h3>
+                <ul class="info-list">
+                    <li *ngFor="let course of userInfo.courses">
+                        {{course.name}}
+                    </li>
+                </ul>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>

@@ -5,7 +5,7 @@ import { Injectable, ConflictException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 
 // DTOs
-import { UserDto } from 'src/dto/user.dto';
+import { UserDto, UserInfoDto } from 'src/dto/user.dto';
 
 // Entities
 import { User } from './user.entity';
@@ -26,7 +26,7 @@ export class UsersService {
     @InjectRepository(User)
     private usersRepository: Repository<User>,
     private jwtService: JwtService,
-  ) {}
+  ) { }
 
   /**
    * Retrieves all users.
@@ -60,16 +60,46 @@ export class UsersService {
   }
 
   /**
-   * Retrieves the profile of a user based on their JWT token.
+   * Retrieves the profile information of a user based on their JWT token.
    *
    * @param token - The JWT token of the authenticated user.
-   * @returns A promise that resolves to the User entity.
+   * @param lang - The language in which to retrieve the data.
+   * @returns A promise that resolves to the UserInfoDto.
    * @throws {UnauthorizedException} If the token is invalid.
    */
-  async findProfile(token: string): Promise<User> {
+  async getProfile(token: string, lang: 'en' | 'fr' = 'fr'): Promise<UserInfoDto> {
     const decoded = this.jwtService.decode(token) as any;
     const userId = decoded?.sub;
-    return this.findById(userId);
+    const user = await this.usersRepository.findOne({
+      where: { id: userId },
+      relations: ['groups', 'groups.courses']
+    });
+
+    // Get unique courses from all groups by course ID
+    const uniqueCourses = Array.from(
+      new Map(
+        user.groups.flatMap(group => group.courses)
+          .map(course => [course.id, course])
+      ).values()
+    );
+
+    return {
+      id: user.id,
+      username: user.username,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      dateOfBirth: user.dateOfBirth,
+      mobilePhone: user.mobilePhone,
+      email: user.email,
+      groups: user.groups.map(g => ({
+        ...g,
+        name: lang === 'en' && g.name_en ? g.name_en : g.name,
+      })),
+      courses: uniqueCourses.map(c => ({
+        ...c,
+        name: lang === 'en' && c.name_en ? c.name_en : c.name,
+      }))
+    };
   }
 
   /**
@@ -80,10 +110,10 @@ export class UsersService {
    * @returns A promise that resolves to the updated User entity.
    * @throws {UnauthorizedException} If the token is invalid.
    */
-  async updateProfile(token: string, updateUserDto: UserDto): Promise<User> {
-    const user = await this.findProfile(token);
+  async updateProfile(token: string, updateUserInfoDto: UserInfoDto): Promise<UserInfoDto> {
+    const user = await this.getProfile(token);
 
-    Object.assign(user, updateUserDto);
+    Object.assign(user, updateUserInfoDto);
     return await this.usersRepository.save(user);
   }
 
