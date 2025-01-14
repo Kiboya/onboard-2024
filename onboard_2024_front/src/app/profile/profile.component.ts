@@ -51,16 +51,23 @@ export class ProfileComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    const userSub = this.userService.getUserInfo().subscribe({
-      next: (data) => this.userInfo = data,
-      error: () => console.error('Error fetching user information')
-    });
-    this.subscriptions.add(userSub);
-
+    this.loadUser();
     const langSub = this.translocoService.langChanges$.subscribe(lang => {
       this.currentLanguage = lang;
+      this.loadUser();
     });
     this.subscriptions.add(langSub);
+  }
+
+  /**
+   * Fetches user information from the backend API.
+   */
+  private loadUser(): void {
+    const userSub = this.userService.getUserInfo().subscribe({
+      next: (data) => this.userInfo = data,
+      error: () => console.error('Error fetching user information'),
+    });
+    this.subscriptions.add(userSub);
   }
 
   ngOnDestroy(): void {
