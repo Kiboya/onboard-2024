@@ -1,4 +1,4 @@
-// src/app/models/user.interface.ts
+// src/app/interfaces/user.interface.ts
 
 /**
  * @fileoverview This file contains interfaces for the user model.

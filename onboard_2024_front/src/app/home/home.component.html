@@ -2,12 +2,12 @@
 
 <!-- Home Page Content -->
 <div class="cards-container">
-  <mat-card *ngFor="let card of cards" [ngClass]="card.class">
-    <mat-card-title [ngClass]="card.title.class">
-      {{ card.title.text }}
+  <mat-card class="home-card" *ngFor="let card of cards" [ngClass]="card.cssClass">
+    <mat-card-title class="home-card-title" [ngClass]="card.cssClass">
+      {{ card.title }}
     </mat-card-title>
     <mat-card-content>
-      <ng-container *ngFor="let node of card.content">
+      <ng-container *ngFor="let node of card.contents">
         <ng-container
           *ngTemplateOutlet="renderNode; context: { $implicit: node }"
         ></ng-container>
@@ -20,17 +20,17 @@
 <ng-template #renderNode let-node>
   <ng-container [ngSwitch]="node.type">
     <!-- Text Node -->
-    <span *ngSwitchCase="'text'" [ngClass]="node.class">
-      {{ node.text }}
+    <span *ngSwitchCase="'text'" [ngClass]="node.cssClass">
+      {{ node.content }}
     </span>
 
     <!-- Link Node -->
-    <a *ngSwitchCase="'link'" [href]="node.url" [ngClass]="node.class">
-      {{ node.text }}
+    <a *ngSwitchCase="'link'" [href]="node.url" [ngClass]="node.cssClass">
+      {{ node.content }}
     </a>
 
     <!-- Paragraph Node -->
-    <p *ngSwitchCase="'paragraph'" [ngClass]="node.class">
+    <p *ngSwitchCase="'paragraph'" [ngClass]="node.cssClass">
       <ng-container *ngFor="let child of node.children">
         <ng-container
           *ngTemplateOutlet="renderNode; context: { $implicit: child }"
@@ -39,7 +39,7 @@
     </p>
 
     <!-- List Node -->
-    <ul *ngSwitchCase="'list'" [ngClass]="node.class">
+    <ul *ngSwitchCase="'list'" [ngClass]="node.cssClass">
       <li *ngFor="let child of node.children">
         <ng-container
           *ngTemplateOutlet="renderNode; context: { $implicit: child }"
@@ -48,7 +48,7 @@
     </ul>
 
     <!-- Container Node -->
-    <div *ngSwitchCase="'container'" [ngClass]="node.class">
+    <div *ngSwitchCase="'container'" [ngClass]="node.cssClass">
       <ng-container *ngFor="let child of node.children">
         <ng-container
           *ngTemplateOutlet="renderNode; context: { $implicit: child }"

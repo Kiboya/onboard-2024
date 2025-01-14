@@ -7,30 +7,110 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
   gap: 16px;
-  justify-items: center;
+  padding: 16px;
 
   @media (max-width: 500px) {
     grid-template-columns: 1fr;
   }
-
-  mat-card {
-    width: 100%;
-  }
 }
 
 // **************************
-// Card Styles
+// Base Card Styles
 // **************************
 mat-card {
   box-shadow: none;
   background-color: var(--sys-surface-container);
+  width: 100%;
 
   mat-card-title {
-    padding: 12px;
+    padding: 16px;
+    font-size: 1.2rem;
+    font-weight: 500;
   }
 
   mat-card-content {
-    padding: 12px;
+    padding: 16px;
+  }
+}
+
+// **************************
+// Home Card Styles
+// **************************
+.home-card {
+  border-left: 4px solid transparent;
+  margin-bottom: 16px;
+
+  &.important {
+    border-left-color: var(--sys-error);
+  }
+
+  &.resources {
+    border-left-color: var(--sys-primary);
+  }
+
+  &.services {
+    border-left-color: var(--sys-secondary);
+  }
+
+  &.contacts {
+    border-left-color: var(--sys-tertiary);
+  }
+
+  // Add more classes as needed
+}
+
+.home-card-title {
+  font-size: 1.2rem;
+  font-weight: 500;
+  padding: 16px;
+
+  &.important {
+    color: var(--sys-error);
+  }
+
+  &.resources {
+    color: var(--sys-primary);
+  }
+
+  &.services {
+    color: var(--sys-secondary);
+  }
+
+  &.contacts {
+    color: var(--sys-tertiary);
+  }
+
+  // Add more classes as needed
+}
+
+// **************************
+// Content Type Styles
+// **************************
+.resource-link {
+  display: inline;
+  color: var(--sys-primary);
+  text-decoration: none;
+
+  &.list {
+    display: block;
+    padding: 8px 0;
+  }
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.service-hours {
+  display: block;
+}
+
+.contact-item {
+  display: block;
+
+  &.emergency {
+    color: var(--sys-error);
+    font-weight: 500;
   }
 }
 
@@ -40,36 +120,36 @@ mat-card {
 .warning {
   color: var(--sys-on-error-container);
   background-color: var(--sys-error-container);
-  border-radius: 7px;
-  padding: 5px;
-  margin-bottom: 10px;
-}
-
-span {
-  white-space: pre-line;
+  border-radius: 4px;
+  margin: 8px 0;
+  padding: 6px;
+  display: inline-block;
+  box-sizing: border-box;
 }
 
 .centered {
-  display: block;
   text-align: center;
-  margin-left: auto;
-  margin-right: auto;
+  display: block;
+  margin: 8px auto;
   width: fit-content;
-  white-space: pre-line;
 }
 
 .justified {
   text-align: justify;
 }
 
-a {
-  display: inline-block;
-  word-spacing: normal;
-  color: var(--sys-primary);
+.date-item {
+  display: block;
+  padding: 8px;
+
+  &:last-child {
+    border-bottom: none;
+  }
 }
 
-.card1-strong {
-  color: var(--sys-surface-tint);
-  font-size: 18px;
-  padding: 10px;
+span,
+p {
+  white-space: pre-line;
+  line-height: 1.5;
+  margin: 8px 0;
 }

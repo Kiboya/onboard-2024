@@ -8,7 +8,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 
 // Models and Services
-import { UserInfo } from '../models/user.interface';
+import { UserInfo } from '../interfaces/user.interface';
 import { UserService } from '../services/user.service';
 
 // Third-Party Libraries

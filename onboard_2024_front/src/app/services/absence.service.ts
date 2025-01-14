@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 // RxJS
 import { Observable } from 'rxjs';
 // Models
-import { Absence } from '../models/absence.interface';
+import { Absence } from '../interfaces/absence.interface';
 // Environment
 import { environment } from '../../environments/environment';
 

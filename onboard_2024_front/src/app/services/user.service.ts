@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 // Models and Environment
-import { UserInfo } from '../models/user.interface';
+import { UserInfo } from '../interfaces/user.interface';
 import { environment } from '../../environments/environment';
 
 /**

@@ -1,4 +1,4 @@
-// src/app/models/class-response-dto.interface.ts
+// src/app/interfaces/class-response-dto.interface.ts
 
 /**
  * @fileoverview ClassResponseDto is an interface for the class response data transfer object.

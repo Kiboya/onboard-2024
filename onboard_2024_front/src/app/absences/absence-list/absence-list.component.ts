@@ -14,7 +14,7 @@ import { Subscription } from 'rxjs';
 import { AbsenceService } from '../../services/absence.service';
 
 // Models
-import { Absence } from '../../models/absence.interface';
+import { Absence } from '../../interfaces/absence.interface';
 
 /**
  * @fileoverview

@@ -21,7 +21,7 @@ import { Subscription } from 'rxjs';
 import { PlanningService } from '../services/planning.service';
 import { ClassService } from '../services/class.service';
 import { ActivatedRoute } from '@angular/router';
-import { ClassResponseDto } from '../models/class-response-dto.interface';
+import { ClassResponseDto } from '../interfaces/class-response-dto.interface';
 
 /**
  * Interface for a calendar event.

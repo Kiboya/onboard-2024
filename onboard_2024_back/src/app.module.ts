@@ -17,6 +17,7 @@ import { UserModule } from './user/user.module';
 import { RoomModule } from './room/room.module';
 import { GroupModule } from './group/group.module';
 import { AbsenceModule } from './absence/absence.module';
+import { HomeModule } from './home/home.module';
 
 /**
  * @fileoverview Defines the root application module, configuring imports, controllers, and providers.
@@ -41,6 +42,7 @@ import { AbsenceModule } from './absence/absence.module';
     RoomModule,
     GroupModule,
     AbsenceModule,
+    HomeModule,
   ],
   controllers: [AppController],
   providers: [AppService],

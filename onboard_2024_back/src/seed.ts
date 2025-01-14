@@ -12,6 +12,11 @@ import { Class } from './class/class.entity';
 import { Room } from './room/room.entity';
 import { Professor } from './professor/professor.entity';
 import { Absence } from './absence/absence.entity';
+import { CardContent } from './home/home-card-content.entity';
+import { Card } from './home/home-card.entity';
+
+// DTOs
+import { HomeCardContentDto, HomeCardDto } from './dto/home-card.dto';
 
 /**
  * @fileoverview Seeds the database with initial data for users, groups, courses, classes, rooms, and professors.
@@ -25,6 +30,8 @@ export async function seedDatabase(dataSource: DataSource) {
   const roomRepository = dataSource.getRepository(Room);
   const professorRepository = dataSource.getRepository(Professor);
   const absenceRepository = dataSource.getRepository(Absence);
+  const cardRepository = dataSource.getRepository(Card);
+  const cardContentRepository = dataSource.getRepository(CardContent);
 
   // Seed Groups
   const groupCount = await groupRepository.count();
@@ -453,6 +460,146 @@ export async function seedDatabase(dataSource: DataSource) {
     console.log('Absences already seeded.');
   }
 
+  // Seed Cards
+  const cardCount = await cardRepository.count();
+  if (cardCount === 0) {
+    console.log('Seeding Home cards...');
+    const cardsData: HomeCardDto[] = [
+      {
+        title: 'Dates académiques importantes',
+        title_en: 'Important Academic Dates',
+        cssClass: 'important',
+        order: 1,
+        contents: [
+          { type: 'text', content: 'Fin du semestre : 15 juin 2025', content_en: 'End of Semester: June 15, 2025', cssClass: 'date-item', order: 1 },
+          { type: 'text', content: 'Examens finaux : 1-14 juin 2025', content_en: 'Final Exams: June 1-14, 2025', cssClass: 'date-item warning', order: 2 },
+          { type: 'text', content: 'Vacances d\'été : 1 juillet - 31 août 2025', content_en: 'Summer Break: July 1 - August 31, 2025', cssClass: 'date-item', order: 3 },
+        ],
+      },
+      {
+        title: 'Ressources du campus',
+        title_en: 'Campus Resources',
+        cssClass: 'resources',
+        order: 2,
+        contents: [
+          { type: 'link', content: 'Catalogue de la bibliothèque', content_en: 'Library Catalog', url: 'https://library.example.com', cssClass: 'resource-link list', order: 1 },
+          { type: 'link', content: 'Support informatique', content_en: 'IT Support', url: 'https://support.example.com', cssClass: 'resource-link list', order: 2 },
+          {
+            type: 'paragraph',
+            content: 'Explorez nos ressources en ligne pour améliorer votre expérience d\'apprentissage.',
+            content_en: 'Explore our online resources to enhance your learning experience.',
+            cssClass: 'justified',
+            order: 3,
+            children: [
+              { type: 'text', content: 'Explorez nos ', content_en: 'Explore our ', cssClass: '', order: 1 },
+              { type: 'link', content: 'ressources en ligne', content_en: 'online resources', url: 'https://resources.example.com', cssClass: 'resource-link', order: 2 },
+              { type: 'text', content: ' pour améliorer votre expérience d\'apprentissage.', content_en: ' to enhance your learning experience.', cssClass: '', order: 3 },
+            ],
+          },
+        ],
+      },
+      {
+        title: 'Horaires des services du campus',
+        title_en: 'Campus Services Hours',
+        cssClass: 'services',
+        order: 3,
+        contents: [
+          { type: 'text', content: 'Bibliothèque : 8h00 - 22h00', content_en: 'Library: 8:00 AM - 10:00 PM', cssClass: 'service-hours', order: 1 },
+          { type: 'text', content: 'Cafétéria : 7h30 - 20h00', content_en: 'Cafeteria: 7:30 AM - 8:00 PM', cssClass: 'service-hours', order: 2 },
+          { type: 'text', content: 'Gymnase : 6h00 - 23h00', content_en: 'Gym: 6:00 AM - 11:00 PM', cssClass: 'service-hours', order: 3 },
+        ],
+      },
+      {
+        title: 'Contacts importants',
+        title_en: 'Important Contacts',
+        cssClass: 'contacts',
+        order: 4,
+        contents: [
+          {
+            type: 'paragraph',
+            content: 'Services aux étudiants : +33 1 23 45 67 89\nUrgences : 112',
+            content_en: 'Student Services: +33 1 23 45 67 89\nEmergency: 112',
+            cssClass: 'contact-info justified',
+            order: 1,
+            children: [
+              { type: 'text', content: 'Services aux étudiants : +33 1 23 45 67 89', content_en: 'Student Services: +33 1 23 45 67 89', cssClass: 'contact-item', order: 1 },
+              { type: 'text', content: 'Urgences : 112', content_en: 'Emergency: 112', cssClass: 'contact-item emergency', order: 2 },
+            ],
+          },
+          {
+            type: 'paragraph',
+            content: 'Pour plus d\'assistance, visitez le bureau de l\'administration pendant les heures de bureau.',
+            content_en: 'For more assistance, visit the Administration Office during working hours.',
+            cssClass: 'centered',
+            order: 2,
+            children: [
+              { type: 'text', content: 'Pour plus d\'assistance, visitez le ', content_en: 'For more assistance, visit the ', cssClass: '', order: 1 },
+              { type: 'link', content: 'bureau de l\'administration', content_en: 'Administration Office', url: 'https://admin.example.com', cssClass: 'resource-link', order: 2 },
+              { type: 'text', content: ' pendant les heures de bureau.', content_en: ' during working hours.', cssClass: '', order: 3 },
+            ],
+          },
+        ],
+      },
+      {
+        title: 'Annonces du campus',
+        title_en: 'Campus Announcements',
+        cssClass: 'important',
+        order: 5,
+        contents: [
+          {
+            type: 'paragraph',
+            content: 'L\'université organisera un symposium technologique le mois prochain. Ne manquez pas les événements passionnants !',
+            content_en: 'The university will be hosting a tech symposium next month. Don\'t miss out on the exciting events!',
+            cssClass: 'justified',
+            order: 1,
+            children: [
+              { type: 'text', content: 'L\'université organisera un ', content_en: 'The university will be hosting a ', cssClass: '', order: 1 },
+              { type: 'link', content: 'symposium technologique', content_en: 'tech symposium', url: 'https://symposium.example.com', cssClass: 'resource-link', order: 2 },
+              { type: 'text', content: ' le mois prochain. Ne manquez pas les événements passionnants !', content_en: ' next month. Don\'t miss out on the exciting events!', cssClass: '', order: 3 },
+            ],
+          },
+          { type: 'text', content: 'Veuillez respecter toutes les directives sanitaires durant les événements.', content_en: 'Please adhere to all health guidelines during the events.', cssClass: 'warning', order: 2 },
+        ],
+      },
+      {
+        title: 'Liens utiles',
+        title_en: 'Useful Links',
+        cssClass: 'resources',
+        order: 6,
+        contents: [
+          {
+            type: 'paragraph',
+            content: 'Accédez au portail étudiant pour gérer vos cours et emplois du temps.',
+            content_en: 'Access the student portal to manage your courses and schedules.',
+            cssClass: 'centered',
+            order: 1,
+            children: [
+              { type: 'text', content: 'Accédez au ', content_en: 'Access the ', cssClass: '', order: 1 },
+              { type: 'link', content: 'portail étudiant', content_en: 'student portal', url: 'https://portal.example.com', cssClass: 'resource-link', order: 2 },
+              { type: 'text', content: ' pour gérer vos cours et emplois du temps.', content_en: ' to manage your courses and schedules.', cssClass: '', order: 3 },
+            ],
+          },
+          { type: 'text', content: 'Pour tout problème, contactez le support informatique.', content_en: 'For any issues, contact IT Support.', cssClass: 'centered', order: 2 },
+        ],
+      },
+    ];
+
+    for (const cardData of cardsData) {
+      const card = cardRepository.create({
+        title: cardData.title,
+        title_en: cardData.title_en,
+        cssClass: cardData.cssClass,
+        order: cardData.order,
+        contents: cardData.contents.map(contentData => mapContentDtoToEntity(contentData)),
+      });
+
+      await cardRepository.save(card);
+
+      console.log(`Home card '${card.title}' added.`);
+    }
+  } else {
+    console.log('Home cards already seeded.');
+  }
   console.log('Database seeding completed.');
 }
 
@@ -470,3 +617,26 @@ export function hashCode(str: string): number {
   }
   return Math.abs(hash);
 };
+
+/**
+ * Maps HomeCardContentDto to CardContent entity, including nested children.
+ * @param contentDto The content DTO to map.
+ * @returns The mapped CardContent entity.
+ */
+function mapContentDtoToEntity(contentDto: HomeCardContentDto): CardContent {
+  const content = new CardContent();
+  content.type = contentDto.type;
+  content.content = contentDto.content;
+  content.content_en = contentDto.content_en;
+  content.url = contentDto.url;
+  content.cssClass = contentDto.cssClass;
+  content.order = contentDto.order;
+
+  if (contentDto.children && contentDto.children.length > 0) {
+    content.children = contentDto.children.map(childDto => mapContentDtoToEntity(childDto));
+  } else {
+    content.children = [];
+  }
+
+  return content;
+}

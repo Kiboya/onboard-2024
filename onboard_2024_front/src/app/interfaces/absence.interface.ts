@@ -1,4 +1,4 @@
-// src/app/models/absence.interface.ts
+// src/app/interfaces/absence.interface.ts
 
 /**
  * @fileoverview Absence is an interface for the absence data.

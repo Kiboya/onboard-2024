@@ -7,7 +7,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 // RxJS
 import { Observable } from 'rxjs';
 // Models
-import { ClassResponseDto } from '../models/class-response-dto.interface';
+import { ClassResponseDto } from '../interfaces/class-response-dto.interface';
 // Services
 import { AuthService } from './auth.service';
 import { environment } from '../../environments/environment';

@@ -1,4 +1,4 @@
-// src/app/models/login-response.interface.ts
+// src/app/interfaces/login-response.interface.ts
 
 /**
  * @fileoverview LoginResponse is an interface for the login response.

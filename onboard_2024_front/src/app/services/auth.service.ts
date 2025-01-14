@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 // RxJS
 import { catchError, Observable, tap, throwError } from 'rxjs';
 // Interfaces
-import { LoginResponse } from '../models/login-response.interface';
+import { LoginResponse } from '../interfaces/login-response.interface';
 // Angular HTTP
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';

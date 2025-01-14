@@ -1,81 +1,88 @@
 // src/app/home/home.component.ts
 
 // Angular Core
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Subscription } from 'rxjs';
 
 // Angular Material Modules
 import { MatCardModule } from '@angular/material/card';
 
-// Third-Party Libraries
-import { TranslocoModule, TranslocoService } from '@ngneat/transloco';
+// Interfaces
+import { Card } from '../interfaces/home-card.interface';
+
+// Services
+import { HomeService } from '../services/home.service';
+
+// Transloco
+import { TranslocoService } from '@ngneat/transloco';
 
 /**
- * Interface for a content node to be displayed on a card.
- */
-interface ContentNode {
-  type: 'text' | 'link' | 'list' | 'paragraph' | 'container';
-  text?: string;
-  url?: string;
-  class?: string;
-  children?: ContentNode[];
-}
-
-/**
- * Interface for a title to be displayed on a card.
- */
-interface Title {
-  text: string;
-  class?: string;
-}
-
-/**
- * Interface for a card to be displayed on the home page.
- */
-interface Card {
-  title: Title;
-  content: ContentNode[];
-  class?: string;
-}
-
-/**
- * @fileoverview
- * HomeComponent is responsible for rendering the home page of the application.
- * It displays a collection of cards with different content nodes such as text, links, and lists.
+ * @fileoverview HomeComponent is responsible for displaying the home page with various cards.
+ * It fetches the cards from the HomeService and displays them in a sorted order.
  */
 @Component({
-    selector: 'app-home',
-    imports: [
-        CommonModule,
-        MatCardModule,
-        TranslocoModule,
-    ],
-    templateUrl: './home.component.html',
-    styleUrls: ['./home.component.scss']
+  selector: 'app-home',
+  standalone: true,
+  imports: [
+    CommonModule,
+    MatCardModule,
+  ],
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
-
+export class HomeComponent implements OnInit, OnDestroy {
   /**
-   * Array of cards to be displayed on the home page.
+   * Array of Card objects to be displayed on the home page.
    */
   cards: Card[] = [];
 
   /**
-   * Constructor for HomeComponent.
-   * 
-   * @param translocoService - Service for handling translations.
+   * Current language of the application.
    */
-  constructor(private translocoService: TranslocoService) {}
+  currentLanguage: string = 'en';
+
+  private subscriptions = new Subscription();
 
   /**
-   * Lifecycle hook that is called after data-bound properties of a directive are initialized.
-   * Fetches the cards from the translation service and assigns them to the `cards` array.
+   * Constructor for HomeComponent.
+   * 
+   * @param homeService - Service for fetching home page cards.
+   * @param translocoService - Service for handling translations.
    */
+  constructor(
+    private homeService: HomeService,
+    private translocoService: TranslocoService
+  ) {}
+
   ngOnInit(): void {
-    this.translocoService
-      .selectTranslateObject<Card[]>('home.cards')
-      .subscribe((cards) => {
-        this.cards = cards;
-      });
+    // Initial load of cards
+    this.loadCards();
+
+    // Subscribe to language changes and reload cards accordingly
+    const langSub = this.translocoService.langChanges$.subscribe(lang => {
+      this.currentLanguage = lang;
+      this.loadCards();
+    });
+    this.subscriptions.add(langSub);
+  }
+
+  /**
+   * Loads cards from the HomeService and sorts them.
+   */
+  private loadCards(): void {
+    const cardsSub = this.homeService.getCards().subscribe({
+      next: (cards) => {
+        this.cards = cards.sort((a, b) => a.order - b.order);
+      },
+      error: (err) => {
+        console.error('Error fetching home cards', err);
+      }
+    });
+    this.subscriptions.add(cardsSub);
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 }
